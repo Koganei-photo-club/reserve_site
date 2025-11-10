@@ -8,13 +8,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     const res = await fetch(apiUrl);
     const data = await res.json();
 
-    // ✅ 改行を含むキーを正規化
+    // ✅ 改行を含むキーを正規化して取得
     const events = data.map(row => {
       const endKey = Object.keys(row).find(k => k.includes("返却予定日"));
+
+      // ✅ 日付を "YYYY-MM-DD" に変換
+      const start = row["借り始め予定日を選択してください。"]?.replaceAll("/", "-");
+      const end = row[endKey]?.replaceAll("/", "-");
+
       return {
         title: `${row["借りたい機材を選択してください。"]} 貸出中（${row["LINEの名前を記入してください。"]}）`,
-        start: row["借り始め予定日を選択してください。"],
-        end: row[endKey], // 改行入りキーもこれでOK
+        start: start,
+        end: end,
         color: "#007bff"
       };
     });
