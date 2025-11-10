@@ -301,3 +301,52 @@ footer p {
     font-size: 1.1em;
   }
 }
+
+/* ===== 貸出申請フォームボタンセクション ===== */
+.reserve-form {
+  text-align: center;
+  margin: 2em auto;
+  padding: 1.5em;
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 600px;
+}
+
+.reserve-form h2 {
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+.reserve-form p {
+  margin-bottom: 1em;
+  color: #555;
+  line-height: 1.6;
+}
+
+.reserve-form .button {
+  display: inline-block;
+  padding: 0.8em 2em;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.reserve-form .button:hover {
+  background: #0056b3;
+}
+
+/* 📱 スマホ対応 */
+@media (max-width: 600px) {
+  .reserve-form {
+    margin: 1em;
+    padding: 1em;
+  }
+  .reserve-form .button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
