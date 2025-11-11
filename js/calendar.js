@@ -6,7 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", async function () {
   const calendarEl = document.getElementById("calendar");
-  const apiUrl = "https://camera-proxy.photo-club-at-koganei.workers.dev/"; // WorkerのURLに合わせて変更
+  const apiUrl = "https://camera-proxy.photo-club-at-koganei.workers.dev/"; // WorkerのURL
 
   try {
     const res = await fetch(apiUrl);
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return {
         title: `${equipment} 貸出中`,
         start: startRaw,
-        end: endDate.toISOString().split("T")[0], // FullCalendar用
+        end: endDate.toISOString().split("T")[0],
         color: "#007bff"
       };
     });
@@ -40,40 +40,67 @@ document.addEventListener("DOMContentLoaded", async function () {
       displayEventEnd: true,
 
       // --- イベントクリック（キャンセル申請） ---
-      eventClick: async function (info) {
-        const eventTitle = info.event.title;
-        const name = prompt(`「${eventTitle}」の予約をキャンセルします。\nご自身の氏名を入力してください：`);
-        if (!name) return;
+      eventClick: function (info) {
+        const modal = document.getElementById("cancelModal");
+        const targetText = document.getElementById("cancelTarget");
+        const messageEl = document.getElementById("cancelMessage");
 
-        const code = prompt("認証コード（4桁）を入力してください：");
-        if (!code) return;
+        targetText.textContent = `対象：${info.event.title}`;
+        messageEl.textContent = "";
+        modal.style.display = "flex";
 
-        // キャンセルリクエスト送信
-        const payload = {
-          requestType: "キャンセルする",
-          name: name,
-          equipment: eventTitle.replace(" 貸出中", ""),
-          authCode: code
-        };
-
-        try {
-          const res = await fetch(apiUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-
-          const result = await res.json();
-          alert(result.message || "キャンセル処理が完了しました。");
-          location.reload(); // 成功時に再読込
-        } catch (err) {
-          console.error("キャンセル送信エラー:", err);
-          alert("キャンセル処理に失敗しました。");
-        }
+        // 設備名をモーダルに保持
+        modal.dataset.equipment = info.event.title.replace(" 貸出中", "");
       }
     });
 
     calendar.render();
+
+    // === モーダル操作 ===
+    const modal = document.getElementById("cancelModal");
+    const closeBtn = document.getElementById("cancelClose");
+    const confirmBtn = document.getElementById("cancelConfirm");
+    const messageEl = document.getElementById("cancelMessage");
+
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    confirmBtn.addEventListener("click", async () => {
+      const name = document.getElementById("cancelName").value.trim();
+      const code = document.getElementById("cancelCode").value.trim();
+      const equipment = modal.dataset.equipment;
+
+      if (!name || !code) {
+        messageEl.textContent = "⚠️ 氏名と認証コードを入力してください。";
+        return;
+      }
+
+      const payload = {
+        requestType: "キャンセルする",
+        name: name,
+        equipment: equipment,
+        authCode: code
+      };
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        messageEl.textContent = result.message;
+
+        if (result.status === "success") {
+          setTimeout(() => location.reload(), 1500); // 成功後1.5秒で再読込
+        }
+      } catch (err) {
+        console.error("キャンセル送信エラー:", err);
+        messageEl.textContent = "⚠️ 通信エラーが発生しました。";
+      }
+    });
 
   } catch (error) {
     console.error("データ取得エラー:", error);

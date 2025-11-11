@@ -44,12 +44,22 @@
     <!-- カレンダー本体 -->
     <div id="calendar"></div>
 
-    <!-- 📋 予約フォームボタン -->
-    <div class="reserve-form">
-      <h2>🔗 貸出申請フォーム</h2>
-      <p>カレンダーで空き状況を確認したら、以下のボタンから申請してください。</p>
-      <a href="https://forms.gle/kShTBhvz6r7FsAcS6"
-        target="_blank" class="button">Googleフォームで申請する</a>
+    <!-- === キャンセル申請モーダル === -->
+    <div id="cancelModal" class="cancel-modal" style="display:none;">
+      <div class="cancel-box">
+        <h3>キャンセル申請</h3>
+        <p id="cancelTarget">この予約をキャンセルするには、氏名と認証コードを入力してください。</p>
+
+        <input type="text" id="cancelName" placeholder="氏名を入力">
+        <input type="text" id="cancelCode" placeholder="認証コード（4桁）">
+
+        <div class="cancel-buttons">
+          <button id="cancelConfirm">キャンセル送信</button>
+          <button id="cancelClose">閉じる</button>
+        </div>
+
+        <p id="cancelMessage" style="margin-top: 1rem; font-weight:bold;"></p>
+      </div>
     </div>
 
     <!-- 📱 スマホ用のフローティング申請ボタン -->
