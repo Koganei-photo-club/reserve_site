@@ -17,7 +17,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const events = data.map(row => {
       const endKey = Object.keys(row).find(k => k.includes("返却予定日"));
       const start = row["借り始め予定日"];
-      const end = row["返却予定日"];
+      const endRaw = row["返却予定日"];
+      // 返却予定日を「含めて」表示するため1日加算
+      const endDate = new Date(endRaw);
+      endDate.setDate(endDate.getDate() + 1); // ← ここで+1日！
+
       const equipment = row["借りたい機材"];
 
       return {
