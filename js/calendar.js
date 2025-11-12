@@ -14,17 +14,20 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // === スプレッドシートのデータをイベント形式に変換 ===
     const events = data.map(row => {
-      const startRaw = row["借り始め予定日"];
       const endRaw = row["返却予定日"];
+      const startRaw = row["借り始め予定日"];
       const equipment = row["借りたい機材"];
 
-      // 返却日を含めるために +1日補正
-      const endDate = new Date(endRaw);
+    // ✅ 日付文字列をスラッシュにも対応して安全にパース
+      const startDate = new Date(startRaw.replace(/\//g, "-"));
+      const endDate = new Date(endRaw.replace(/\//g, "-"));
+
+    // ✅ 返却日を含めるために +1日補正
       endDate.setDate(endDate.getDate() + 1);
 
       return {
         title: `${equipment} 貸出中`,
-        start: startRaw,
+        start: startDate.toISOString().split("T")[0],
         end: endDate.toISOString().split("T")[0],
         color: "#007bff"
       };
