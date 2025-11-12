@@ -428,3 +428,51 @@ footer p {
 #cancelConfirm { background-color: #d9534f; }
 #cancelClose { background-color: #6c757d; }
 
+/* ===== カメラ一覧（画像サイズ調整） ===== */
+/* ===== カメラ一覧レイアウト ===== */
+.work-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em; /* カード間の余白 */
+  margin-top: 2em;
+}
+
+.work-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 30%; /* PCでは3枚並び（30%×3＋余白） */
+  min-width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.work-card:hover {
+  transform: translateY(-5px);
+}
+
+.work-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.work-info {
+  padding: 1em;
+}
+
+/* ===== スマホ・タブレット対応 ===== */
+@media screen and (max-width: 768px) {
+  .work-gallery {
+    flex-direction: column; /* ← 縦並びに */
+    align-items: center;
+  }
+
+  .work-card {
+    width: 90%; /* スマホでは1枚を画面幅いっぱい */
+    max-width: 400px;
+  }
+}
+
