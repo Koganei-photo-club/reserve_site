@@ -31,8 +31,8 @@
   <!-- ===== ナビゲーション ===== -->
   <nav class="navbar">
     <ul>
-      <li><a href="/index.html">ホーム</a></li>
-      <li><a href="/reserve.html">予約カレンダー</a></li>
+      <li><a href="{{ "/index.html" | relative_url }}">ホーム</a></li>
+      <li><a href="{{ "/reserve.html" | relative_url }}">予約カレンダー</a></li>
     </ul>
   </nav>
 
@@ -43,7 +43,7 @@
 
   <!-- ===== フッター ===== -->
   <footer>
-    <p><img src="/images/club-icon.JPG" style="height:40px;"></p>
+    <p><img src="{{ "/images/club-icon.JPG" | relative_url }}" alt="写真部アイコン" style="height:40px;"></p>
     <p>© 2025 法政大学 小金井写真部</p>
   </footer>
 
