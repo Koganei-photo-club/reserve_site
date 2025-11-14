@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>予約カレンダー | 法政大学 小金井写真部 貸出カメラ予約システム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="images/club-icon.JPG" type="image/jpeg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- FullCalendar -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ===== ヘッダー ===== -->
+  <header id="main-header">
+    <div class="header-content">
+      <a href="index.html">
+        <img src="images/club-icon.JPG" alt="写真部アイコン" class="logo">
+        <div class="site-title">
+          <h1>法政大学 小金井写真部</h1>
+          <p>貸出カメラ予約システム</p>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== ナビ ===== -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="reserve.html" class="disabled">予約カレンダー</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== 本文 ===== -->
+  <main>
+
+    <h2>予約カレンダー</h2>
+
+    <div class="c-section__container">
+      <p>
+        カメラの貸出状況を確認できます。<br>
+        青いバーが表示されている期間は貸出中です。<br>
+        カレンダーの読み込みには数秒かかる場合があります。
+      </p>
+    </div>
+
+    <!-- ===== カレンダー本体 ===== -->
+    <div id="calendar"></div>
+
+    <!-- ===== 貸出申請フォーム ===== -->
+    <section class="reserve-form">
+      <h2>貸出申請フォーム</h2>
+      <p>
+        以下のフォームからカメラの貸出申請を行ってください。<br>
+        送信後、すぐにカレンダーへ反映されます。
+      </p>
+
+      <a href="https://forms.gle/Dyx2gLjrSSyv3i9x7" 
+         target="_blank"
+         class="button">
+        📋 貸出申請フォームを開く
+      </a>
+    </section>
+
+    <!-- ===== スマホ専用フローティングボタン ===== -->
+    <a href="https://forms.gle/Dyx2gLjrSSyv3i9x7"
+      target="_blank"
+      class="floating-button">
+        📋 貸出申請する
+    </a>
+
+    <!-- ===== キャンセル申請モーダル ===== -->
+    <div id="cancelModal" class="cancel-modal" style="display:none;">
+      <div class="cancel-box">
+        <h3>キャンセル申請</h3>
+        <p id="cancelTarget">この予約をキャンセルするには、氏名と認証コードを入力してください。</p>
+
+        <input type="text" id="cancelName" placeholder="氏名を入力">
+        <input type="text" id="cancelCode" placeholder="認証コード（4桁）">
+
+        <div class="cancel-buttons">
+          <button id="cancelConfirm">キャンセル送信</button>
+          <button id="cancelClose">閉じる</button>
+        </div>
+
+        <p id="cancelMessage" style="margin-top: 1rem; font-weight:bold;"></p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== フッター ===== -->
+  <footer>
+    <p><img src="images/club-icon.JPG" style="height:40px;"></p>
+    <p>© 2025 法政大学 小金井写真部</p>
+  </footer>
+
+  <!-- ===== JavaScript ===== -->
+  <script src="js/script.js"></script>
+</body>
+</html>

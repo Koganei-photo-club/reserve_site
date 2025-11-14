@@ -431,10 +431,9 @@ footer p {
 /* ===== カメラ一覧（画像サイズ調整） ===== */
 /* ===== カメラ一覧レイアウト ===== */
 .work-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5em; /* カード間の余白 */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3列固定 */
+  gap: 1.5em;
   margin-top: 2em;
 }
 
@@ -443,7 +442,6 @@ footer p {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  width: 30%; /* PCでは3枚並び（30%×3＋余白） */
   min-width: 250px;
   text-align: center;
   transition: transform 0.2s ease;
@@ -455,8 +453,8 @@ footer p {
 
 .work-card img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 200px;
+  object-fit: cover;
 }
 
 .work-info {
