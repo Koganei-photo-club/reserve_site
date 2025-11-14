@@ -1,0 +1,22 @@
+title: "法政大学 小金井写真部 貸出カメラ予約システム"
+description: "カメラ貸出状況の確認と予約ができます。"
+
+# GitHub Pages の URL
+baseurl: "/camera_reserve_site"  # あなたのリポジトリ名
+url: "https://koganei-photo-club.github.io"
+
+timezone: "Asia/Tokyo"
+
+# Jekyll 本体設定
+markdown: kramdown
+highlighter: rouge
+
+# GitHub Pages プラグイン（github-pages に含まれている）
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# 明示的に HTML ページをJekyllに含める
+include:
+  - index.html
+  - reserve.html
