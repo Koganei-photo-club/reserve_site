@@ -3,7 +3,7 @@ description: "カメラ貸出状況の確認と予約ができます。"
 
 # GitHub Pages の URL
 baseurl: "/camera_reserve_site"  # あなたのリポジトリ名
-url: "https://koganei-photo-club.github.io"
+url: "https://Koganei-photo-club.github.io"
 
 timezone: "Asia/Tokyo"
 
