@@ -44,28 +44,38 @@ const events = data.map(row => {
 }).filter(e => e !== null); // ← 無効データを除外
 
     // === FullCalendar 設定 ===
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      locale: "ja",
-      height: "auto",
-      events: events,
-      eventTimeFormat: { hour: "2-digit", minute: "2-digit" },
-      displayEventEnd: true,
+const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: "dayGridMonth",
+  locale: "ja",
+  height: "auto",
 
-      // --- イベントクリック（キャンセル申請） ---
-      eventClick: function (info) {
-        const modal = document.getElementById("cancelModal");
-        const targetText = document.getElementById("cancelTarget");
-        const messageEl = document.getElementById("cancelMessage");
+  events: events,
 
-        targetText.textContent = `対象：${info.event.title}`;
-        messageEl.textContent = "";
-        modal.style.display = "flex";
+  eventTimeFormat: { hour: "2-digit", minute: "2-digit" },
+  displayEventEnd: true,
 
-        // 設備名をモーダルに保持
-        modal.dataset.equipment = info.event.title.replace(" 貸出中", "").trim();
-      }
-    });
+  // ← 追加：同日複数イベントの最大表示数
+  dayMaxEventRows: 3,
+
+  views: {
+    dayGridMonth: {
+      dayMaxEventRows: 3
+    }
+  },
+
+  // --- イベントクリック（キャンセル申請） ---
+  eventClick: function (info) {
+    const modal = document.getElementById("cancelModal");
+    const targetText = document.getElementById("cancelTarget");
+    const messageEl = document.getElementById("cancelMessage");
+
+    targetText.textContent = `対象：${info.event.title}`;
+    messageEl.textContent = "";
+    modal.style.display = "flex";
+
+    modal.dataset.equipment = info.event.title.replace(" 貸出中", "").trim();
+  }
+});
 
     calendar.render();
 
@@ -120,19 +130,4 @@ const events = data.map(row => {
   } catch (error) {
     console.error("データ取得エラー:", error);
   }
-});
-
-const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: "dayGridMonth",
-  locale: "ja",
-  height: "auto",
-  events: events,
-  eventTimeFormat: { hour: "2-digit", minute: "2-digit" },
-  displayEventEnd: true,
-  dayMaxEventRows: 3, // ← 同日最大3件まで表示（それ以上は「+X件」）
-  views: {
-    dayGridMonth: {
-      dayMaxEventRows: 3 // ← 月間ビューで3件に制限
-    }
-  },
 });
