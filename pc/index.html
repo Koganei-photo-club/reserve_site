@@ -1,0 +1,76 @@
+<!-- /pc/reserve.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>PC予約カレンダー | 法政大学 小金井写真部 予約システム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="images/club-icon.JPG" type="image/jpeg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- FullCalendar（PC用） -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</head>
+
+<body>
+
+  <div id="header-wrapper">
+    <!-- ===== ヘッダー ===== -->
+    <header id="main-header">
+      <div class="header-content">
+        <!-- ここは総合トップに戻る -->
+        <a href="../index.html">
+          <img src="images/club-icon.JPG" alt="写真部アイコン" class="logo">
+          <div class="site-title">
+            <h1>法政大学 小金井写真部</h1>
+            <p>PC予約システム</p>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <!-- ===== ナビ ===== -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">PC予約トップ</a></li>
+        <li><a href="reserve.html" class="disabled">PC予約カレンダー</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- ===== 本文 ===== -->
+  <main>
+    <h2>PC予約カレンダー</h2>
+
+    <div class="c-section__container">
+      <p>
+        PC室の予約状況を確認できます。<br>
+        ◯：全枠空き / △：一部空き / ✕：全て埋まり<br>
+        日付をタップすると、その日の時間枠が表示されます。
+      </p>
+    </div>
+
+    <!-- ===== カレンダー本体 ===== -->
+    <div id="pc-calendar"></div>
+
+    <!-- ===== 予約枠モーダル（Lightbox風） ===== -->
+    <div id="pcSlotModal" class="cancel-modal" style="display:none;">
+      <div class="cancel-box" id="pcSlotModalBox">
+        <!-- JSで中身を差し替えます -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== フッター ===== -->
+  <footer>
+    <p><img src="images/club-icon.JPG" style="height:40px;"></p>
+    <p>© 2025 法政大学 小金井写真部</p>
+  </footer>
+
+  <!-- ===== JavaScript ===== -->
+  <script src="../camera/js/script.js"></script> <!-- ヘッダー挙動など共通ならこれ -->
+  <script src="js/pc-calendar.js"></script>     <!-- ★PC専用ロジック -->
+</body>
+</html>
