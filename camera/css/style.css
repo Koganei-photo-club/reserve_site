@@ -429,10 +429,9 @@ footer p {
 #cancelClose { background-color: #6c757d; }
 
 /* ===== カメラ一覧（画像サイズ調整） ===== */
-/* ===== カメラ一覧レイアウト ===== */
 .work-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3列固定 */
+  grid-template-columns: repeat(3, 1fr); /* PCでは3列 */
   gap: 1.5em;
   margin-top: 2em;
 }
@@ -442,13 +441,8 @@ footer p {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  min-width: 250px;
   text-align: center;
   transition: transform 0.2s ease;
-}
-
-.work-card:hover {
-  transform: translateY(-5px);
 }
 
 .work-card img {
@@ -461,15 +455,16 @@ footer p {
   padding: 1em;
 }
 
-/* ===== スマホ・タブレット対応 ===== */
+/* ===== 📱 スマホ・タブレット対応 ===== */
 @media screen and (max-width: 768px) {
   .work-gallery {
+    display: flex;          /* ← grid を flex に変更 */
     flex-direction: column; /* ← 縦並びに */
     align-items: center;
   }
 
   .work-card {
-    width: 90%; /* スマホでは1枚を画面幅いっぱい */
+    width: 90%;             /* ← 1枚を画面いっぱいに */
     max-width: 400px;
   }
 }
