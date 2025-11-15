@@ -14,6 +14,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     "17:00〜17:50", "17:50〜18:40"
   ];
 
+  function isPcSlotAvailable(dateStr) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const target = new Date(dateStr);
+
+    return target > today;  // 今日より未来だけ予約可能
+  }
+
   let rawData = [];
 
 
@@ -209,8 +218,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       const btn = document.createElement("button");
 
+      // 締切済み（日付が当日・過去）
       if (!available) {
-        // 予約締切済み
         btn.className = "slot closed";
         btn.textContent = `${slot}（予約締切）`;
         btn.disabled = true;
