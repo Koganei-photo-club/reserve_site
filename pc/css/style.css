@@ -570,3 +570,51 @@ footer p {
 }
 
 /* PC予約キャンセルモーダルは既存のものを使用 */
+
+/* ===== 日別モーダル ===== */
+.day-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.day-box {
+  background: #fff;
+  padding: 1.5em;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+}
+
+#timeSlots {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.slot {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.slot.free {
+  background: #c8f7c5;
+}
+
+.slot.booked {
+  background: #ddd;
+  cursor: pointer;
+}
+
+.close-btn {
+  margin-top: 1em;
+  padding: 0.7em 1.2em;
+}
