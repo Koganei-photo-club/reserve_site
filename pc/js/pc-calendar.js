@@ -54,22 +54,33 @@ document.addEventListener("DOMContentLoaded", async function () {
       const cnt = countByDate[date] || 0;
 
       let mark = "◯";
-      let color = "#c8f7c5";   // 0〜3件 → 緑
+      let color = "#c8f7c5";
 
       if (cnt >= 4 && cnt <= 7) {
         mark = "△";
-        color = "#ffe8b3";     // 4〜7件 → 橙（today と区別済）
+        color = "#ffe8b3";
       } else if (cnt >= 8) {
         mark = "×";
-        color = "#ffd6d6";     // 8件 → 赤
+        color = "#ffd6d6";
       }
 
+      // 背景色だけはセルに付ける
       info.el.style.background = color;
-      info.el.innerHTML += `<div style="text-align:center; font-size:1.4em;">${mark}</div>`;
-    },
 
-    dateClick(info) {
-      openDayModal(info.dateStr);
+      // 既存の追加要素があれば削除（再描画時の重複防止）
+      const oldMark = info.el.querySelector(".pc-mark");
+      if (oldMark) oldMark.remove();
+
+      // 新しいマーク要素
+      const markDiv = document.createElement("div");
+      markDiv.className = "pc-mark";
+      markDiv.textContent = mark;
+      markDiv.style.textAlign = "center";
+      markDiv.style.fontSize = "1.4em";
+      markDiv.style.marginTop = "4px";
+
+      // 追加
+      info.el.appendChild(markDiv);
     }
   });
 
