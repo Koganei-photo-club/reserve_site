@@ -55,23 +55,28 @@ document.addEventListener("DOMContentLoaded", async function () {
     dayCellDidMount(info) {
       const cellDate = info.date;
 
-      // === FullCalendar の正しい「表示中の月」 ===
-      const displayDate = new Date(info.view.currentStart);
-      displayDate.setDate(displayDate.getDate() + 7);  // ← 1週間足すことで正しい月へ修正
-      const displayMonth = displayDate.getMonth();
+      // --- 表示中の月を正確に算出 ---
+      const start = new Date(info.view.currentStart);
+      const end = new Date(info.view.currentEnd);
+
+      const middle = new Date((start.getTime() + end.getTime()) / 2);
+      const displayMonth = middle.getMonth();
+      const displayYear = middle.getFullYear();
 
       // === このセルの日付 ===
-      const month = cellDate.getMonth();
+      const cellMonth = cellDate.getMonth();
+      const cellYear = cellDate.getFullYear();
 
-      // === 今月以外は塗りつぶしもマーク表示も全部消す ===
-      if (month !== displayMonth) {
+      // === 今月以外（前月・次月）は塗りつぶししない ===
+      const isCurrentMonth = (cellYear === displayYear && cellMonth === displayMonth);
+      if (!isCurrentMonth) {
         const old = info.el.querySelector(".pc-mark");
         if (old) old.remove();
         info.el.style.background = "";
         return;
       }
 
-      // === 今月の予約数を取得 ===
+      // --- ここから下は「今月の日付」にだけ適用される ---
       const dateStr = cellDate.toISOString().split("T")[0];
       const cnt = countByDate[dateStr] || 0;
 
