@@ -50,8 +50,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     height: "auto",
 
     dayCellDidMount(info) {
-      const date = info.date.toISOString().split("T")[0];
-      const cnt = countByDate[date] || 0;
+      const cellDate = info.date;
+      const year = cellDate.getFullYear();
+      const month = cellDate.getMonth(); // 0=Jan, 1=Feb...
+
+      const calendarMonth = info.view.currentStart.getMonth(); // 今月の月番号
+
+      // === 前月・翌月のセルなら何もしない ===
+      if (month !== calendarMonth) {
+        // 背景もデフォルトに戻す（FullCalendar が持っている色を使用）
+        info.el.style.background = "";
+
+        // 古いマークが残っていたら除去
+        const oldMark = info.el.querySelector(".pc-mark");
+    if (oldMark) oldMark.remove();
+
+        return; // ★処理終了
+      }
+    // === ここから通常月の処理 ===
+      const dateStr = cellDate.toISOString().split("T")[0];
+      const cnt = countByDate[dateStr] || 0;
 
       let mark = "◯";
       let color = "#c8f7c5";
@@ -60,28 +78,23 @@ document.addEventListener("DOMContentLoaded", async function () {
         mark = "△";
         color = "#ffe8b3";
       } else if (cnt >= 8) {
-        mark = "×";
-        color = "#ffd6d6";
+    mark = "×";
+    color = "#ffd6d6";
       }
 
-      // 背景色だけはセルに付ける
       info.el.style.background = color;
+      // 一度クリア
+      const old = info.el.querySelector(".pc-mark");
+      if (old) old.remove();
 
-      // 既存の追加要素があれば削除（再描画時の重複防止）
-      const oldMark = info.el.querySelector(".pc-mark");
-      if (oldMark) oldMark.remove();
-
-      // 新しいマーク要素
       const markDiv = document.createElement("div");
       markDiv.className = "pc-mark";
       markDiv.textContent = mark;
       markDiv.style.textAlign = "center";
       markDiv.style.fontSize = "1.4em";
       markDiv.style.marginTop = "4px";
-
-      // 追加
       info.el.appendChild(markDiv);
-    }
+    },
   });
 
   calendar.render();
