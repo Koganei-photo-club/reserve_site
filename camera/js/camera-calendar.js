@@ -57,6 +57,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     rawData = [];
   }
 
+    /****************************************
+   * 📌 貸出期間と重複しているか判定
+   ****************************************/
+  function isOverlapping(equipName, targetDate) {
+    const target = new Date(targetDate + "T00:00:00");
+
+    return rawData.some(item => {
+      if (item.equip !== equipName) return false;
+
+      const start = new Date(item.start + "T00:00:00");
+      const end = new Date(item.end + "T00:00:00");
+
+      return (target >= start && target <= end);
+    });
+  }
+
   /****************************************
    * 📅 FullCalendar 用イベント配列に変換
    ****************************************/
@@ -175,15 +191,29 @@ function datePlusOne(str) {
   function openDayModal(dateStr) {
     dayTitle.textContent = `${dateStr} から借り始め`;
 
-    // ボタンを一度リセット
     cameraButtons.innerHTML = "";
 
     CAMERAS.forEach(equipName => {
       const btn = document.createElement("button");
       btn.textContent = equipName + " を予約する";
-      btn.addEventListener("click", () => {
-        openReserveForm(dateStr, equipName);
-      });
+
+      // 🔥 重複チェック
+      const conflict = isOverlapping(equipName, dateStr);
+
+      if (conflict) {
+        // 重複 → ボタン無効化
+        btn.disabled = true;
+        btn.style.background = "#ccc";
+        btn.style.color = "#666";
+        btn.style.cursor = "not-allowed";
+        btn.title = "この機材はこの期間すでに貸し出されています";
+      } else {
+        // 問題なし → クリック可
+        btn.addEventListener("click", () => {
+          openReserveForm(dateStr, equipName);
+        });
+      }
+
       cameraButtons.appendChild(btn);
     });
 
