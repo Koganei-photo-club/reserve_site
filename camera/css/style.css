@@ -107,7 +107,7 @@ body {
 /* --- 本文 --- */
 main {
   padding: 2em;
-  margin-top: 140px; /* ヘッダー＋ナビ分下げる */
+  margin-top: 140px;
 }
 
 h2 {
@@ -182,7 +182,7 @@ footer p {
 }
 
 /* ===============================
-   日別モーダル（PC/Camera 共通）
+   PC/旧版日別モーダル（残す）
    =============================== */
 .day-modal {
   position: fixed;
@@ -341,46 +341,39 @@ footer p {
   }
 }
 
-.day-modal {
+/* ===============================
+   📸 カメラ予約モーダル（新規）
+=============================== */
+.modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 10000;
 }
 
-.day-box {
+.modal-box {
   background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  width: 300px;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 360px;
+  width: 90%;
   text-align: center;
 }
 
-#cameraButtons button {
+.modal-box select,
+.modal-box input[type="date"] {
   width: 100%;
-  margin: 0.4em 0;
   padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #007bff;
-  color: white;
-  cursor: pointer;
+  margin: 0.6em 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
-#cameraButtons button:hover {
-  background: #0056b3;
-}
-
-.close-btn {
-  background: #6c757d;
-  color: white;
-  border: none;
-  margin-top: 1rem;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
+.modal-box .button {
+  width: 100%;
+  margin-top: 1em;
 }

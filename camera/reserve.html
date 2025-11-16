@@ -5,7 +5,10 @@
   <title>カメラ貸出カレンダー | 法政大学 小金井写真部</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Favicon -->
   <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 
   <!-- FullCalendar -->
@@ -15,6 +18,9 @@
 
 <body>
 
+<!-- ==========================
+     固定ヘッダー
+============================== -->
 <div id="header-wrapper">
   <header id="main-header">
     <div class="header-content">
@@ -36,27 +42,43 @@
   </nav>
 </div>
 
-
+<!-- ==========================
+     本文
+============================== -->
 <main>
   <h2>カメラ貸出カレンダー</h2>
 
   <div id="calendar"></div>
 </main>
 
+<!-- ==========================
+     カメラ予約モーダル
+============================== -->
+<div id="cameraModal" class="modal" style="display:none;">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
 
-<!-- 🔶 カメラ選択モーダル -->
-<div id="dayModal" class="day-modal" style="display:none;">
-  <div class="day-box">
-    <h3 id="dayTitle"></h3>
+    <p><b>借りたい機材</b></p>
+    <select id="equipSelect">
+      <option value="">選択してください</option>
+      <option value="Canon EOS 5D Mark III">Canon EOS 5D Mark III</option>
+      <option value="Canon EOS R10">Canon EOS R10</option>
+      <option value="Nikon D3000">Nikon D3000</option>
+    </select>
 
-    <!-- カメラ選択肢 -->
-    <div id="cameraButtons"></div>
+    <p><b>借り始め日</b>：<span id="startDate"></span></p>
 
-    <button id="dayClose" class="close-btn">閉じる</button>
+    <p><b>返却予定日</b></p>
+    <input type="date" id="endDate">
+
+    <div style="margin-top:1.5em;">
+      <button id="submitReserve" class="button">予約フォームへ進む</button>
+      <button id="closeModal" class="button" style="background:#999;">閉じる</button>
+    </div>
   </div>
 </div>
 
-
+<!-- JS -->
 <script src="js/camera-calendar.js"></script>
 
 </body>
