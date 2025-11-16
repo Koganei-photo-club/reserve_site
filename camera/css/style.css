@@ -340,3 +340,47 @@ footer p {
     max-width: 400px;
   }
 }
+
+.day-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.day-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+#cameraButtons button {
+  width: 100%;
+  margin: 0.4em 0;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#cameraButtons button:hover {
+  background: #0056b3;
+}
+
+.close-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  margin-top: 1rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

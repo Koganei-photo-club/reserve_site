@@ -2,10 +2,10 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>カメラ予約カレンダー | 法政大学 小金井写真部</title>
+  <title>カメラ貸出カレンダー | 法政大学 小金井写真部</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="icon" href="images/club-icon.JPG" type="image/jpeg">
+  <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
   <link rel="stylesheet" href="css/style.css">
 
   <!-- FullCalendar -->
@@ -19,10 +19,10 @@
   <header id="main-header">
     <div class="header-content">
       <a href="../index.html">
-        <img src="images/club-icon.JPG" alt="写真部アイコン" class="logo">
+        <img src="../camera/images/club-icon.JPG" alt="写真部アイコン" class="logo">
         <div class="site-title">
           <h1>法政大学 小金井写真部</h1>
-          <p>貸出カメラ予約システム</p>
+          <p>カメラ貸出システム</p>
         </div>
       </a>
     </div>
@@ -31,40 +31,32 @@
   <nav class="navbar">
     <ul>
       <li><a href="index.html">ホーム</a></li>
-      <li><a href="reserve.html" class="disabled">予約カレンダー</a></li>
+      <li><a href="reserve.html" class="disabled">貸出カレンダー</a></li>
     </ul>
   </nav>
 </div>
 
-<main>
-  <h2>カメラ予約カレンダー</h2>
 
-  <div class="c-section__container">
-    <p>
-      カメラの貸出状況をカレンダーで確認できます。<br>
-      日付をクリックすると、その日を「借り始め予定日」としてカメラを選択し、<br>
-      予約フォームを開くことができます。<br>
-      ※ カメラ予約は借り始め予定日の1週間前までに行ってください。
-    </p>
-  </div>
+<main>
+  <h2>カメラ貸出カレンダー</h2>
 
   <div id="calendar"></div>
 </main>
 
-<!-- --- 日別モーダル（カメラ選択用） --- -->
+
+<!-- 🔶 カメラ選択モーダル -->
 <div id="dayModal" class="day-modal" style="display:none;">
   <div class="day-box">
     <h3 id="dayTitle"></h3>
 
-    <div id="cameraSlots"></div>
+    <!-- カメラ選択肢 -->
+    <div id="cameraButtons"></div>
 
     <button id="dayClose" class="close-btn">閉じる</button>
   </div>
 </div>
 
-<!-- （カメラのキャンセルは現行方式をそのまま使うなら、ここで別モーダルは不要） -->
 
-<!-- カメラ用カレンダーJS -->
 <script src="js/camera-calendar.js"></script>
 
 </body>
