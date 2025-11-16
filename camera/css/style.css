@@ -377,3 +377,31 @@ footer p {
   width: 100%;
   margin-top: 1em;
 }
+
+/* ===============================
+   カメラ選択ボタンデザイン
+=============================== */
+#cameraButtons {
+  display: flex;
+  flex-direction: column; /* ← 縦並び */
+  gap: 12px;
+  margin-top: 10px;
+}
+
+#cameraButtons button {
+  width: 100%;                 /* ← 横幅そろえる */
+  padding: 14px;               /* ← 大きめ */
+  font-size: 1.1rem;           /* ← 見やすく */
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#cameraButtons button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
