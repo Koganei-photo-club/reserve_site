@@ -1,140 +1,152 @@
 /**********************************************
- * Camera Reservation Calendar (FullCalendar)
- * カメラ予約システム Ver.1
+ * 📷 カメラ貸出カレンダー 完全版
+ *  - Cloudflare Worker (camera-proxy) 経由で予約取得
+ *  - 予約期間を FullCalendar に表示
+ *  - 日付クリック → カメラ選択 → Googleフォームにプリフィル
+ *  - 借り始めは「今日から 7日後 以降」だけ予約可能
  **********************************************/
 
 document.addEventListener("DOMContentLoaded", async function () {
-
   const calendarEl = document.getElementById("calendar");
 
-  // GAS → Worker → JSON 取得
-  const apiUrl = "https://pc-proxy.photo-club-at-koganei.workers.dev/"; 
-  // ↑ PC と違う Worker を後で camera-proxy に変更する（今は仮）
+  // 🔗 Cloudflare Worker（カメラ用）
+  const apiUrl = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
 
+  // 🔧 カメラの種類（表示用 + フォーム用）
+  const CAMERAS = [
+    "Canon EOS 5D Mark III",
+    "Canon EOS R10",
+    "Nikon D3000"
+  ];
+
+  // 🔧 Googleフォーム（カメラ予約）のプリフィル URL（ベース）
+  //  entry.389826105 = 借りたい機材
+  //  entry.445112185 = 借り始め予定日
+  const FORM_BASE_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSfNVO0OilcqtDFXmj2FjauZ4fQX7_ZKO0xBdZIf6U9Cg53yMQ/viewform?usp=pp_url";
+
+  /****************************************
+   * ⏰ カメラ予約の「開始可能日」チェック
+   *  - 借り始め予定日は「今日から 7日後 以降」
+   ****************************************/
+  function isCameraStartAvailable(dateStr) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const minStart = new Date(today);
+    minStart.setDate(minStart.getDate() + 7); // 今日 + 7日
+
+    // info.dateStr は "YYYY-MM-DD" 形式
+    const target = new Date(dateStr + "T00:00:00");
+
+    return target >= minStart;
+  }
+
+  /****************************************
+   * 📥 予約データの取得
+   ****************************************/
   let rawData = [];
 
   try {
     const res = await fetch(apiUrl);
     rawData = await res.json();
+    // 期待する形：
+    // [{ timestamp, name, line, equip, start, end, auth }, ...]
   } catch (err) {
-    console.error("予約データ取得エラー:", err);
+    console.error("カメラ予約データ取得エラー:", err);
+    rawData = [];
   }
 
-  /**********************************************
-   * 機材カラー
-   **********************************************/
-  const EQUIP_COLORS = {
-    "Canon EOS 5D Mark III": "#b3d9ff",
-    "Canon EOS R10": "#d0f0c0",
-    "Nikon D3000": "#ffd6cc"
-  };
+  /****************************************
+   * 📅 FullCalendar 用イベント配列に変換
+   ****************************************/
+  const events = [];
 
-  /**********************************************
-   * 予約不可判定：借り始め日 = 今日 + 7日 以降だけ
-   **********************************************/
-  function isCameraStartAvailable(dateStr) {
-    const today = new Date();
-    today.setHours(0,0,0,0);
+  rawData.forEach(r => {
+    if (!r.start || !r.end || !r.equip) return;
 
-    const minStart = new Date(today);
-    minStart.setDate(minStart.getDate() + 7);
+    const start = new Date(r.start + "T00:00:00");
+    const end = new Date(r.end + "T00:00:00");
 
-    const target = new Date(dateStr);
-    return target >= minStart;
-  }
+    // FullCalendar の allDay イベントで「end は翌日」を指定
+    const endPlusOne = new Date(end);
+    endPlusOne.setDate(endPlusOne.getDate() + 1);
 
-  /**********************************************
-   * カレンダー構築
-   **********************************************/
+    events.push({
+      title: `${r.equip} 貸出中`,
+      start: start.toISOString().split("T")[0],
+      end: endPlusOne.toISOString().split("T")[0],
+      allDay: true
+    });
+  });
+
+  /****************************************
+   * 📅 カレンダー本体
+   ****************************************/
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "ja",
     height: "auto",
+    events: events,
 
-    dayCellDidMount(info) {
-      const dateStr = info.date.toISOString().split("T")[0];
+    // 日付クリック → カメラ選択モーダル
+    dateClick: function (info) {
+      const dateStr = info.dateStr; // "YYYY-MM-DD"
 
-      // その日を含む予約帯を集める
-      const matches = rawData.filter(r => {
-        if (!r.start || !r.end) return false;
-        const start = new Date(r.start);
-        const end = new Date(r.end);
-        const d = new Date(dateStr);
-        return d >= start && d <= end;
-      });
-
-      if (matches.length > 0) {
-        // ひとまず1機材だけを表示（後で複数重ねる拡張も可能）
-        const equip = matches[0].equip;
-        const color = EQUIP_COLORS[equip] || "#e6e6e6";
-
-        info.el.style.background = color;
-        info.el.style.opacity = "0.9";
+      // 予約開始可能日チェック
+      if (!isCameraStartAvailable(dateStr)) {
+        alert(
+          "カメラの予約は、借り始め予定日の 1週間前までに行ってください。\n" +
+          "本日から 7日以内の日付は、借り始めとして選択できません。"
+        );
+        return;
       }
-    },
 
-    dateClick(info) {
-      openModal(info.dateStr);
+      openDayModal(dateStr);
     }
   });
 
   calendar.render();
 
+  /****************************************
+   * 📦 カメラ選択モーダル（Day Modal）
+   ****************************************/
+  const dayModal = document.getElementById("dayModal");
+  const dayTitle = document.getElementById("dayTitle");
+  const cameraButtons = document.getElementById("cameraButtons");
+  const dayCloseBtn = document.getElementById("dayClose");
 
-  /**********************************************
-   * モーダル（借りたい機材 ＋ 返却予定日）
-   **********************************************/
-  const modal = document.getElementById("cameraModal");
-  const modalTitle = document.getElementById("modalTitle");
-  const startDateSpan = document.getElementById("startDate");
-  const endDateInput = document.getElementById("endDate");
-  const equipSelect = document.getElementById("equipSelect");
-  const closeBtn = document.getElementById("closeModal");
-  const submitBtn = document.getElementById("submitReserve");
-
-  closeBtn.addEventListener("click", () => modal.style.display = "none");
-
-  // モーダルを開く関数
-  function openModal(dateStr) {
-
-    if (!isCameraStartAvailable(dateStr)) {
-      alert("予約は借り始め予定日の7日前までです。\nこの日は選択できません。");
-      return;
-    }
-
-    modalTitle.textContent = `借り始め予定日：${dateStr}`;
-    startDateSpan.textContent = dateStr;
-
-    // 自動返却予定日（7日後）
-    const d = new Date(dateStr);
-    d.setDate(d.getDate() + 7);
-    endDateInput.value = d.toISOString().split("T")[0];
-
-    modal.style.display = "flex";
-  }
-
-
-  /**********************************************
-   * Googleフォームへプリフィルして遷移
-   **********************************************/
-  submitBtn.addEventListener("click", () => {
-
-    const equip = equipSelect.value;
-    const start = startDateSpan.textContent;
-    const end = endDateInput.value;
-
-    if (!equip) {
-      alert("借りたい機材を選択してください");
-      return;
-    }
-
-    const url =
-      "https://docs.google.com/forms/d/e/1FAIpQLSfNVO0OilcqtDFXmj2FjauZ4fQX7_ZKO0xBdZIf6U9Cg53yMQ/viewform?usp=pp_url"
-      + `&entry.389826105=${encodeURIComponent(equip)}`
-      + `&entry.445112185=${encodeURIComponent(start)}`
-      + `&entry.1310995013=${encodeURIComponent(end)}`;
-
-    window.open(url, "_blank");
+  dayCloseBtn.addEventListener("click", () => {
+    dayModal.style.display = "none";
   });
 
+  function openDayModal(dateStr) {
+    dayTitle.textContent = `${dateStr} から借り始め`;
+
+    // ボタンを一度リセット
+    cameraButtons.innerHTML = "";
+
+    CAMERAS.forEach(equipName => {
+      const btn = document.createElement("button");
+      btn.textContent = equipName + " を予約する";
+      btn.addEventListener("click", () => {
+        openReserveForm(dateStr, equipName);
+      });
+      cameraButtons.appendChild(btn);
+    });
+
+    dayModal.style.display = "flex";
+  }
+
+  /****************************************
+   * 📝 Googleフォームをプリフィルして開く
+   ****************************************/
+  function openReserveForm(startDate, equipName) {
+    const url =
+      FORM_BASE_URL +
+      `&entry.389826105=${encodeURIComponent(equipName)}` +      // 借りたい機材
+      `&entry.445112185=${encodeURIComponent(startDate)}`;       // 借り始め予定日
+
+    window.open(url, "_blank");
+  }
 });
