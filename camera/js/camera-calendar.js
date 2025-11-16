@@ -81,13 +81,40 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   /****************************************
+ * 📌 予約期間 → 背景帯イベントに変換
+ ****************************************/
+  function convertReservationsToEvents(data) {
+    const list = [];
+
+    data.forEach(item => {
+      if (!item.start || !item.end) return;
+
+      list.push({
+        start: item.start,
+        end: datePlusOne(item.end),
+        display: "background",
+        backgroundColor: "rgba(0, 123, 255, 0.20)",
+        borderColor: "rgba(0, 123, 255, 0)"
+      });
+    });
+
+    return list;
+  }
+
+  function datePlusOne(str) {
+    const d = new Date(str);
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10);
+  }
+
+  /****************************************
    * 📅 カレンダー本体
    ****************************************/
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "ja",
     height: "auto",
-    events: events,
+    events: convertReservationsToEvents(rawData),
 
     // 日付クリック → カメラ選択モーダル
     dateClick: function (info) {
