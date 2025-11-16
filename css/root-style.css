@@ -10,6 +10,123 @@ body {
   font-family: sans-serif;
 }
 
+/* ===============================
+   共通デザイン（写真展サイト由来）
+   =============================== */
+body {
+  background-color: #f5f5f5;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+/* ラッパー */
+#header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* --- ヘッダー --- */
+#main-header {
+  position: relative;
+  background: #333;
+  color: white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: top 0.25s ease;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 1em;
+}
+
+.header-content a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 1em;
+}
+
+.site-title h1 {
+  font-size: 1.2em;
+  margin: 0;
+  color: white;
+}
+
+.site-title p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+/* --- ナビゲーション --- */
+.navbar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background: #555;
+  transition: top 0.25s ease;
+  z-index: 999;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0.5em;
+}
+
+.navbar li {
+  margin: 0 0.5em;
+}
+
+.navbar a {
+  display: block;
+  padding: 0.8em 1.2em;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.navbar a:hover {
+  background: #777;
+}
+
+/* --- 無効化リンク --- */
+.navbar a.disabled {
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* --- 本文 --- */
+main {
+  padding: 2em;
+  margin-top: 140px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
 /* 中央寄せコンテナ */
 .main-container {
   max-width: 900px;
@@ -75,6 +192,365 @@ h1.page-title {
 
 .news-section li {
   margin: 0.5em 0;
+}
+
+/* =======================================
+   🔧 写真展用のセクションレイアウトを復旧
+======================================= */
+
+/* セクション全体 */
+.c-section {
+  padding: 2em 1em;
+  background: #fafafa;
+  margin: 2em 0;
+  border-top: 2px solid #333;
+}
+
+/* タイトル部分 */
+.c-section__heading {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.c-section__heading--title span {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #333;
+}
+
+.c-section__heading--subtitle {
+  font-size: 0.9em;
+  color: #777;
+  margin-top: 0.3em;
+}
+
+/* コンテンツ部分（中央寄せ＋幅制限） */
+.c-section__container {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* リストの見た目を調整 */
+.c-section__container ul {
+  padding-left: 1.2em;
+}
+
+.c-section__container li {
+  margin: 0.5em 0;
+}
+
+/* --- ボタン --- */
+.button {
+  display: inline-block;
+  background: darkblue;
+  color: white;
+  padding: 0.8em 2em;
+  min-width: 200px;
+  text-align: center;
+  margin: 0.3em;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: navy;
+}
+
+.button.disabled {
+  background: #eee;
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- フッター --- */
+footer {
+  background: #ccc;
+  text-align: center;
+  padding: 1.5em;
+  margin-top: 2em;
+}
+
+footer p {
+  margin: 0.3em 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* ===============================
+   カレンダー（FullCalendar）用
+   =============================== */
+#calendar {
+  max-width: 800px;
+  margin: 2em auto;
+  background: white;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fc-toolbar-title {
+  font-size: 1.3em !important;
+  color: #222;
+}
+
+.fc-button-primary {
+  background-color: darkblue !important;
+  border: none !important;
+}
+
+.fc-button-primary:hover {
+  background-color: navy !important;
+}
+
+/* ===============================
+   PC/旧版日別モーダル（残す）
+   =============================== */
+.day-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.day-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 350px;
+  width: 90%;
+  text-align: center;
+}
+
+.day-box button.slot {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.slot.free {
+  background: #e0f7ff;
+}
+
+.slot.booked {
+  background: #ffd6d6;
+}
+
+.close-btn {
+  margin-top: 1em;
+  padding: 8px 14px;
+  background: #555;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ==============================
+   キャンセル申請モーダル
+============================== */
+.cancel-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.cancel-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+}
+
+.cancel-box input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cancel-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.cancel-buttons button {
+  flex: 1;
+  margin: 0 4px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+#cancelConfirm { background-color: #d9534f; }
+#cancelClose { background-color: #6c757d; }
+
+/* ==============================
+   カメラ画像ギャラリー
+============================== */
+.work-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5em;
+  margin-top: 2em;
+}
+
+.work-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.work-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.work-info {
+  padding: 1em;
+}
+
+/* 📱 スマホ対応 */
+@media screen and (max-width: 768px) {
+  #main-header { height: 60px; }
+  .logo { height: 32px; margin-right: 0.6em; }
+  .site-title h1 { font-size: 1em; }
+  .site-title p { font-size: 0.8em; }
+
+  .navbar ul {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  main {
+    margin-top: 100px;
+  }
+
+  #calendar {
+    width: 100%;
+    max-width: 95vw;
+    font-size: 0.8rem;
+  }
+
+  .work-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .work-card {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
+/* ===============================
+   📸 カメラ予約モーダル（新規）
+=============================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-box select,
+.modal-box input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin: 0.6em 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modal-box .button {
+  width: 100%;
+  margin-top: 1em;
+}
+
+/* ===============================
+   カメラ選択ボタンデザイン
+=============================== */
+#cameraButtons {
+  display: flex;
+  flex-direction: column; /* ← 縦並び */
+  gap: 12px;
+  margin-top: 10px;
+}
+
+#cameraButtons button {
+  width: 100%;                 /* ← 横幅そろえる */
+  padding: 14px;               /* ← 大きめ */
+  font-size: 1.1rem;           /* ← 見やすく */
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#cameraButtons button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+#cameraButtons .camera-btn {
+  width: 100%;
+  margin: 0.4em 0;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#cameraButtons .camera-btn:hover:not(.disabled) {
+  background: #0056b3;
+}
+
+#cameraButtons .camera-btn.disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 /* ========= センターレイアウト ========= */
