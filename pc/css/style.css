@@ -708,3 +708,60 @@ footer p {
   cursor: not-allowed;
   border: 1px solid #ccc;
 }
+
+/* ===============================
+   📌 カメラ予約トップ専用の中央レイアウト
+=============================== */
+
+/* セクション（ブロック全体を中央に置く） */
+.pc-center-section {
+  max-width: 900px;
+  margin: 2em auto;
+  text-align: center;    /* 見出しは中央 */
+  padding: 0 1rem;
+}
+
+/* 説明文の文章ブロック（中身だけ左寄せ） */
+.pc-description {
+  max-width: 600px;      /* 説明文の幅 */
+  margin: 1.5em auto;
+  text-align: left;      /* ← 文章だけ左寄せ */
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* ボタンブロック */
+.pc-link-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ボタンを大きく整える */
+.pc-link-buttons a {
+  padding: 1.2em 2.5em;
+  font-size: 1.3em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 📱 スマホ対応 */
+@media (max-width: 600px) {
+
+  .pc-description {
+    max-width: 95%;
+  }
+
+  .pc-link-buttons {
+    flex-direction: column;  /* ボタン縦並び */
+    gap: 1rem;
+  }
+
+  .pc-link-buttons a {
+    width: 100%;             /* 全幅ボタン */
+    box-sizing: border-box;
+  }
+}
