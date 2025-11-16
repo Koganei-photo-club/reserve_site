@@ -1,15 +1,6 @@
 /* ===============================
    予約システムトップページ専用CSS
 =============================== */
-
-/* 全体 */
-body {
-  margin: 0;
-  padding: 0;
-  background: #f7f7f7;
-  font-family: sans-serif;
-}
-
 /* ===============================
    共通デザイン（写真展サイト由来）
    =============================== */
@@ -265,6 +256,29 @@ h1.page-title {
   color: #999;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* 総合トップ専用の小さめボタン */
+.root-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 2em;
+  font-size: 1.1em;
+  background: darkblue;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 0.5em;
+  width: auto;
+}
+
+@media (max-width: 600px) {
+  .root-button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1em;
+  }
 }
 
 /* --- フッター --- */
