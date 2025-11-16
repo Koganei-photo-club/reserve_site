@@ -14,17 +14,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     "17:00〜17:50", "17:50〜18:40"
   ];
 
-  function isPcSlotAvailable(dateStr) {
-      // 今日を JST の yyyy-mm-dd に正規化
-    const today = new Date();
-    const todayStr = today.toISOString().slice(0, 10);  // UTC日付になるが後で補正
-    const todayJst = new Date(todayStr + "T00:00:00+09:00"); 
+// ===============================
+// PC予約：JSTで前日締切
+// ===============================
+function isPcSlotAvailable(dateStr) {
+  // 今日の JST YYYY-MM-DD を作成
+  const now = new Date();
+  const jstOffsetMs = 9 * 60 * 60 * 1000;
+  const todayJst = new Date(now.getTime() + jstOffsetMs);
+  const todayStr = todayJst.toISOString().split("T")[0];
 
-     // ターゲット日付を JST の00:00で固定
-    const target = new Date(dateStr + "T00:00:00+09:00");
+  // 今日の JST 00:00 を作る
+  const today0 = new Date(`${todayStr}T00:00:00+09:00`);
 
-    return target > todayJst;
-  }
+  // 対象日を JST 00:00 に固定
+  const target = new Date(`${dateStr}T00:00:00+09:00`);
+
+  // 今日より未来の日付だけ予約可能
+  return target > today0;
+}
 
   let rawData = [];
 
