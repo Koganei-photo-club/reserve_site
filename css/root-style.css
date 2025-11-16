@@ -79,19 +79,29 @@ h1.page-title {
 
 /* 全体のセンタリング用 */
 .center-section {
+  text-align: center; /* セクション全体は中央寄せ */
   margin-top: 2em;
-  text-align: center; /* 見出しやボタンだけ中央に */
 }
 
-/* 説明文だけ左寄せにする */
+/* 説明文のブロック */
+.center-section p {
+  max-width: 600px;     /* PCでは横600pxに制限 */
+  margin: 1em auto;     /* ブロック自体は中央 */
+  line-height: 1.8;
+  text-align: left;     /* ← 内部の文章は左寄せ */
+  padding: 0 1rem;      /* スマホで左右に余白を作る */
+  word-break: normal;   /* 変なところで折り返させない */
+}
+
+/* 説明文だけ左寄せにする
 .description {
   max-width: 600px;
   margin: 1em auto;
   line-height: 1.8;
   text-align: left;       /* ← 中身は左寄せ */
-  padding: 0 1em;         /* ← スマホでも左右余白つけて読みやすく */
-  word-break: keep-all;   /* 変なところで折り返しにくくする */
-}
+  /* padding: 0 1em;         ← スマホでも左右余白つけて読みやすく */
+  /* word-break: keep-all;   変なところで折り返しにくくする */
+/* } 
 
 /* ボタンの並び */
 .link-buttons {
