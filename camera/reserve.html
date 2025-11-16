@@ -14,17 +14,6 @@
   <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-  <script>
-  // maintenance.flag が存在したら強制メンテ
-  fetch("/maintenance.flag")
-    .then(r => {
-      if (r.ok) {
-        if (!location.pathname.includes("maintenance.html")) {
-          location.href = "/maintenance.html";
-        }
-      }
-    });
-  </script>
 </head>
 
 <body>
@@ -57,7 +46,16 @@
      本文
 ============================== -->
 <main>
-  <h2>カメラ貸出カレンダー</h2>
+  <section class="camera-center-section">
+    <h2>カメラ貸出カレンダー</h2>
+
+    <p class="camera-description">
+      以下のカレンダーで、写真部共用カメラの貸出状況を確認できます。<br>
+      ◯：全枠空き / △：一部空き / ✕：全て埋まり<br>
+      日付をタップすると、その日の貸出可能なカメラが表示されます。<br>
+      カレンダーの読み込みには数秒から数十秒かかる場合があります。ご了承ください。
+    </p>
+  </section>
 
   <div id="calendar"></div>
 </main>
