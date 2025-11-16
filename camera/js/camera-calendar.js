@@ -80,32 +80,35 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   });
 
-  /****************************************
- * 📌 予約期間 → 背景帯イベントに変換
+/****************************************
+ * 📌 予約期間 → 通常の帯イベントに変換
+ *   → 左の例のように表示される
  ****************************************/
-  function convertReservationsToEvents(data) {
-    const list = [];
+function convertReservationsToEvents(data) {
+  const list = [];
 
-    data.forEach(item => {
-      if (!item.start || !item.end) return;
+  data.forEach(item => {
+    if (!item.start || !item.end || !item.equip) return;
 
-      list.push({
-        start: item.start,
-        end: datePlusOne(item.end),
-        display: "background",
-        backgroundColor: "rgba(0, 123, 255, 0.20)",
-        borderColor: "rgba(0, 123, 255, 0)"
-      });
+    list.push({
+      title: `${item.equip} 貸出中`,
+      start: item.start,
+      end: datePlusOne(item.end),  // FullCalendar の仕様で end は翌日にする
+      allDay: true,
+      backgroundColor: "rgba(0, 123, 255, 0.85)",
+      borderColor: "#0056b3",
+      textColor: "white"
     });
+  });
 
-    return list;
-  }
+  return list;
+}
 
-  function datePlusOne(str) {
-    const d = new Date(str);
-    d.setDate(d.getDate() + 1);
-    return d.toISOString().slice(0, 10);
-  }
+function datePlusOne(str) {
+  const d = new Date(str);
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
 
   /****************************************
    * 📅 カレンダー本体
