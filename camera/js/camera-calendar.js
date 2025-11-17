@@ -27,6 +27,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     "Nikon D3000":            "#ff9800"  // オレンジ
   };
 
+  // ---返却日モーダル ---
+  const returnModal    = document.getElementById("returnModal");
+  const returnInfo     = document.getElementById("returnInfo");
+  const returnSelect   = document.getElementById("returnSelect");
+  const goFormBtn      = document.getElementById("goForm");
+  const closeReturnBtn = document.getElementById("closeReturn");
+
   // 🔧 Googleフォーム（カメラ予約）のプリフィル URL（ベース）
   //  entry.389826105 = 借りたい機材
   //  entry.445112185 = 借り始め予定日
@@ -89,6 +96,87 @@ document.addEventListener("DOMContentLoaded", async function () {
       const e = new Date(r.end + "T00:00:00");
       return s <= target && target <= e;
     });
+  }
+
+  // ==============================
+  // 返却予定日の候補生成
+  // ==============================
+  function getAvailableReturnDates(startDate, equipName) {
+    const start = new Date(startDate + "T00:00:00");
+
+    // 最大7日間(start含む → +6)
+    const maxEnd = new Date(start);
+    maxEnd.setDate(maxEnd.getDate() + 6);
+
+    // 次の予約の start を探す
+    let nextBookingStart = null;
+
+    rawDate.forEach(r => {
+      if (r.equip !== equipName) return;
+      if (!r.start || !r.end) return;
+
+      const s =new Date(r.start + "T00:00:00");
+      if (s > start) {
+        if (!nextBookingStart || s < nextBookingStart) {
+          nextBookingStart = s;
+        }
+      }
+    });
+
+    let limitEnd = maxEnd;
+
+    // 次の予約があるなら「前日」まで
+    if (nextBookingStart) {
+      const dayBefore = new Date(nextBookingStart);
+      dayBefore.setDate(dayBefore.getDate() - 1);
+
+      if (dayBefore < limitEnd) {
+        limitEnd = dayBefore;
+      }
+    }
+
+    // リスト作成
+    const result = [];
+    let cur = new Date(start);
+
+    while (cur <= limitEnd) {
+      result.push(cur.toISOString().slice(0, 10));
+      cur.setDate(cur.getDate() + 1);
+    }
+
+    return result;
+  }
+
+  // ==============================
+  // 返却日選択モーダルを開く
+  // ==============================
+  function openReturnModal(startDate, equipName) {
+    returnInfo.textContent =
+      `${equipName} の返却予定日を選択してください（借り始め：${startDate}）`;
+
+    returnSelect.innerHTML = "";
+
+    const dates = getAvailableReturnDates(startDate, equipName);
+
+    dates.forEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = d;
+      returnSelect.appendChild(opt);
+    });
+
+    returnModal.style.display = "flex";
+
+    // 「申請フォームへ進む」
+    goFormBtn.onclick = () => {
+      const returnDate = returnSelect.value;
+      openReserveForm(startDate, equipName, returnDate);
+    };
+
+    // 閉じる
+    closeReturnBtn.onclick = () => {
+      returnModal.style.display = "none";
+    };
   }
 
   /****************************************
@@ -198,15 +286,24 @@ document.addEventListener("DOMContentLoaded", async function () {
    * 📝 Googleフォームをプリフィルして開く
    ****************************************/
   function openReserveForm(startDate, equipName, endDate) {
+    const sY = startDate.slice(0, 4);
+    const sM = startDate.slice(5, 7);
+    const sD = startDate.slice(8, 10);
+
+    const r = new Date(returnDate + "T00:00:00");
+    const rY = r.getFullYear();
+    const rM = r.getMonth() + 1;
+    const rD = r.getDate();
+
     const url =
       FORM_BASE_URL +
       `&entry.389826105=${encodeURIComponent(equipName)}` +
-      `&entry.445112185_year=${y1}` +
-      `&entry.445112185_month=${m1}` +
-      `&entry.445112185_day=${d1}`;
-      `&entry.1310995013_year=${y2}` +
-      `&entry.1310995013_month=${m2}` +
-      `&entry.1310995013_day=${d2}`;
+      `&entry.445112185_year=${sY}` +
+      `&entry.445112185_month=${sM}` +
+      `&entry.445112185_day=${sD}`;
+      `&entry.1310995013_year=${rY}` +
+      `&entry.1310995013_month=${rM}` +
+      `&entry.1310995013_day=${rD}`;
 
     window.open(url, "_blank");
 
