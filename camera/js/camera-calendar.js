@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     rawData.forEach(r => {
       if (r.equip !== equipName) return;
 
-      const s = new Date(r.start + "T00:00:00");
+      const s = toLocalDate(r.start);
       if (s > start) {
         if (!nextStart || s < nextStart) nextStart = s;
       }
@@ -150,7 +150,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       `&entry.1310995013_month=${rM}` +
       `&entry.1310995013_day=${rD}`;
 
-    window.open(url, "_blank");
+    window.open(url, "_blank");    // ← フォームを新しいタブで開く
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);                      // ← 少し待ってからリロード（予約状況反映のため）
   }
 
   /****************************************
@@ -162,7 +166,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     return {
       title: `${r.equip} 貸出中`,
       start: r.start,
-      end: (d => { d.setDate(d.getDate()+1); return d.toISOString().slice(0,10); })(new Date(r.end + "T00:00:00")),
+      end: (() => {
+        const d = toLocalDate(r.end);
+        d.setDate(d.getDate() +1);
+        return d.toISOString().slice(0,10);
+      })(),
       allDay: true,
       backgroundColor: COLOR_MAP[r.equip],
       borderColor: COLOR_MAP[r.equip],
