@@ -709,6 +709,24 @@ footer p {
   border: 1px solid #ccc;
 }
 
+/* モーダル本体を画面内スクロール可能にする */
+.modal-box {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* モーダル背景の固定（背景のスクロールを止める） */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  overflow: hidden;
+}
+
 /* ===============================
    📌 カメラ予約トップ専用の中央レイアウト
 =============================== */
