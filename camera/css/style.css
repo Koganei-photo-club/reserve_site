@@ -530,3 +530,20 @@ footer p {
     box-sizing: border-box;
   }
 }
+
+/* ===============================
+   返却日選択モーダル
+=============================== */
+#returnModal .modal-box {
+  max-width: 360px;
+  width: 90%;
+}
+
+#returnSelect {
+  width: 100%;
+  padding: 10px;
+  margin: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}

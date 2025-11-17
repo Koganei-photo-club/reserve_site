@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         btn.classList.add("disabled");
       } else {
         btn.addEventListener("click", () => {
-          openReserveForm(dateStr, equipName);
+          openReturnModal(dateStr, equipName);
         });
       }
 
@@ -197,13 +197,25 @@ document.addEventListener("DOMContentLoaded", async function () {
   /****************************************
    * 📝 Googleフォームをプリフィルして開く
    ****************************************/
-  function openReserveForm(startDate, equipName) {
+  function openReserveForm(startDate, equipName, endDate) {
     const url =
       FORM_BASE_URL +
-      `&entry.389826105=${encodeURIComponent(equipName)}` +      // 借りたい機材
-      `&entry.445112185=${encodeURIComponent(startDate)}`;       // 借り始め予定日
+      `&entry.389826105=${encodeURIComponent(equipName)}` +
+      `&entry.445112185_year=${y1}` +
+      `&entry.445112185_month=${m1}` +
+      `&entry.445112185_day=${d1}`;
+      `&entry.1310995013_year=${y2}` +
+      `&entry.1310995013_month=${m2}` +
+      `&entry.1310995013_day=${d2}`;
 
     window.open(url, "_blank");
+
+    // const url =
+    //   FORM_BASE_URL +
+    //   `&entry.389826105=${encodeURIComponent(equipName)}` +      // 借りたい機材
+    //   `&entry.445112185=${encodeURIComponent(startDate)}`;       // 借り始め予定日
+
+    // window.open(url, "_blank");
   }
 
   /****************************************
@@ -271,4 +283,27 @@ document.addEventListener("DOMContentLoaded", async function () {
       cancelMsgEl.textContent = "⚠️ 通信エラーが発生しました。";
     }
   });
+
+  function openReturnModal(startDate, equipName) {
+    const dates = getValidReturnDates(startDate, equipName);
+
+    document.getElementById("returnInfo").textContent =
+    `借り始め：${startDate}\n機材：${equipName}`;
+
+    const sel = document.getElementById("returnSelect");
+    sel.innerHTML = " ";
+    dates.forEach(d => {
+      const op = document.createElement("option");
+      op.value = d;
+      op.textContent = d;
+      sel.appendChild(op);
+    });
+
+    openReturnModal.style.display = "flex";
+
+    // 決定ボタン
+    document.getElementById("goForm").onclick = ( ) => {
+      openReserveForm(startDate, equipName, sel.value);
+    };
+  }
 });
