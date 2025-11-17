@@ -13,6 +13,17 @@ function toLocalDate(yyyy_mm_dd) {
   return new Date(y, m -1, d);    //これがローカル日付になる
 }
 
+function addDaysLocal(dateStr, days) {
+  const d = toLocalDate(dateStr);
+  d.setDate(d.getDate() + days);
+
+  return [
+    d.getFullYear(),
+    String(d.getMonth() + 1).padStart(2, "0"),
+    String(d.getDate()).padStart(2, "0")
+  ].join("-");
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
   const calendarEl = document.getElementById("calendar");
 
@@ -166,11 +177,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return {
       title: `${r.equip} 貸出中`,
       start: r.start,
-      end: (() => {
-        const d = toLocalDate(r.end);
-        d.setDate(d.getDate() +1);
-        return d.toISOString().slice(0,10);
-      })(),
+      end: addDaysLocal(r.end, 1),
       allDay: true,
       backgroundColor: COLOR_MAP[r.equip],
       borderColor: COLOR_MAP[r.equip],
