@@ -334,3 +334,24 @@ function isPcSlotAvailable(dateStr) {
   });
 
 });
+
+/**********************************************
+ * 📱 アプリ風ページ遷移（フェードアニメーション）
+ **********************************************/
+document.querySelectorAll("a").forEach(a => {
+  // 外部リンク・#アンカー・新規タブは除外
+  const href = a.getAttribute("href");
+  if (!href || href.startsWith("http") || href.startsWith("#") || a.target === "_blank") return;
+
+  a.addEventListener("click", (e) => {
+    e.preventDefault();        // 通常遷移を止める
+    const url = href;
+
+    // フェードアウト開始
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 350);   // ← CSSの0.35sと同期
+  });
+});
