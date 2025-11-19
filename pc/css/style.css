@@ -607,7 +607,7 @@ footer p {
 }
 
 /* ===== PC予約：日別Lightbox ===== */
-.day-modal {
+/* .day-modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.6);
@@ -623,9 +623,9 @@ footer p {
   border-radius: 12px;
   width: 320px;
   text-align: center;
-}
+} */
 
-.slot {
+/* .slot {
   display: block;
   width: 100%;
   padding: 0.8em;
@@ -654,7 +654,7 @@ footer p {
   background: #777;
   color: #fff;
   border-radius: 6px;
-}
+} */
 
 /* PC予約キャンセルモーダルは既存のものを使用 */
 
