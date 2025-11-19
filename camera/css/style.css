@@ -147,7 +147,7 @@ h2 {
 
 /* コンテンツ部分（中央寄せ＋幅制限） */
 .c-section__container {
-  max-width: 700px;
+  max-width: 750px;
   margin: 0 auto;
   font-size: 1rem;
   line-height: 1.7;
