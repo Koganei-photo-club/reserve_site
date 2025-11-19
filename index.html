@@ -13,6 +13,11 @@
   <meta name="theme-color" content="#333333">
   
   <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/service-worker.js");
+    }
+  </script>
+  <script>
     fetch("./maintenance.flag").then(r => {
       if (r.ok && !location.pathname.includes("maintenance.html")) {
         location.href = "./maintenance.html";
