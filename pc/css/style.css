@@ -606,7 +606,7 @@ footer p {
   cursor: not-allowed;
 }
 
-/* ===== PC予約：日別Lightbox ===== */
+/* ===== PC予約：日別Lightbox ===== ここ要らないと思う */
 /* .day-modal {
   position: fixed;
   inset: 0;
@@ -668,6 +668,7 @@ footer p {
   align-items: center;
   z-index: 20000;
   overflow: hidden;
+  overflow-y: auto;
 }
 
 .day-box {
