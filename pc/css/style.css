@@ -775,3 +775,164 @@ footer p {
     box-sizing: border-box;
   }
 }
+
+/* ===========================================================
+   📱 PC予約 UI 強化（アプリ風デザイン統合版）
+   =========================================================== */
+
+/* モーダル：フェードイン＋スケール（アプリっぽく） */
+.day-modal.show,
+.cancel-modal.show {
+  animation: modalFadeIn 0.15s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* モーダル背景は既にあるので OK */
+
+
+/* ==============================
+   日別モーダル（改善版）
+============================== */
+
+.day-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;                  /* show を JS で付ける */
+  justify-content: center;
+  align-items: center;
+  z-index: 30000;
+  padding: 20px;
+  overflow-y: auto;               /* ← 画面に収まらない対策 */
+}
+
+.day-box {
+  background: #fff;
+  padding: 1.6rem;
+  border-radius: 16px;            /* ← 角丸を強調（アプリっぽい） */
+  width: 92%;
+  max-width: 420px;
+  max-height: 90vh;               /* ← 内側もスクロール */
+  overflow-y: auto;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+  animation: modalFadeIn 0.15s ease-out;
+}
+
+#dayTitle {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+/* スロット一覧 */
+#timeSlots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+/* スロット（PC予約の「枠」ボタン） */
+.slot {
+  padding: 0.9em 1em;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.07em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ◯ 空き */
+.slot.free {
+  background: #e4f6ff;       /* 明るめの青 */
+  color: #004f7a;
+  border: 1px solid #a5d6f7;
+}
+
+.slot.free:hover {
+  background: #d3efff;
+}
+
+/* △ 一部空き */
+.slot.partial {
+  background: #fff4d2;
+  color: #a36b00;
+  border: 1px solid #f2ce7e;
+}
+
+.slot.partial:hover {
+  background: #ffedc1;
+}
+
+/* ✕ 予約不可 */
+.slot.booked {
+  background: #eee;
+  color: #777;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+
+/* ↑ 予約を受け付けない時間帯（完全 ×） */
+.slot.closed {
+  background: #e5e5e5;
+  color: #888;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+
+/* モーダルの閉じるボタン */
+.close-btn {
+  margin-top: 1.3em;
+  padding: 0.75em 1.2em;
+  border: none;
+  background: #555;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.close-btn:hover {
+  background: #444;
+}
+
+/* ==============================
+   キャンセル申請モーダル（統一スタイル）
+============================== */
+
+.cancel-modal {
+  backdrop-filter: blur(2px);
+}
+
+.cancel-box {
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+  padding: 2rem 1.6rem;
+}
+
+.cancel-buttons button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.7em;
+}
+
+/* ==============================
+   スマホ最適化
+============================== */
+@media (max-width: 480px) {
+  .day-box {
+    padding: 1.2rem;
+    border-radius: 14px;
+  }
+  #dayTitle {
+    font-size: 1.2rem;
+  }
+  .slot {
+    font-size: 1em;
+    padding: 0.8em;
+  }
+}
