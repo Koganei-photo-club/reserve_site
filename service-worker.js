@@ -1,38 +1,38 @@
+/* service-worker.js */
 // ===============================
-// 📸 写真部 PWA Service Worker
+// 📸 法政大学 小金井写真部 予約システム PWA SW
 // ===============================
 
-const CACHE_NAME = "photo-club-cache-v1";
+// キャッシュ名（更新時はバージョンを上げる）
+const CACHE_NAME = "photo-club-cache-v2";
 
-// キャッシュするファイル一覧
+// キャッシュ対象
 const ASSETS = [
-  "/",                     // ルート
-  "/index.html",
-  "/css/root-style.css",
-  "/js/root-script.js",
+  "/reserve_site/",
+  "/reserve_site/index.html",
+  "/reserve_site/css/root-style.css",
+  "/reserve_site/js/root-script.js",
 
   // カメラ
-  "/camera/index.html",
-  "/camera/reserve.html",
-  "/camera/css/style.css",
-  "/camera/js/camera-calendar.js",
+  "/reserve_site/camera/index.html",
+  "/reserve_site/camera/reserve.html",
+  "/reserve_site/camera/css/style.css",
+  "/reserve_site/camera/js/camera-calendar.js",
 
   // PC
-  "/pc/index.html",
-  "/pc/reserve.html",
-  "/pc/css/style.css",
-  "/pc/js/pc-calendar.js",
+  "/reserve_site/pc/index.html",
+  "/reserve_site/pc/reserve.html",
+  "/reserve_site/pc/css/style.css",
+  "/reserve_site/pc/js/pc-calendar.js",
 
-  // 共通画像
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/icon-180.png",
-
-  // フォントなど必要に応じて追加
+  // アイコン
+  "/reserve_site/icons/icon-192.png",
+  "/reserve_site/icons/icon-512.png",
+  "/reserve_site/icons/icon-180.png"
 ];
 
 // ===============================
-// 🔧 インストール時：キャッシュ登録
+// 🟦 install: キャッシュの登録
 // ===============================
 self.addEventListener("install", (event) => {
   console.log("[SW] Install");
@@ -47,7 +47,7 @@ self.addEventListener("install", (event) => {
 });
 
 // ===============================
-// 🔄 有効化：古いキャッシュの削除
+// 🟩 activate: 古いキャッシュ削除
 // ===============================
 self.addEventListener("activate", (event) => {
   console.log("[SW] Activate");
@@ -68,16 +68,14 @@ self.addEventListener("activate", (event) => {
 });
 
 // ===============================
-// 📦 fetch：キャッシュ優先 → ネット
+// 🟨 fetch: キャッシュ優先
 // ===============================
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return (
         cached ||
-        fetch(event.request).catch(() =>
-          caches.match("/") // オフライン時のフォールバック
-        )
+        fetch(event.request).catch(() => caches.match("/reserve_site/index.html"))
       );
     })
   );

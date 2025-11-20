@@ -3,6 +3,7 @@
   "short_name": "写真部予約",
   "lang": "ja",
   "start_url": "/reserve_site/index.html",
+  "scope": "/reserve_site/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#333333",

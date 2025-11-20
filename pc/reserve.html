@@ -8,6 +8,25 @@
   <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
   <link rel="stylesheet" href="css/style.css">
 
+  <link rel="manifest" href="/reserve_site/manifest.json">
+  <meta name="theme-color" content="#333333">
+
+  <!-- iOS 用 PWA -->
+  <link rel="apple-touch-icon" href="/reserve_site/icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Android / Chrome 用 -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/reserve_site/service-worker.js")
+      .then(() => console.log("SW 登録成功"))
+      .catch((err) => console.error("SW 登録失敗:", err));
+  }
+  </script>
+
   <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>

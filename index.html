@@ -12,11 +12,21 @@
   <link rel="manifest" href="/reserve_site/manifest.json">
   <meta name="theme-color" content="#333333">
   
+  <!-- iOS 用 PWA -->
+  <link rel="apple-touch-icon" href="/reserve_site/icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Android / Chrome 用 -->
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/reserve_site/service-worker.js");
-    }
-  </script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/reserve_site/service-worker.js")
+      .then(() => console.log("SW 登録成功"))
+      .catch((err) => console.error("SW 登録失敗:", err));
+  }
+</script>
   <script>
     fetch("./maintenance.flag").then(r => {
       if (r.ok && !location.pathname.includes("maintenance.html")) {
