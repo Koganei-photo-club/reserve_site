@@ -629,6 +629,10 @@ footer p {
   transition: opacity 0.35s ease-in-out;
 }
 
+.page-transition.fade-in {
+  opacity: 1;
+}
+
 .page-transition.fade-out {
   opacity: 0;
 }

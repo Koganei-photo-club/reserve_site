@@ -229,6 +229,9 @@ document.querySelectorAll("a").forEach(a => {
     e.preventDefault();        // 通常遷移を止める
     const url = href;
 
+
+    // フェードイン開始
+    document.body.classList.add("fade-in");
     // フェードアウト開始
     document.body.classList.add("fade-out");
 
