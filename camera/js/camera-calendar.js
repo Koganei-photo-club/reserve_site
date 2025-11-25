@@ -229,9 +229,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     dayModal.style.display = "flex";
+    dayModal.classList.add("show");
   }
 
   document.getElementById("dayClose").onclick = () => {
+    dayModal.classList.remove("show");
     dayModal.style.display = "none";
   };
 
