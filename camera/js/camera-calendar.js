@@ -1,133 +1,103 @@
 /**********************************************
- * 📷 カメラ貸出カレンダー 完全版（2025/11 修正版）
- *  - Cloudflare Worker (camera-proxy) 経由で予約取得
- *  - 機材ごとに色分けされた貸出帯を表示
- *  - 日付クリック → カメラ選択 → 返却日選択 → Googleフォームにプリフィル
- *  - 帯クリック → キャンセル申請モーダル
- *  - 借り始めは「今日から 7日後 以降」だけ予約可
+ * 📷 カメラ貸出カレンダー（DB 連携版）
+ *  - Google Sheets → GAS → JSON API でカメラ情報を取得
+ *  - CAMERAS 配列を完全撤廃し、DB の内容に自動対応
  **********************************************/
 
-// ローカル日付を安全に作る関数
 function toLocalDate(yyyy_mm_dd) {
   const [y, m, d] = yyyy_mm_dd.split("-").map(Number);
-  return new Date(y, m -1, d);    //これがローカル日付になる
-}
-
-function addDaysLocal(dateStr, days) {
-  const d = toLocalDate(dateStr);
-  d.setDate(d.getDate() + days);
-
-  return [
-    d.getFullYear(),
-    String(d.getMonth() + 1).padStart(2, "0"),
-    String(d.getDate()).padStart(2, "0")
-  ].join("-");
+  return new Date(y, m - 1, d);
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
   const calendarEl = document.getElementById("calendar");
 
-  // 🔗 Cloudflare Worker（カメラ用）
+  // 🔗 Cloudflare Worker（予約データ用）
   const apiUrl = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
 
-  // 🔧 カメラの種類
-  const CAMERAS = [
-    "Canon EOS 5D Mark III",
-    "Canon EOS R10",
-    "Nikon D3000"
-  ];
-
-  // 🔧 機材ごとの色
-  const COLOR_MAP = {
-    "Canon EOS 5D Mark III": "#007bff",
-    "Canon EOS R10": "#28a745",
-    "Nikon D3000": "#ff9800"
-  };
-
-  // 🔧 Googleフォーム（プリフィルURL）
-  const FORM_BASE_URL =
-    "https://docs.google.com/forms/d/e/1FAIpQLSfNVO0OilcqtDFXmj2FjauZ4fQX7_ZKO0xBdZIf6U9Cg53yMQ/viewform?usp=pp_url";
+  // 🔗 Google Sheets DB（あなたの API）
+  const CAMERA_DB_URL =
+    "https://script.google.com/macros/s/AKfycbyHEx_s2OigM_JCYkanCdf9NQU7mcGGHOUC__OPSBqTuA7TfA-cCrbskM-NrYIwflsT/exec";
 
   /****************************************
-   * 📌 借り始め可能日のチェック
+   * 📌 1. カメラ DB を取得
    ****************************************/
-  function isCameraStartAvailable(dateStr) {
-    const today = new Date();
-    today.setHours(0,0,0,0);
+  let CAMERA_LIST = [];
+  let COLOR_MAP = {};
 
-    const minStart = new Date(today);
-    minStart.setDate(minStart.getDate() + 7);
+  try {
+    const camRes = await fetch(CAMERA_DB_URL);
+    CAMERA_LIST = await camRes.json();
 
-    const target = new Date(dateStr + "T00:00:00");
-    return target >= minStart;
+    // 動的に色を割り振る
+    const colors = ["#007bff", "#28a745", "#ff9800", "#9c27b0", "#3f51b5", "#ff5722"];
+    CAMERA_LIST.forEach((cam, i) => {
+      COLOR_MAP[cam.name] = colors[i % colors.length];
+    });
+
+    console.log("📸 カメラ一覧:", CAMERA_LIST);
+  } catch (err) {
+    console.error("❌ カメラ DB の取得に失敗", err);
+    CAMERA_LIST = [];
   }
 
   /****************************************
-   * 📥 予約データ取得
+   * 📌 2. 予約データ取得
    ****************************************/
   let rawData = [];
-
   try {
     const res = await fetch(apiUrl);
     rawData = await res.json();
   } catch (err) {
     console.error("予約データ取得エラー:", err);
-    rawData = [];
   }
 
   /****************************************
-   * 📌 指定日がその機材の予約にかぶっているか
+   * 📌 指定日が予約済みか？
    ****************************************/
-  function isCameraBookedAtDate(dateStr, equip) {
+  function isCameraBookedAtDate(dateStr, equipName) {
     const t = new Date(dateStr + "T00:00:00");
 
     return rawData.some(r => {
-      if (r.equip !== equip) return false;
+      if (r.equip !== equipName) return false;
       if (!r.start || !r.end) return false;
+
       const s = toLocalDate(r.start);
       const e = toLocalDate(r.end);
+
       return s <= t && t <= e;
     });
   }
 
   /****************************************
-   * 📌 返却日候補生成（最大7日・次予約前日まで）
+   * 📌 返却予定日の候補生成
    ****************************************/
   function getAvailableReturnDates(startDate, equipName) {
-
     const start = toLocalDate(startDate);
 
-    // 最大 7日間
-    const maxEnd = new Date(start.getTime());
-    maxEnd.setDate(maxEnd.getDate() + 6);
+    const maxEnd = new Date(start);
+    maxEnd.setDate(start.getDate() + 6);
 
-    // 次予約の開始日
     let nextStart = null;
-
     rawData.forEach(r => {
       if (r.equip !== equipName) return;
-
       const s = toLocalDate(r.start);
-      if (s > start) {
-        if (!nextStart || s < nextStart) nextStart = s;
+      if (s > start && (!nextStart || s < nextStart)) {
+        nextStart = s;
       }
     });
 
     let limit = maxEnd;
-
     if (nextStart) {
-      const dayBefore = new Date(nextStart.getTime());
-      dayBefore.setDate(dayBefore.getDate() - 1);
-      if (dayBefore < limit) limit = dayBefore;
+      const before = new Date(nextStart);
+      before.setDate(before.getDate() - 1);
+      if (before < limit) limit = before;
     }
 
     const result = [];
-    let cur = new Date(start);
-
+    const cur = new Date(start);
     while (cur <= limit) {
-      result.push(
-        `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, "0")}-${String(cur.getDate()).padStart(2, "0")}`
-      );
+      result.push(cur.toISOString().slice(0, 10));
       cur.setDate(cur.getDate() + 1);
     }
 
@@ -135,22 +105,21 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   /****************************************
-   * 📌 Googleフォームにプリフィルして開く
+   * 📌 Googleフォームへプリフィルで遷移
    ****************************************/
+  const FORM_BASE_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSfNVO0OilcqtDFXmj2FjauZ4fQX7_ZKO0xBdZIf6U9Cg53yMQ/viewform?usp=pp_url";
+
   function openReserveForm(startDate, equipName, endDate) {
+    const sY = startDate.slice(0, 4);
+    const sM = startDate.slice(5, 7);
+    const sD = startDate.slice(8, 10);
 
-    // 借り始め
-    const sY = startDate.slice(0,4);
-    const sM = startDate.slice(5,7);
-    const sD = startDate.slice(8,10);
-
-    // 返却予定日
     const rd = new Date(endDate + "T00:00:00");
     const rY = rd.getFullYear();
     const rM = rd.getMonth() + 1;
     const rD = rd.getDate();
 
-    // 完全プリフィル URL
     const url =
       FORM_BASE_URL +
       `&entry.389826105=${encodeURIComponent(equipName)}` +
@@ -161,54 +130,55 @@ document.addEventListener("DOMContentLoaded", async function () {
       `&entry.1310995013_month=${rM}` +
       `&entry.1310995013_day=${rD}`;
 
-    window.open(url, "_blank");    // ← フォームを新しいタブで開く
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 300);                      // ← 少し待ってからリロード（予約状況反映のため）
+    window.open(url, "_blank");
+    setTimeout(() => location.reload(), 300);
   }
 
   /****************************************
-   * 📌 FullCalendar のイベント作成
+   * 📌 FullCalendar イベント生成
    ****************************************/
-  const events = rawData.map(r => {
-    if (!r.start || !r.end) return null;
+  const events = rawData
+    .map(r => {
+      if (!r.start || !r.end) return null;
 
-    return {
-      title: `${r.equip} 貸出中`,
-      start: r.start,
-      end: addDaysLocal(r.end, 1),
-      allDay: true,
-      backgroundColor: COLOR_MAP[r.equip],
-      borderColor: COLOR_MAP[r.equip],
-      textColor: "#fff",
-      extendedProps: {
-        equip: r.equip,
-        startDate: r.start,
-        endDate: r.end
-      }
-    };
-  }).filter(Boolean);
+      const endPlus1 = new Date(r.end + "T00:00:00");
+      endPlus1.setDate(endPlus1.getDate() + 1);
 
-  /****************************************
-   * 📅 カレンダー初期化
-   ****************************************/
+      return {
+        title: `${r.equip} 貸出中`,
+        start: r.start,
+        end: endPlus1.toISOString().slice(0, 10),
+        allDay: true,
+        backgroundColor: COLOR_MAP[r.equip] || "#666",
+        borderColor: COLOR_MAP[r.equip] || "#666",
+        textColor: "#fff",
+        extendedProps: {
+          equip: r.equip,
+          startDate: r.start,
+          endDate: r.end
+        }
+      };
+    })
+    .filter(Boolean);
+
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "ja",
-    events: events,
-
+    events,
     dateClick(info) {
-      const dateStr = info.dateStr;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-      if (!isCameraStartAvailable(dateStr)) {
-        alert("借り始め予定日は「今日から7日後以降」のみ選択できます。");
+      const min = new Date();
+      min.setDate(today.getDate() + 7);
+
+      if (new Date(info.dateStr) < min) {
+        alert("借り始めは「今日から7日後」以降です。");
         return;
       }
 
-      openDayModal(dateStr);
+      openDayModal(info.dateStr);
     },
-
     eventClick(info) {
       const ext = info.event.extendedProps;
       openCancelModal(ext.equip, ext.startDate, ext.endDate);
@@ -220,69 +190,59 @@ document.addEventListener("DOMContentLoaded", async function () {
   /****************************************
    * 📌 カメラ選択モーダル
    ****************************************/
-  const dayModal   = document.getElementById("dayModal");
-  const dayTitle   = document.getElementById("dayTitle");
+  const dayModal = document.getElementById("dayModal");
+  const dayTitle = document.getElementById("dayTitle");
   const cameraBtns = document.getElementById("cameraButtons");
-  const dayClose   = document.getElementById("dayClose");
-
-  dayClose.onclick = () => {
-    dayModal.classList.remove("show");
-    setTimeout(() => dayModal.style.display = "none", 250);
-  };
 
   function openDayModal(dateStr) {
-    dayTitle.textContent = `${dateStr} から借り始め`;
+    dayTitle.textContent = `${dateStr} の貸出可能カメラ`;
+
     cameraBtns.innerHTML = "";
 
-    CAMERAS.forEach(cam => {
-      const booked = isCameraBookedAtDate(dateStr, cam);
+    CAMERA_LIST.forEach(cam => {
       const btn = document.createElement("button");
-
       btn.className = "camera-btn";
 
+      const booked = isCameraBookedAtDate(dateStr, cam.name);
+
       if (booked) {
-        btn.textContent = `${cam} は貸出中`;
+        btn.textContent = `${cam.name}（貸出中）`;
         btn.disabled = true;
         btn.classList.add("disabled");
       } else {
-        btn.textContent = `${cam} を予約する`;
-        btn.onclick = () => openReturnModal(dateStr, cam);
+        btn.textContent = `${cam.name} を予約する`;
+        btn.onclick = () => openReturnModal(dateStr, cam.name);
       }
 
       cameraBtns.appendChild(btn);
     });
 
     dayModal.style.display = "flex";
-    dayModal.classList.add("show");
   }
+
+  document.getElementById("dayClose").onclick = () => {
+    dayModal.style.display = "none";
+  };
 
   /****************************************
    * 📌 返却日選択モーダル
    ****************************************/
-  const returnModal    = document.getElementById("returnModal");
-  const returnInfo     = document.getElementById("returnInfo");
-  const returnSelect   = document.getElementById("returnSelect");
-  const goFormBtn      = document.getElementById("goForm");
-  const closeReturnBtn = document.getElementById("closeReturn");
-
-  closeReturnBtn.onclick = () => {
-    returnModal.classList.remove("show");
-    setTimeout(() => returnModal.style.display = "none", 250);
-  };
+  const returnModal = document.getElementById("returnModal");
+  const returnInfo = document.getElementById("returnInfo");
+  const returnSelect = document.getElementById("returnSelect");
+  const goFormBtn = document.getElementById("goForm");
 
   function openReturnModal(startDate, equipName) {
-
     const dates = getAvailableReturnDates(startDate, equipName);
 
-    returnInfo.textContent =
-      `${equipName}（借り始め：${startDate}）の返却予定日を選択`;
-
+    returnInfo.textContent = `${equipName}（借り始め：${startDate}）の返却予定日：`;
     returnSelect.innerHTML = "";
+
     dates.forEach(d => {
-      const op = document.createElement("option");
-      op.value = d;
-      op.textContent = d;
-      returnSelect.appendChild(op);
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = d;
+      returnSelect.appendChild(opt);
     });
 
     goFormBtn.onclick = () => {
@@ -291,96 +251,31 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     returnModal.style.display = "flex";
-    returnModal.classList.add("show");
   }
+
+  document.getElementById("closeReturn").onclick = () => {
+    returnModal.style.display = "none";
+  };
 
   /****************************************
    * ❌ キャンセル申請モーダル
    ****************************************/
-  const cancelModal   = document.getElementById("cancelModal");
-  const cancelTarget  = document.getElementById("cancelTarget");
-  const cancelNameEl  = document.getElementById("cancelName");
-  const cancelCodeEl  = document.getElementById("cancelCode");
-  const cancelSendBtn = document.getElementById("cancelSend");
-  const cancelCloseBtn= document.getElementById("cancelClose");
-  const cancelMsgEl   = document.getElementById("cancelMessage");
-
-  cancelCloseBtn.onclick = () => {
-    cancelModal.classList.remove("show");
-    setTimeout(() => cancelModal.style.display = "none", 250);
-  };
-
-  let cancelState = { equip: "", start: "", end: "" };
+  const cancelModal = document.getElementById("cancelModal");
+  const cancelTarget = document.getElementById("cancelTarget");
+  const cancelName = document.getElementById("cancelName");
+  const cancelCode = document.getElementById("cancelCode");
+  const cancelMsg = document.getElementById("cancelMessage");
 
   function openCancelModal(equip, start, end) {
-    cancelState = { equip, start, end };
     cancelTarget.textContent = `${equip} / ${start}〜${end}`;
-    cancelMsgEl.textContent = "";
-    cancelNameEl.value = "";
-    cancelCodeEl.value = "";
+    cancelName.value = "";
+    cancelCode.value = "";
+    cancelMsg.textContent = "";
     cancelModal.style.display = "flex";
-    cancelModal.classList.add("show");
   }
 
-  cancelSendBtn.onclick = async () => {
-    const name = cancelNameEl.value.trim();
-    const auth = cancelCodeEl.value.trim();
-
-    if (!name || !auth) {
-      cancelMsgEl.textContent = "⚠️ 氏名と認証番号を入力してください。";
-      return;
-    }
-
-    const payload = {
-      action: "cancel",
-      equip: cancelState.equip,
-      start: cancelState.start,
-      end: cancelState.end,
-      name: name,
-      auth: auth
-    };
-
-    try {
-      const res = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await res.json();
-      cancelMsgEl.textContent = result.message;
-
-      if (result.status === "success") {
-        setTimeout(() => location.reload(), 1000);
-      }
-
-    } catch (err) {
-      console.error(err);
-      cancelMsgEl.textContent = "⚠️ 通信エラーが発生しました。";
-    }
+  document.getElementById("cancelClose").onclick = () => {
+    cancelModal.style.display = "none";
   };
-});
 
-/**********************************************
- * 📱 アプリ風ページ遷移（フェードアニメーション）
- **********************************************/
-document.querySelectorAll("a").forEach(a => {
-  // 外部リンク・#アンカー・新規タブは除外
-  const href = a.getAttribute("href");
-  if (!href || href.startsWith("http") || href.startsWith("#") || a.target === "_blank") return;
-
-  a.addEventListener("click", (e) => {
-    e.preventDefault();        // 通常遷移を止める
-    const url = href;
-
-
-    // フェードイン開始
-    document.body.classList.add("fade-in");
-    // フェードアウト開始
-    document.body.classList.add("fade-out");
-
-    setTimeout(() => {
-      window.location.href = url;
-    }, 350);   // ← CSSの0.35sと同期
-  });
 });
