@@ -21,7 +21,7 @@
 
   <script>
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/reserve_site/service-worker.js")
+    navigator.serviceWorker.register("/reserve_site/service-worker.v4.js")
       .then(() => console.log("SW 登録成功"))
       .catch((err) => console.error("SW 登録失敗:", err));
   }
