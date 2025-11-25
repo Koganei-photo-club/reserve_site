@@ -13,6 +13,8 @@ function toLocalDate(yyyy_mm_dd) {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
+  const goFormBtn = document.getElementById("goForm");
+  const returnSelect = document.getElementById("returnSelect");
   const calendarEl = document.getElementById("calendar");
 
   // 🔗 Cloudflare Worker（予約データ用）
@@ -76,33 +78,34 @@ document.addEventListener("DOMContentLoaded", async function () {
    * 📌 返却予定日の候補生成
    ****************************************/
   function getAvailableReturnDates(startDate, equipName) {
-    const start = toLocalDate(startDate);
+const start = new Date(startDate + "T00:00:00");
 
-    const maxEnd = new Date(start);
-    maxEnd.setDate(start.getDate() + 6);
+const maxEnd = new Date(start);
+maxEnd.setDate(start.getDate() + 6);
 
-    let nextStart = null;
-    rawData.forEach(r => {
-      if (r.equip !== equipName) return;
-      const s = toLocalDate(r.start);
-      if (s > start && (!nextStart || s < nextStart)) {
-        nextStart = s;
-      }
-    });
+let nextStart = null;
+rawData.forEach(r => {
+  if (r.equip !== equipName) return;
+  const s = new Date(r.start + "T00:00:00");
+  if (s > start && (!nextStart || s < nextStart)) {
+    nextStart = s;
+  }
+});
 
-    let limit = maxEnd;
-    if (nextStart) {
-      const before = new Date(nextStart);
-      before.setDate(before.getDate() - 1);
-      if (before < limit) limit = before;
-    }
+let limit = maxEnd;
+if (nextStart) {
+  const before = new Date(nextStart);
+  before.setDate(before.getDate() - 1);
+  if (before < limit) limit = before;
+}
 
-    const result = [];
-    const cur = new Date(start);
-    while (cur <= limit) {
-      result.push(cur.toISOString().slice(0, 10));
-      cur.setDate(cur.getDate() + 1);
-    }
+const result = [];
+let cur = new Date(start);
+
+while (cur <= limit) {
+  result.push(cur.toISOString().slice(0, 10));
+  cur.setDate(cur.getDate() + 1);
+}
 
     return result;
   }
@@ -245,8 +248,6 @@ document.addEventListener("DOMContentLoaded", async function () {
    ****************************************/
   const returnModal = document.getElementById("returnModal");
   const returnInfo = document.getElementById("returnInfo");
-  const returnSelect = document.getElementById("returnSelect");
-  const goFormBtn = document.getElementById("goForm");
 
 function openReturnModal(startDate, equipName) {
 
