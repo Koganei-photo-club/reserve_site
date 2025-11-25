@@ -59,7 +59,7 @@ self.addEventListener("fetch", (event) => {
   const url = event.request.url;
 
   // 🟥 2. GAS など外部 API はキャッシュせずバイパス
-  if (url.includes("script.google.com") || url.includes("googleusercontent.com")) {
+  if (url.includes("script.google.com") || url.includes("https://script.google.com/macros/s/AKfycbzGVbtYBaY8lJrAitp-PMzheO8fmz6a5yN41TD0ut9NnkZ2bA5Mb7rHe-k_WUMI6pvopg/exec")) {
     return;
   }
 
