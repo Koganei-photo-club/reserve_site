@@ -197,7 +197,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   function openDayModal(dateStr) {
     console.log("👉 CAMERA_LIST:", CAMERA_LIST);
     console.log("👉 rawData:", rawData);
-    
+    CAMERA_LIST.forEach(c => {
+      console.log(`機材名: [${c.name}]`);
+    });
+
+    rawData.forEach(r => {
+      console.log(`予約データ equip: [${r.equip}]`);
+    });
+
     dayTitle.textContent = `${dateStr} の貸出可能カメラ`;
 
     cameraBtns.innerHTML = "";
