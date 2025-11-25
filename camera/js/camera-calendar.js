@@ -264,9 +264,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     returnModal.style.display = "flex";
+    returnModal.classList.add("show");
   }
 
   document.getElementById("closeReturn").onclick = () => {
+    returnModal.classList.remove("show");
     returnModal.style.display = "none";
   };
 
