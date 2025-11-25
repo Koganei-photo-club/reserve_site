@@ -287,9 +287,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     cancelCode.value = "";
     cancelMsg.textContent = "";
     cancelModal.style.display = "flex";
+    cancelModal.classList.add("show");
   }
 
   document.getElementById("cancelClose").onclick = () => {
+    cancelModal.classList.remove("show");
     cancelModal.style.display = "none";
   };
 
