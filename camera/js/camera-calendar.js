@@ -312,9 +312,8 @@ function openReturnModal(startDate, equipName) {
     cancelModal.style.display = "none";
   };
 
-});
 
-/****************************************
+  /****************************************
  * 📌 予約申請（UX 版：フォームに飛ばない）
  ****************************************/
 
@@ -392,3 +391,5 @@ document.getElementById("applySend").onclick = async () => {
 document.getElementById("applyClose").onclick = () => {
   applyModal.style.display = "none";
 };
+});
+
