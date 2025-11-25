@@ -548,6 +548,37 @@ footer p {
   font-size: 1rem;
 }
 
+.return-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  overflow-y: auto;
+}
+
+.return-modal {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.return-modal.show {
+  opacity: 1;
+}
+
+.return-modal .day-box {
+  transform: translateY(30px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.return-modal.show .day-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .day-modal {
   position: fixed;
   inset: 0;
