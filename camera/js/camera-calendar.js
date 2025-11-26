@@ -37,7 +37,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   let reservations = [];
   try {
     const res = await fetch(API_URL);
-    reservations = await res.json();
+    const data = await res.json();
+
+    // 🔥 rows 部分だけ抽出！！
+    reservations = Array.isArray(data.rows) ? data.rows : [];
   } catch {
     alert("予約データ読込失敗");
   }
