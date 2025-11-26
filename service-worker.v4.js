@@ -51,19 +51,22 @@ self.addEventListener("activate", (event) => {
 // fetch
 self.addEventListener("fetch", (event) => {
 
-  // 🟥 1. POST は完全にバイパス
+  // 🟥 1. POST は完全にネットワークへ
   if (event.request.method !== "GET") {
-    return;
+    return; // bypass
   }
 
   const url = event.request.url;
 
-  // 🟥 2. GAS など外部 API はキャッシュせずバイパス
-  if (url.includes("script.google.com") || url.includes("https://script.google.com/macros/s/AKfycbzGVbtYBaY8lJrAitp-PMzheO8fmz6a5yN41TD0ut9NnkZ2bA5Mb7rHe-k_WUMI6pvopg/exec")) {
-    return;
+  // 🟥 2. GAS / Google API へのアクセスはキャッシュ禁止
+  if (
+    url.includes("script.google.com") ||
+    url.includes("script.googleusercontent.com")
+  ) {
+    return; // bypass
   }
 
-  // 🟦 3. GitHub Pages の GET をキャッシュ優先で返す
+  // 🟦 3. 通常の GET はキャッシュ → ネットワーク
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return cached || fetch(event.request);
