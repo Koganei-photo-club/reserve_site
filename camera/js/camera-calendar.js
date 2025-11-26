@@ -159,7 +159,7 @@ function getAvailableReturnDates(startDate, equipName) {
       return {
         title: `${r.equip} 貸出中`,
         start: r.start,
-        end: endPlus1.toISOString().slice(0, 10),
+        end: `${endPlus1.getFullYear()}-${String(endPlus1.getMonth() + 1).padStart(2, "0")}-${String(endPlus1.getDate()).padStart(2, "0")}`,
         allDay: true,
         backgroundColor: COLOR_MAP[r.equip] || "#666",
         borderColor: COLOR_MAP[r.equip] || "#666",
@@ -184,7 +184,7 @@ function getAvailableReturnDates(startDate, equipName) {
       const min = new Date();
       min.setDate(today.getDate() + 7);
 
-      if (new Date(info.dateStr) < min) {
+      if (toLocalDate(info.dateStr) < min) {
         alert("借り始めは「今日から7日後」以降です。");
         return;
       }
