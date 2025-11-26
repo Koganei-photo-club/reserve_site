@@ -355,7 +355,7 @@ window.openApplyModal = function(start, end, equip) {
 document.getElementById("applySend").onclick = async () => {
   applyMsg.textContent = "送信中…";
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbwEqQ4Izq-Sy_L06giDPMI7aU0dmqABARA_Yna1jTk-j_l37JGRONRtDYbFMKoOd8VhMA/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyThexXWqJUzYybFL5VG8EeHfwbYZHXUTjlU5dp1jsx0cTCgZTjwvVxRssljuE20OVeHw/exec";
   console.log("POST URL =", API_URL);
 
   const payload = {
