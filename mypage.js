@@ -1,7 +1,7 @@
 // ▼ セッションチェック（未ログインなら拒否）
 const userData = sessionStorage.getItem("user");
 if (!userData) {
-  window.location.href = "./auth/login.html";
+  window.location.href = "../auth/login.html";
 }
 
 // ▼ ユーザー情報を反映
@@ -14,5 +14,5 @@ document.getElementById("mp-email").textContent = user.email;
 // ▼ ログアウト
 document.getElementById("logoutBtn").onclick = () => {
   sessionStorage.clear();
-  window.location.href = "./auth/login.html";
+  window.location.href = "../auth/login.html";
 };
