@@ -160,6 +160,30 @@
   </div>
 </div>
 
+<!-- 🔁 返却日変更モーダル -->
+<div id="modifyModal" class="modal">
+  <div class="modal-content">
+    <h2>返却日を変更</h2>
+    <p id="modifyTarget"></p>
+
+    <label>新しい返却予定日</label>
+    <select id="modifySelect"></select>
+
+    <label>氏名</label>
+    <input id="modifyName" type="text" />
+
+    <label>認証コード</label>
+    <input id="modifyCode" type="text" />
+
+    <p id="modifyMessage" class="message"></p>
+
+    <div class="modal-buttons">
+      <button id="modifySend">送信</button>
+      <button id="modifyClose">閉じる</button>
+    </div>
+  </div>
+</div>
+
   <!-- ===== フッター ===== -->
   <footer>
     <p><img src="images/club-icon.JPG" style="height:40px;"></p>
