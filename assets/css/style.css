@@ -782,15 +782,18 @@ footer p {
 }
 
 /* ===== マイページ専用の可視化修正 ===== */
+/* 🔥マイページの文字が見えない問題 修正 */
 #profile-box {
-  background: #ffffff;      /* 白背景に統一 */
-  color: #222222;           /* 濃い文字色 */
-  border: 1px solid #ddd;   /* 境界線で浮き上がらせる */
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ddd;
   padding: 1.5em;
   border-radius: 12px;
-  margin: 0 auto;
-  width: 100%;
   max-width: 380px;
+  margin: 0 auto;
+}
+#profile-box * {
+  color: #000000 !important;
 }
 
 #profile-box strong {
