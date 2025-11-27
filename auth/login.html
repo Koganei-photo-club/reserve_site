@@ -1,19 +1,86 @@
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>PoCKet ログイン | 写真技術研究会</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div id="g_id_onload"
-    data-client_id="427429205098-0gafn9b9rh6ls7qfq9pi5vu7j2hl3si8.apps.googleusercontent.com"
-    data-context="signin"
-    data-ux_mode="popup"
-    data-callback="handleCredentialResponse">
+  <!-- あなたの共通CSS（さっき送ってくれたやつ） -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="page-transition fade-in">
+
+<div id="header-wrapper">
+  <header id="main-header">
+    <div class="header-content">
+      <a href="../index.html">
+        <img src="../assets/images/club-icon.JPG" alt="写真技術研究会ロゴ" class="logo">
+        <div class="site-title">
+          <h1>PoCKet（写真技術研究会 貸出システム）</h1>
+          <p>Photo Club Koganei Equipment Terminal</p>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="../auth/login.html" class="disabled">ログイン</a></li>
+      <li><a href="../camera/index.html">カメラ予約</a></li>
+      <li><a href="../pc/index.html">PC予約</a></li>
+    </ul>
+  </nav>
 </div>
 
-<div class="g_id_signin"
-    data-type="standard"
-    data-shape="rectangular"
-    data-theme="outline"
-    data-text="signin_with"
-    data-size="large"
-    data-logo_alignment="left">
-</div>
+<main>
+  <section class="camera-center-section">
+    <h2>PoCKet にログイン</h2>
 
-<script src="/auth/app-auth.js"></script>
+    <div class="camera-description">
+      <p>
+        このページは <strong>法政大学 写真技術研究会</strong> のメンバー専用の
+        機材・PC貸出システム <strong>「PoCKet」</strong> のログインページです。
+      </p>
+      <ul>
+        <li>大学の <code>@stu.hosei.ac.jp</code> アカウントのみ利用できます。</li>
+        <li>初めての方はログイン後、自動的に利用者登録ページへ移動します。</li>
+        <li>すでに登録済みの方は、そのままマイページへ進みます。</li>
+      </ul>
+    </div>
+
+    <!-- Google Sign-In ボタンブロック -->
+    <div style="margin-top: 2em;">
+      <div id="g_id_onload"
+          data-client_id="427429205098-0gafn9b9rh6ls7qfq9pi5vu7j2hl3si8.apps.googleusercontent.com"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-callback="handleCredentialResponse">
+      </div>
+
+      <div class="g_id_signin"
+          data-type="standard"
+          data-shape="rectangular"
+          data-theme="outline"
+          data-text="continue_with"
+          data-size="large"
+          data-logo_alignment="left">
+      </div>
+    </div>
+
+    <p style="margin-top:1.5em; font-size:0.9rem; color:#666;">
+      ※ ログインすることで、PoCKet 利用規約および部内ルールに同意したものとみなします。
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>© 写真技術研究会 PoCKet</p>
+</footer>
+
+<!-- 認証ロジック -->
+<script src="../auth/js/app-auth.js"></script>
+</body>
+</html>

@@ -1,50 +1,103 @@
-<h2>初回登録</h2>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>初回利用者登録 | PoCKet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<p id="reg-email"></p>
+  <link rel="stylesheet" href="/assets/css/camera.css">
+</head>
+<body class="page-transition fade-in">
 
-<label>氏名</label><br>
-<input id="reg-name" type="text"><br><br>
+<div id="header-wrapper">
+  <header id="main-header">
+    <div class="header-content">
+      <a href="/index.html">
+        <img src="/assets/images/club-icon.JPG" alt="ロゴ" class="logo">
+        <div class="site-title">
+          <h1>PoCKet 利用者登録</h1>
+          <p>Photo Club Koganei Equipment Terminal</p>
+        </div>
+      </a>
+    </div>
+  </header>
 
-<label>LINE表示名</label><br>
-<input id="reg-line" type="text"><br><br>
+  <nav class="navbar">
+    <ul>
+      <li><a href="/index.html">ログイン</a></li>
+      <li><a href="#" class="disabled">初回登録</a></li>
+    </ul>
+  </nav>
+</div>
 
-<label>学年</label><br>
-<select id="reg-grade">
-  <option value="1">B1</option>
-  <option value="2">B2</option>
-  <option value="3">B3</option>
-  <option value="4">B4</option>
-  <option value="5">M1</option>
-  <option value="6">M2</option>
-</select>
-<br><br>
+<main>
+  <section class="camera-center-section">
+    <h2>初回利用者登録</h2>
 
-<button onclick="sendRegister()">登録する</button>
+    <div class="camera-description">
+      <p id="reg-email" style="font-weight:bold;"></p>
+      <p>以下の情報は、貸出管理のために部内でのみ利用します。</p>
+    </div>
+
+    <div class="c-section__container" style="max-width:420px; margin:0 auto;">
+      <label>氏名</label><br>
+      <input id="reg-name" type="text" style="width:100%; padding:8px;"><br><br>
+
+      <label>LINE 表示名</label><br>
+      <input id="reg-line" type="text" style="width:100%; padding:8px;"><br><br>
+
+      <label>学年</label><br>
+      <select id="reg-grade" style="width:100%; padding:8px;">
+        <option value="1">B1</option>
+        <option value="2">B2</option>
+        <option value="3">B3</option>
+        <option value="4">B4</option>
+        <option value="5">M1</option>
+        <option value="6">M2</option>
+      </select>
+      <br><br>
+
+      <button class="button" onclick="sendRegister()">登録する</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 写真技術研究会 PoCKet</p>
+</footer>
 
 <script>
-const USER_API = "https://script.google.com/macros/s/AKfycbzoovwcdLn6EU_CuqOUak2s9GqSfPUFBKGYfDbp_ZdAmQNzJyJDE2yHzKTSgTULV6Ip/exec";
+const USER_API =
+  "https://script.google.com/macros/s/AKfycbzoovwcdLn6EU_CuqOUak2s9GqSfPUFBKGYfDbp_ZdAmQNzJyJDE2yHzKTSgTULV6Ip/exec";
 
+const email = sessionStorage.getItem("email");
 document.getElementById("reg-email").textContent =
-  "メール: " + sessionStorage.getItem("email");
+  email ? ("メールアドレス: " + email) : "メールアドレス情報が取得できませんでした。";
 
 async function sendRegister() {
   const payload = {
     mode: "register",
-    email: sessionStorage.getItem("email"),
+    email: email,
     name: document.getElementById("reg-name").value.trim(),
     lineName: document.getElementById("reg-line").value.trim(),
     grade: document.getElementById("reg-grade").value
   };
 
-  const res = await fetch(USER_API, {
+  if (!payload.email || !payload.name || !payload.lineName) {
+    alert("氏名・LINE表示名が未入力です。");
+    return;
+  }
+
+  await fetch(USER_API, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify(payload)
   });
 
-  alert("登録完了！🎉 ログイン画面へ戻ります");
+  alert("登録が完了しました！🎉 ログイン画面に戻ります。");
   sessionStorage.removeItem("email");
-  window.location.href = "/auth/login.html";
+  window.location.href = "/index.html";
 }
 </script>
-<script src="/auth/app-auth.js"></script>
+</body>
+</html>
