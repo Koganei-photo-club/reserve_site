@@ -10,6 +10,13 @@ function toDate(d) {
   return new Date(d + "T00:00:00");
 }
 
+function toYMD(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 let APPLY_START = null;
 let APPLY_END = null;
 let APPLY_EQUIP = null;
@@ -74,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let cur = new Date(s);
 
     while (cur <= limit) {
-      arr.push(cur.toISOString().slice(0, 10));
+      arr.push(toYMD(cur));   // ← ここも toISOString() やめる
       cur.setDate(cur.getDate() + 1);
     }
     return arr;
@@ -87,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return {
       title: `${r.equip} 貸出中`,
       start: r.start,
-      end: e.toISOString().slice(0, 10),
+      end:   toYMD(e),      // ← ここが重要！toISOString() を使わない
       extendedProps: r,
       backgroundColor: COLOR_MAP[r.equip] ?? "#777",
       textColor: "#fff",
