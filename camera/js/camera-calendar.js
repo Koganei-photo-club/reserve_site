@@ -13,6 +13,13 @@ function toDate(d) {
   return new Date(d + "T00:00:00");
 }
 
+function toYMD(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 let APPLY_START = null;
 let APPLY_END   = null;
 let APPLY_EQUIP = null;
@@ -135,17 +142,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     return arr;
   }
 
-/***** 📌 FullCalendar イベント生成（修正版） *****/
-  const events = reservations.map(r => ({
+/***** 📌 FullCalendar イベント生成（JSTずれ修正版） *****/
+const events = reservations.map(r => {
+  // end は「返却日を含めて」表示したいので +1日する
+  const e = toDate(r.end);
+  e.setDate(e.getDate() + 1); // FullCalendar は end「翌日」までを指定する仕様
+
+  return {
     title: `${r.equip} 貸出中`,
-    start: r.start,
-    end:   r.end, // ← 1日延長せず、そのまま！
+    start: r.start,       // start はそのまま
+    end:   toYMD(e),      // ← ここが重要！toISOString() を使わない
     extendedProps: r,
     backgroundColor: COLOR_MAP[r.equip] ?? "#777",
     borderColor:     COLOR_MAP[r.equip] ?? "#777",
     textColor: "#fff",
     allDay: true
-  }));
+  };
+});
 
   /***** 📌 FullCalendar 描画 *****/
   const calendar = new FullCalendar.Calendar(calendarEl, {
