@@ -28,7 +28,7 @@ async function handleCredentialResponse(response) {
     if (data.result === "register-required") {
       // 初回登録が必要
       sessionStorage.setItem("email", data.email);
-      window.location.href = "./auth/register.html";
+      window.location.href = "./register.html";
       return;
     }
 
