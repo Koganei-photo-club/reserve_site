@@ -781,7 +781,28 @@ footer p {
   min-height: 1.2rem;
 }
 
+/* ===== マイページ専用の可視化修正 ===== */
 #profile-box {
-  background: #fff;
-  color: #333;
+  background: #ffffff;      /* 白背景に統一 */
+  color: #222222;           /* 濃い文字色 */
+  border: 1px solid #ddd;   /* 境界線で浮き上がらせる */
+  padding: 1.5em;
+  border-radius: 12px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 380px;
+}
+
+#profile-box strong {
+  color: #111111; /* 強調部分はさらに濃く */
+}
+
+#profile-box li {
+  margin: 0.4em 0;
+}
+
+main.camera-center-section {
+  background: #f8f8f8; /* 背景を少しグレーに */
+  min-height: 60vh;
+  padding-top: 3em;
 }
