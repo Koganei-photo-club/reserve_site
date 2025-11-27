@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let cur     = new Date(s);
 
     while (cur <= limit) {
-      arr.push(cur.toISOString().slice(0, 10));
+      arr.push(toYMD(cur));   // ← ここも toISOString() やめる
       cur.setDate(cur.getDate() + 1);
     }
     return arr;
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let cur   = new Date(begin);
 
     while (cur <= limit) {
-      arr.push(cur.toISOString().slice(0, 10));
+      arr.push(toYMD(cur));   // ← ここも toISOString() やめる
       cur.setDate(cur.getDate() + 1);
     }
     return arr;
