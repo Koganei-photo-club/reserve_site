@@ -2,7 +2,7 @@
 
 // 利用者管理用 GAS Web API
 const USER_API =
-  "https://script.google.com/macros/s/AKfycby0YOC_ckGZcQ3eyE4o5r_3z4BKGPyqc4KUdy4D04faTCDSrCxggPY3yr7NpBeEbTUv/exec";
+  "https://script.google.com/macros/s/AKfycbyfpetIsPVKur5FnHpqk24Lu7bJ58o8z-nmNo8aPy0mCXU849psXIgL4x36RevcbQ/exec";
 
 /**
  * Google Identity Services のコールバック
