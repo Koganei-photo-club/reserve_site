@@ -819,6 +819,36 @@ main.camera-center-section {
   text-align: left;
 }
 
+.mypage-section {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.reserve-list-box {
+  max-width: 700px;
+  margin: 1em auto;
+}
+
+.reserve-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.reserve-table th,
+.reserve-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.reserve-table th {
+  background: #007bff;
+  color: #fff;
+}
+
 .mypage-card {
   background: white;
   padding: 1.5em;
