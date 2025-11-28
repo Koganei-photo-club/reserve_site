@@ -818,3 +818,33 @@ main.camera-center-section {
   border-radius: 8px;
   text-align: left;
 }
+
+.mypage-card {
+  background: white;
+  padding: 1.5em;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin: 1.5em auto;
+  max-width: 650px;
+  width: 100%;
+  text-align: left;
+}
+
+.mypage-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mypage-card li {
+  margin: 6px 0;
+}
+
+.mypage-card button {
+  width: 100%;
+  padding: 0.8em;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

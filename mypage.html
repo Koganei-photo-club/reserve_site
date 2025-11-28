@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>マイページ - PoCKet</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!-- 🔹パス修正 -->
-  <script src="./auth/js/app-auth.js" defer></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../auth/js/app-auth.js" defer></script>
   <script src="./mypage.js" defer></script>
 </head>
 <body>
 
 <header id="main-header">
   <div class="header-content">
-    <a href="./index.html">
-      <img src="./assets/images/club-icon.JPG" class="logo">
+    <a href="../index.html">
+      <img src="../assets/images/club-icon.JPG" class="logo">
       <div class="site-title"><h1>PoCKet</h1><p>PhotoClub Koganei</p></div>
     </a>
   </div>
@@ -24,23 +22,37 @@
 
   <h2>マイページ</h2>
 
-  <section id="profile-section" style="margin-top: 2em; font-size: 1.1rem;">
+  <!-- 🔹 プロフィールカード -->
+  <section class="mypage-card">
     <p>こんにちは、<strong id="mp-name"></strong> さん！</p>
 
-    <p>
-      <strong>学年：</strong> <span id="mp-grade"></span><br>
-      <strong>LINE名：</strong> <span id="mp-line"></span><br>
-      <strong>メール：</strong> <span id="mp-email"></span><br>
-      <strong>役職：</strong> <span id="mp-role"></span>
-    </p>
+    <ul>
+      <li><strong>学年:</strong> <span id="mp-grade"></span></li>
+      <li><strong>LINE名:</strong> <span id="mp-line"></span></li>
+      <li><strong>メール:</strong> <span id="mp-email"></span></li>
+      <li><strong>役職:</strong> <span id="mp-role"></span></li>
+    </ul>
 
-    <button class="button" id="logoutBtn" style="background: #d9534f;">
-      ログアウト
-    </button>
+    <button id="logoutBtn">ログアウト</button>
   </section>
 
-  <h3>あなたの予約</h3>
-  <div id="reserve-list"></div>
+  <!-- 🔹 予約一覧（ここに表示追加！） -->
+  <section class="mypage-card">
+    <h3>📷 カメラ予約状況</h3>
+    <div id="camera-reservations">読み込み中...</div>
+  </section>
+
+  <section class="mypage-card">
+    <h3>💻 PC予約状況</h3>
+    <div id="pc-reservations">読み込み中...</div>
+  </section>
+
+  <!-- 🔹 管理者メニュー（役職者のみ後ほど表示） -->
+  <section id="admin-menu" class="mypage-card" style="display:none;">
+    <h3>🛠 管理者メニュー</h3>
+    <p><a href="../camera/admin.html">カメラ管理画面</a></p>
+    <p><a href="../pc/admin.html">PC管理画面</a></p>
+  </section>
 
 </main>
 
