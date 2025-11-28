@@ -1,6 +1,9 @@
 // ======================
 // マイページ表示制御
 // ======================
+const CAMERA_API = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
+const PC_API = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ユーザー情報の取得
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // 🔹カメラ予約API
-  const CAMERA_API = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
+  // const CAMERA_API = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
 
   async function loadCameraReservations() {
     const list = document.getElementById("reserve-list");
@@ -71,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // 🔹PC予約API
-  const PC_API = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
+  // const PC_API = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
 
   async function loadPCReservations() {
     const list = document.getElementById("pc-reserve-list");
