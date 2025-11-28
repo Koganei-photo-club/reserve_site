@@ -94,6 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${r.equip || "PC"}</td>
               <td>${r.start}〜${r.end}</td>
               <td>${r.code}</td>
+              <td>
+                <button class="cancel-btn" onclick="openMyCancelModal('${r.equip}', '${r.start}', '${r.code}')">
+                  取り消し
+                </button>
+              </td>
             </tr>
           `).join("")}
         </table>
@@ -110,3 +115,46 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCameraReservations();
   loadPCReservations();
 });
+
+// =============================
+// マイページ用キャンセル操作
+// =============================
+
+// 既存のキャンセルモーダルを利用
+function openMyCancelModal(equip, start, code) {
+  document.getElementById("cancelTarget").textContent =
+    `${equip} / ${start}`;
+  document.getElementById("cancelMessage").textContent = "";
+  document.getElementById("cancelModal").style.display = "flex";
+
+  document.getElementById("cancelSend").onclick = () =>
+    myCancelSend(equip, start, code);
+}
+
+async function myCancelSend(equip, start, correctCode) {
+
+  const input = document.getElementById("cancelCode").value.trim();
+  if (!input) {
+    document.getElementById("cancelMessage").textContent = "❌ コードを入力";
+    return;
+  }
+  if (input !== correctCode) {
+    document.getElementById("cancelMessage").textContent = "❌ コードが違います";
+    return;
+  }
+
+  const payload = {
+    mode: "cancel",
+    equip,
+    start,
+    code: correctCode
+  };
+
+  await fetch(CAMERA_API, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  document.getElementById("cancelMessage").textContent = "✔ キャンセル完了！";
+  setTimeout(() => location.reload(), 800);
+}
