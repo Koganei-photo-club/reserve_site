@@ -53,6 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${r.equip}</td>
               <td>${r.start}〜${r.end}</td>
               <td>${r.code}</td>
+              <td>
+                <button class="cancel-btn" onclick="openMyCancelModal('${r.equip}', '${r.start}', '${r.code}')">
+                  取り消し
+                </button>
+              </td>
             </tr>
           `).join("")}
         </table>
