@@ -848,3 +848,42 @@ main.camera-center-section {
   border-radius: 6px;
   cursor: pointer;
 }
+
+/* マイページ予約一覧テーブル */
+.mypage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  font-size: 1rem;
+  background: #ffffff;
+}
+
+.mypage-table th,
+.mypage-table td {
+  padding: 12px 10px;  /* 🔥余白UP */
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.mypage-table th {
+  background: #007bff;  /* 🔵ヘッダーに色付け */
+  color: white;
+  font-weight: bold;
+}
+
+.mypage-table tr:nth-child(even) {
+  background: #f9f9f9; /* シマシマで見やすく */
+}
+
+.mypage-table tr:hover {
+  background: #e6f1ff; /* ホバー時わかりやすく */
+}
+
+/* 📱スマホ表示調整 */
+@media (max-width: 600px) {
+  .mypage-table th,
+  .mypage-table td {
+    font-size: 0.85rem;
+    padding: 10px 6px;
+  }
+}
