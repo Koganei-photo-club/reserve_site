@@ -38,39 +38,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const CAMERA_API = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
 
-async function loadCameraReservations(user) {
-  const container = document.getElementById("camera-reservations");
-  container.textContent = "読み込み中...";
+async function loadReservations(email) {
+  let list = document.getElementById("reserve-list");
+  list.innerHTML = "読み込み中…";
 
   try {
     const res = await fetch(CAMERA_API);
     const data = await res.json();
     const rows = data.rows || [];
 
-    const myRows = rows.filter(r => r.name === user.name);
+    // 👤 user.name でフィルタ（メールより確実）
+    const userRes = rows.filter(r => r.name === user.name);
 
-    if (myRows.length === 0) {
-      container.textContent = "予約はありません";
+    if (userRes.length === 0) {
+      list.innerHTML = "現在アクティブな予約はありません。";
       return;
     }
 
-    myRows.sort((a,b)=> new Date(a.start) - new Date(b.start));
+    // 🔥 HTML生成（キャンセルボタン付き）
+    list.innerHTML = userRes.map((r, idx) => `
+      <div class="reserve-item" data-index="${idx}">
+        <strong>${r.equip}</strong><br>
+        ${r.start} 〜 ${r.end}<br>
+        認証コード: ${r.code}<br>
+        <button class="cancel-btn" data-code="${r.code}" data-equip="${r.equip}" data-start="${r.start}">
+          キャンセル
+        </button>
+      </div>
+    `).join("");
 
-    container.innerHTML = `
-      <table class="mypage-table">
-        <tr><th>機種</th><th>期間</th><th>認証コード</th></tr>
-        ${myRows.map(r=>`
-          <tr>
-            <td>${r.equip}</td>
-            <td>${r.start}〜${r.end}</td>
-            <td>${r.code}</td>
-          </tr>
-        `).join("")}
-      </table>
-    `;
+    // ------- 🔹キャンセルボタン処理 ------ //
+    document.querySelectorAll(".cancel-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const payload = {
+          mode: "cancel",
+          name: user.name,
+          equip: btn.dataset.equip,
+          start: btn.dataset.start,
+          code: btn.dataset.code
+        };
 
-  } catch {
-    container.textContent = "取得エラー";
+        const ok = confirm("予約をキャンセルしますか？");
+        if (!ok) return;
+
+        await fetch(CAMERA_API, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        alert("キャンセル完了！");
+        loadReservations(); // ← 自動再読み込み！！🔥
+      });
+    });
+
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = "予約情報を取得できませんでした。";
   }
 }
 

@@ -887,3 +887,19 @@ main.camera-center-section {
     padding: 10px 6px;
   }
 }
+
+.cancel-btn {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #c0392b;
+}
