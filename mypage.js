@@ -166,7 +166,7 @@ async function myCancelSend(equip, start, correctCode) {
   }
 
   const payload = {
-    mode: "cancel",
+    mode: "delete",   // ←ここ!!
     equip,
     start,
     code: correctCode
@@ -174,6 +174,7 @@ async function myCancelSend(equip, start, correctCode) {
 
   await fetch(CAMERA_API, {
     method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(payload)
   });
 
