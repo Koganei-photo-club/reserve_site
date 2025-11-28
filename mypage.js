@@ -115,6 +115,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const cancelCloseBtn = document.getElementById("cancelClose");
+  if (cancelCloseBtn) {
+    cancelCloseBtn.onclick = () => {
+      const m = document.getElementById("cancelModal");
+      m.classList.remove("show");
+      setTimeout(() => m.style.display = "none", 200);
+    };
+  }
+
 
   // 🔥 初回ロード
   loadCameraReservations();
@@ -127,10 +136,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 既存のキャンセルモーダルを利用
 function openMyCancelModal(equip, start, code) {
+  const m = document.getElementById("cancelModal");
+
   document.getElementById("cancelTarget").textContent =
     `${equip} / ${start}`;
   document.getElementById("cancelMessage").textContent = "";
-  document.getElementById("cancelModal").style.display = "flex";
+
+  // 表示＋ふわっと出るアニメーション
+  m.style.display = "flex";
+  setTimeout(() => m.classList.add("show"), 10);
 
   document.getElementById("cancelSend").onclick = () =>
     myCancelSend(equip, start, code);
