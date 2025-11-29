@@ -110,12 +110,12 @@ async function loadPCReservations() {
           <tr>
             <td>${r.date}</td>
             <td>${r.slot}</td>
-            <td>${r.code}</td>
+            <td>${r.auth}</td>
             <td>
               <button class="cancel-btn"
-                data-equip="${r.slot}"
-                data-start="${r.date}"
-                data-code="${r.code}">
+                data-date="${r.date}"
+                data-slot="${r.slot}"
+                data-auth="${r.auth}">
                 取り消し
               </button>
             </td>
@@ -128,9 +128,9 @@ async function loadPCReservations() {
     document.querySelectorAll(".cancel-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         openMyCancelModal(
-          btn.dataset.equip,  // slot
-          btn.dataset.start,  // date
-          btn.dataset.code
+          btn.dataset.slot,  // PCはslotをequipの代わりに使用
+          btn.dataset.date,
+          btn.dataset.auth
         );
       });
     });
@@ -177,7 +177,7 @@ function openMyCancelModal(equip, start, code) {
 
 const DEBUG_MODE = true; // ← ここだけ切り替える！
 
-async function myCancelSend(equip, start, correctCode) {
+async function myCancelSend(equip, startOrDate, correctCode) {
 
   const input = document.getElementById("cancelCode").value.trim();
   if (!input) {
@@ -189,15 +189,31 @@ async function myCancelSend(equip, start, correctCode) {
     return;
   }
 
-  const targetAPI = equip.includes("PC") ? PC_API : CAMERA_API;
+  let targetAPI;
+  let payload;
 
-  const payload = {
-    mode: "cancel",
-    email: user.email,
-    equip,
-    start,
-    code: correctCode
-  };
+  // 🔹PC判定（equip が時刻枠なら PC予約）
+  const isPC = equip.includes("〜");
+
+  if (isPC) {
+    targetAPI = PC_API;
+    payload = {
+      requestType: "PCキャンセル",
+      date: startOrDate,
+      slot: equip,
+      auth: correctCode,
+      name: user.name
+    };
+  } else {
+    targetAPI = CAMERA_API;
+    payload = {
+      mode: "cancel",
+      email: user.email,
+      equip,
+      start: startOrDate,
+      code: correctCode
+    };
+  }
 
   if (DEBUG_MODE) {
     console.log("🔥Send cancel payload:", payload);
@@ -213,11 +229,13 @@ async function myCancelSend(equip, start, correctCode) {
   if (DEBUG_MODE) {
     const result = await res.json().catch(()=>null);
     console.log("📥Cancel response:", result);
-    document.getElementById("cancelMessage").textContent = "✔ 完了（デバッグ中）";
-  } else {
-    document.getElementById("cancelMessage").textContent = "✔ キャンセル完了！";
-    setTimeout(() => location.reload(), 800);
+    document.getElementById("cancelMessage").textContent =
+      "✔ 完了（デバッグ中）";
+    return;
   }
+
+  document.getElementById("cancelMessage").textContent = "✔ キャンセル完了！";
+  setTimeout(() => location.reload(), 800);
 }
 
 });
