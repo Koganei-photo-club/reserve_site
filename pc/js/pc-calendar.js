@@ -14,51 +14,50 @@ document.addEventListener("DOMContentLoaded", async function () {
     "17:00〜17:50", "17:50〜18:40"
   ];
 
-// ===============================
-// PC予約：JSTで前日締切
-// ===============================
-function isPcSlotAvailable(dateStr) {
-  // 今日の JST YYYY-MM-DD を作成
-  const now = new Date();
-  const jstOffsetMs = 9 * 60 * 60 * 1000;
-  const todayJst = new Date(now.getTime() + jstOffsetMs);
-  const todayStr = todayJst.toISOString().split("T")[0];
+  // ===============================
+  // PC予約：JSTで前日締切
+  // ===============================
+  function isPcSlotAvailable(dateStr) {
+    const now = new Date();
+    const jstOffsetMs = 9 * 60 * 60 * 1000;
+    const todayJst = new Date(now.getTime() + jstOffsetMs);
+    const todayStr = todayJst.toISOString().split("T")[0];
+    const today0 = new Date(`${todayStr}T00:00:00+09:00`);
+    const target = new Date(`${dateStr}T00:00:00+09:00`);
 
-  // 今日の JST 00:00 を作る
-  const today0 = new Date(`${todayStr}T00:00:00+09:00`);
+    return target > today0;
+  }
 
-  // 対象日を JST 00:00 に固定
-  const target = new Date(`${dateStr}T00:00:00+09:00`);
-
-  // 今日より未来の日付だけ予約可能
-  return target > today0;
-}
-
+  // ← ここは「配列」にしておく
   let rawData = [];
-
 
   /************************************************
    * 予約データ取得
    ************************************************/
   try {
     const res = await fetch(apiUrl);
-    rawData = await res.json();
+    const raw = await res.json();              // 👈 まずオブジェクトを受け取る
+
+    console.log("PC予約レスポンス:", raw);    // デバッグ用
+
+    // 👇 rows が配列ならそれを rawData に入れる
+    rawData = Array.isArray(raw.rows) ? raw.rows : [];
+
   } catch (err) {
     console.error("予約データ取得エラー:", err);
     return;
   }
 
-
   /************************************************
    * 日付別の予約カウント
    ************************************************/
   const countByDate = {};
-  rawData.forEach(r => {
+  rawData.forEach(r => {              // 👈 ここでやっと配列として使える
     if (!r.date) return;
-    if (!countByDate[r.date]) countByDate[r.date] = 0;
-    countByDate[r.date]++;
+    const date = String(r.date).replace(/\//g, "-");
+    if (!countByDate[date]) countByDate[date] = 0;
+    countByDate[date]++;
   });
-
 
   /************************************************
    * カレンダー本体
@@ -68,12 +67,10 @@ function isPcSlotAvailable(dateStr) {
     locale: "ja",
     height: "auto",
 
-    // ========= 日セル描画（初回 & 月移動後に再実行される） =========
     dayCellDidMount(info) {
       paintCell(info, calendar);
     },
 
-    // ========= 表示月が確定した直後に発火（Safari対策・最重要） =========
     datesSet(info) {
       fixMonthPaint(calendar, countByDate);
     },
@@ -85,17 +82,14 @@ function isPcSlotAvailable(dateStr) {
 
   calendar.render();
 
-
   /************************************************
    * 日セルの色付け（関数化）
    ************************************************/
   function paintCell(info, calendarInstance) {
-
     const cellDate = info.date;
     const dispMonth = info.view.currentStart.getMonth();
     const dispYear  = info.view.currentStart.getFullYear();
 
-    // 他の月のセルは背景クリア
     if (cellDate.getMonth() !== dispMonth || cellDate.getFullYear() !== dispYear) {
       const old = info.el.querySelector(".pc-mark");
       if (old) old.remove();
@@ -138,29 +132,23 @@ function isPcSlotAvailable(dateStr) {
     info.el.appendChild(div);
   }
 
-
   /************************************************
-   * 月が確定した後に全日セルを再塗り（最重要）
+   * 月が確定した後に全日セルを再塗り
    ************************************************/
   function fixMonthPaint(calendarInstance, countMap) {
-
     const view = calendarInstance.view;
     const start = new Date(view.currentStart);
     const end   = new Date(view.currentEnd);
-
     const mid = new Date((start.getTime() + end.getTime()) / 2);
-
     const dispMonth = mid.getMonth();
     const dispYear  = mid.getFullYear();
 
     document.querySelectorAll(".fc-daygrid-day").forEach(cell => {
-
       const dateStr = cell.getAttribute("data-date");
       if (!dateStr) return;
 
       const d = new Date(dateStr);
 
-      // 他の月のセルは背景クリア
       if (d.getMonth() !== dispMonth || d.getFullYear() !== dispYear) {
         cell.style.background = "";
         const old = cell.querySelector(".pc-mark");
@@ -168,7 +156,6 @@ function isPcSlotAvailable(dateStr) {
         return;
       }
 
-      // 今月のセルだけ色付け
       const cnt = countMap[dateStr] || 0;
 
       let mark = "◯";
@@ -204,14 +191,13 @@ function isPcSlotAvailable(dateStr) {
     });
   }
 
-
   /************************************************
    * 日別モーダル
    ************************************************/
-  const dayModal = document.getElementById("dayModal");
-  const dayTitle = document.getElementById("dayTitle");
-  const timeSlotsEl = document.getElementById("timeSlots");
-  const dayClose = document.getElementById("dayClose");
+  const dayModal   = document.getElementById("dayModal");
+  const dayTitle   = document.getElementById("dayTitle");
+  const timeSlotsEl= document.getElementById("timeSlots");
+  const dayClose   = document.getElementById("dayClose");
 
   dayClose.addEventListener("click", () => {
     dayModal.style.display = "none";
@@ -220,23 +206,22 @@ function isPcSlotAvailable(dateStr) {
   function openDayModal(date) {
     dayTitle.textContent = `${date} の予約状況`;
 
-    const todaysData = rawData.filter(r => r.date === date);
+    const todaysData = rawData.filter(r => String(r.date).replace(/\//g,"-") === date);
     timeSlotsEl.innerHTML = "";
 
     TIME_SLOTS.forEach(slot => {
-      const reserved = todaysData.some(r => r.slot === slot);
+      const reserved  = todaysData.some(r => r.slot === slot);
       const available = isPcSlotAvailable(date);
-
       const btn = document.createElement("button");
 
-      // 締切済み（日付が当日・過去）
       if (!available) {
         btn.className = "slot closed";
         btn.textContent = `${slot}（予約締切）`;
         btn.disabled = true;
         timeSlotsEl.appendChild(btn);
         return;
-        }
+      }
+
       if (reserved) {
         btn.className = "slot booked";
         btn.textContent = `${slot}（予約済）`;
@@ -252,7 +237,6 @@ function isPcSlotAvailable(dateStr) {
 
     dayModal.style.display = "flex";
   }
-
 
   /************************************************
    * Googleフォームへ飛ぶ
@@ -276,9 +260,9 @@ function isPcSlotAvailable(dateStr) {
   /************************************************
    * キャンセル申請
    ************************************************/
-  const cancelModal = document.getElementById("cancelModal");
-  const cancelTarget = document.getElementById("cancelTarget");
-  const cancelClose = document.getElementById("cancelClose");
+  const cancelModal   = document.getElementById("cancelModal");
+  const cancelTarget  = document.getElementById("cancelTarget");
+  const cancelClose   = document.getElementById("cancelClose");
   const cancelConfirm = document.getElementById("cancelConfirm");
   const cancelMessage = document.getElementById("cancelMessage");
 
@@ -294,7 +278,6 @@ function isPcSlotAvailable(dateStr) {
     cancelMessage.textContent = "";
     cancelModal.style.display = "flex";
   }
-
 
   cancelConfirm.addEventListener("click", async () => {
     const name = document.getElementById("cancelName").value.trim();
@@ -339,22 +322,17 @@ function isPcSlotAvailable(dateStr) {
  * 📱 アプリ風ページ遷移（フェードアニメーション）
  **********************************************/
 document.querySelectorAll("a").forEach(a => {
-  // 外部リンク・#アンカー・新規タブは除外
   const href = a.getAttribute("href");
   if (!href || href.startsWith("http") || href.startsWith("#") || a.target === "_blank") return;
 
   a.addEventListener("click", (e) => {
-    e.preventDefault();        // 通常遷移を止める
+    e.preventDefault();
     const url = href;
-
-
-    // フェードイン開始
     document.body.classList.add("fade-in");
-    // フェードアウト開始
     document.body.classList.add("fade-out");
 
     setTimeout(() => {
       window.location.href = url;
-    }, 350);   // ← CSSの0.35sと同期
+    }, 350);
   });
 });
