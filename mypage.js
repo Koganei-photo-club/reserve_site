@@ -172,7 +172,7 @@ function openMyCancelModal(equip, start, code) {
     myCancelSend(equip, start, code);
 }
 
-const DEBUG_MODE = false; // ← ここだけ切り替える！
+const DEBUG_MODE = true; // ← ここだけ切り替える！
 
 async function myCancelSend(equip, start, correctCode) {
 
