@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔹 カメラ予約一覧の読み込み
   // =========================
   async function loadCameraReservations() {
-    const list = document.getElementById("reserve-list");
+    const list = document.getElementById("camera-reserve-list");
+    if (!list) return;
     list.innerHTML = "読み込み中…";
 
     try {
