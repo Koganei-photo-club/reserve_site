@@ -144,6 +144,13 @@ body {
   background: #777;
 }
 
+@media (max-width: 480px) {
+  .navbar.two-rows a {
+    font-size: 0.8rem;
+    padding: 0.4em 0.8em;
+  }
+}
+
 /* ▼ 2段になったので本文の開始位置を下げる */
 /* --- 本文 --- */
 main {
