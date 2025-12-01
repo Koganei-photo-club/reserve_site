@@ -241,19 +241,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       const btn = document.createElement("button");
 
-      if (!available) {
-        btn.className = "slot closed";
-        btn.textContent = `${slot}（予約締切）`;
-        btn.disabled = true;
-        timeSlotsEl.appendChild(btn);
-        return;
-      }
-
+      // 予約済チェック（締切より優先）
       if (reserved) {
         btn.className = "slot booked";
         btn.textContent = `${slot}（予約済）`;
-        btn.addEventListener("click", () => openCancelModal(date, slot));
-      } else {
+        btn.addEventListener("click",()=> openCancelModal(date, slot));
+      }
+      // 予約はないが締切済→キャンセル不可
+      else if (!available) {
+        btn.className = "slot closed";
+        btn.textContent = `${slot}（予約締切）`;
+        btn.disabled = true;
+        // timeSlotsEl.appendChild(btn);
+        // return;
+      }
+      // 上記以外→予約可能
+      else {
         btn.className = "slot free";
         btn.textContent = `${slot}（空き）`;
         btn.addEventListener("click", () => openReserveConfirm(date, slot));
