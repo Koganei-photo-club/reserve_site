@@ -52,16 +52,20 @@
     </div>
   </header>
 
-  <nav class="navbar">
-    <ul id="nav-menu">
-      <!-- <li><a href="/reserve_site/index.html">home</a></li> -->
-      <li id="nav-login"><a href="/reserve_site/auth/login.html">log-in</a></li>
-      <li><a href="camera/index.html">camera</a></li>
-      <!-- <li><a href="camera/index.html" class="disabled">カメラ予約（メンテ中）</a></li> -->
-      <li><a href="pc/index.html">PC</a></li>
-      <li id="nav-mypage" style="display:none;"><a href="/reserve_site/mypage.html">my-page</a></li>
-      <li id="nav-logout" style="display:none;"><a href="#" id="logoutBtnNav">log-out</a></li>
-    </ul>
+  <nav class="navbar two-rows">
+    <div class="nav-row user-links">
+      <ul>
+        <li id="nav-login"><a href="/reserve_site/auth/login.html">ログイン</a></li>
+        <li id="nav-mypage" style="display:none;"><a href="/reserve_site/mypage.html">マイページ</a></li>
+        <li id="nav-logout" style="display:none;"><a href="#" id="logoutBtnNav">ログアウト</a></li>
+      </ul>
+    </div>
+    <div class="nav-row category-links">
+      <ul>
+        <li><a href="camera/index.html">📷 カメラ予約</a></li>
+        <li><a href="pc/index.html">💻 PC予約</a></li>
+      </ul>
+    </div>
   </nav>
   </div>
 

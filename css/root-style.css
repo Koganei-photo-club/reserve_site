@@ -107,10 +107,48 @@ body {
   background: transparent;
 }
 
+/* ▼ 2段ナビゲーション用 */
+.navbar.two-rows {
+  background: #444;
+}
+
+.navbar.two-rows .nav-row {
+  display: flex;
+  justify-content: center;
+  background: #555;
+  padding: 0.4em 0;
+  border-bottom: 1px solid #666;
+}
+
+.navbar.two-rows .nav-row:last-child {
+  border-bottom: none;
+}
+
+.navbar.two-rows ul {
+  display: flex;
+  gap: 0.5em;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.navbar.two-rows a {
+  padding: 0.5em 1em;
+  font-size: 0.9rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.navbar.two-rows a:hover {
+  background: #777;
+}
+
+/* ▼ 2段になったので本文の開始位置を下げる */
 /* --- 本文 --- */
 main {
   padding: 2em;
-  margin-top: 140px;
+  margin-top: 160px;
 }
 
 h2 {
@@ -619,6 +657,8 @@ footer p {
     width: 100%;             /* ボタン横いっぱい */
   }
 }
+
+
 
 /* ===============================
    📱 アプリ風ページ遷移アニメーション
