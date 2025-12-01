@@ -208,7 +208,7 @@ modal("applySend").onclick = async () => {
   }
   modal("cancelClose").onclick=()=>hide("cancelModal");
 
-const DEBUG = true; // 共通！
+const DEBUG = false; // 共通！
 
 async function cancelSend(equip, start, code) {
   const userCode = modal("cancelCode").value.trim();
