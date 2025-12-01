@@ -872,8 +872,15 @@ footer p {
   background: #ffedc1;
 }
 
-/* ✕ 予約不可 */
 .slot.booked {
+  background: #ff9a9a !important; /* 濃い赤系 */
+  color: #600;
+  border-color: #c00;
+  font-weight: bold;
+}
+
+/* ✕ 予約不可 */
+.slot.closed {
   background: #eee;
   color: #777;
   cursor: not-allowed;
