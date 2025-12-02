@@ -31,11 +31,41 @@ async function loadUsers() {
       <td>${u.name}</td>
       <td>${gradeNames[u.grade] || "-"}</td>
       <td>${roleNames[u.role] || "？"}</td>
-      <td><button onclick="editUser('${u.email}')">編集</button></td>
+      <td>
+        <button class="edit-btn" data-index="${i}">編集</button>
+      </td>
     </tr>
   `).join("");
 }
 
-function editUser(email) {
-  alert("後ほど：編集モーダルを追加します！\n対象: " + email);
-}
+// function editUser(email) {
+//   alert("後ほど：編集モーダルを追加します！\n対象: " + email);
+// }
+
+const editModal = document.getElementById("editModal");
+const editName = document.getElementById("editName");
+const editGrade = document.getElementById("editGrade");
+const editRole = document.getElementById("editRole");
+const saveBtn = document.getElementById("saveUserBtn");
+const closeBtn = document.getElementById("closeModalBtn");
+
+let editingIndex = null;
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit-btn")) {
+    editingIndex = e.target.dataset.index;
+    const u = users[editingIndex];
+
+    editName.textContent = u.name;
+    editGrade.value = u.grade;
+    editRole.value = u.role;
+
+    editModal.style.display = "flex";
+    setTimeout(() => editModal.classList.add("show"), 10);
+  }
+});
+
+closeBtn.onclick = () => {
+  editModal.classList.remove("show");
+  setTimeout(() => editModal.style.display = "none", 200);
+};

@@ -24,5 +24,35 @@
   <p>⚠ 権限がありません。</p>
 </div>
 
+<div id="editModal" class="modal">
+  <div class="modal-box">
+    <h3>ユーザー情報を編集</h3>
+    <p id="editName"></p>
+
+    <label>学年</label>
+    <select id="editGrade">
+      <option value="1">B1</option>
+      <option value="2">B2</option>
+      <option value="3">B3</option>
+      <option value="4">B4</option>
+      <option value="5">M1</option>
+      <option value="6">M2</option>
+      <option value="7">OB/OG</option>
+    </select>
+
+    <label>役職</label>
+    <select id="editRole">
+      <option value="0">役職なし</option>
+      <option value="1">部長</option>
+      <option value="2">副部長</option>
+      <option value="3">会計</option>
+      <option value="4">文連</option>
+    </select>
+
+    <button id="saveUserBtn" class="btn-primary">保存</button>
+    <button id="closeModalBtn" class="btn-secondary">閉じる</button>
+  </div>
+</div>
+
 </body>
 </html>
