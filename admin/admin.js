@@ -1,10 +1,13 @@
-const USER_API = "https://script.google.com/macros/s/AKfycbxWNWz8aIr_8DqTTHsk9y089ZLZO6B8m2ywd6e1kCWi6Fyhr4AIOcS5QwdXpHxjx8w/exec";
+// admin/admin.js
 
 document.addEventListener("DOMContentLoaded", async () => {
   const userJson = sessionStorage.getItem("user");
-  if (!userJson) return location.href = "/reserve_site/auth/login.html";
+  if (!userJson) {
+    return location.href = "/reserve_site/auth/login.html";
+  }
   const user = JSON.parse(userJson);
 
+  // 管理者チェック
   if (!(["部長","副部長","会計","文連"].includes(user.role))) {
     document.getElementById("no-permission").style.display = "block";
     return;
@@ -18,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadUsers() {
   const res = await fetch(USER_API + "?mode=list");
   const data = await res.json();
-  const users = data.users;
+  const users = data.users || [];
 
   const tbody = document.getElementById("users-table");
   tbody.innerHTML = users.map(u => `
