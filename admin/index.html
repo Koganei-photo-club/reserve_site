@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<title>管理者画面 - PoCKet</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<script src="../auth/js/app-auth.js"></script>
-<script src="./admin.js" defer></script>
+  <meta charset="UTF-8">
+  <title>管理者メニュー | PoCKet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../auth/js/app-auth.js" defer></script>
+  <script src="admin.js" defer></script>
 </head>
-<body>
+<body class="page-transition fade-in">
 
-<h2>管理者メニュー（ユーザー管理）</h2>
+<header id="main-header">
+  <div class="header-content">
+    <a href="../index.html">
+      <img src="../assets/images/club-icon.JPG" class="logo">
+      <div class="site-title">
+        <h1>PoCKet 管理者メニュー</h1>
+        <p>Photo Club Koganei</p>
+      </div>
+    </a>
+  </div>
+</header>
 
-<div id="admin-section" style="max-width:700px; margin:auto; display:none;">
-  <table class="reserve-table">
-    <thead>
-      <tr><th>氏名</th><th>学年</th><th>役職</th><th>操作</th></tr>
-    </thead>
-    <tbody id="users-table"></tbody>
-  </table>
-</div>
+<main class="camera-center-section">
+  <h2>ユーザー管理</h2>
+  <p>学年・役職を編集できます。（部長・副部長・会計・文連のみ）</p>
 
-<div id="no-permission" style="text-align:center; margin-top:50px; display:none;">
-  <p>⚠ 権限がありません。</p>
-</div>
+  <div class="reserve-list-box">
+    <table class="reserve-table">
+      <thead>
+        <tr>
+          <th>氏名</th>
+          <th>学年</th>
+          <th>役職</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="users-table">
+        <tr><td colspan="4">読み込み中…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
 
-<div id="editModal" class="modal">
+<!-- 編集モーダル -->
+<div id="edit-modal" class="modal" style="display:none;">
   <div class="modal-box">
-    <h3>ユーザー情報を編集</h3>
-    <p id="editName"></p>
+    <h3>ユーザー編集</h3>
+    <p id="edit-name"></p>
 
     <label>学年</label>
-    <select id="editGrade">
+    <select id="edit-grade">
       <option value="1">B1</option>
       <option value="2">B2</option>
       <option value="3">B3</option>
@@ -41,7 +61,7 @@
     </select>
 
     <label>役職</label>
-    <select id="editRole">
+    <select id="edit-role">
       <option value="0">役職なし</option>
       <option value="1">部長</option>
       <option value="2">副部長</option>
@@ -49,10 +69,15 @@
       <option value="4">文連</option>
     </select>
 
-    <button id="saveUserBtn" class="btn-primary">保存</button>
-    <button id="closeModalBtn" class="btn-secondary">閉じる</button>
+    <p id="edit-message" class="message"></p>
+
+    <button id="edit-save"   class="btn-primary">保存</button>
+    <button id="edit-cancel" class="btn-secondary">キャンセル</button>
   </div>
 </div>
 
+<footer>
+  <p>© 写真技術研究会 PoCKet</p>
+</footer>
 </body>
 </html>
