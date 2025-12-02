@@ -24,13 +24,16 @@ async function loadUsers() {
   const users = data.users || [];
   const roleNames = ["役職なし","部長","副部長","会計","文連"];
   const gradeNames = ["","B1","B2","B3","B4","M1","M2","OB/OG"];
+  const roleText  = roleNames[u.role] ?? "ー";
+  const gradeText = gradeNames[u.grade] ?? "ー";
+
 
   const tbody = document.getElementById("users-table");
   tbody.innerHTML = users.map(u => `
     <tr>
       <td>${u.name}</td>
-      <td>${gradeNames[u.grade] || "-"}</td>
-      <td>${roleNames[u.role] || "？"}</td>
+      <td>${gradeText}</td>
+      <td>${roleText}</td>
       <td><button onclick="editUser('${u.email}')">編集</button></td>
     </tr>
   `).join("");
