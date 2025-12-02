@@ -22,13 +22,15 @@ async function loadUsers() {
   const res = await fetch(USER_API + "?mode=list");
   const data = await res.json();
   const users = data.users || [];
+  const roleNames = ["役職なし","部長","副部長","会計","文連"];
+  const gradeNames = ["","B1","B2","B3","B4","M1","M2","OB/OG"];
 
   const tbody = document.getElementById("users-table");
   tbody.innerHTML = users.map(u => `
     <tr>
       <td>${u.name}</td>
-      <td>${u.grade}</td>
-      <td>${u.role}</td>
+      <td>${gradeNames[u.grade] || "-"}</td>
+      <td>${roleNames[u.role] || "？"}</td>
       <td><button onclick="editUser('${u.email}')">編集</button></td>
     </tr>
   `).join("");
