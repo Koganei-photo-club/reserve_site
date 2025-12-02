@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(userJson);
 
   document.getElementById("mp-name").textContent  = user.name;
-  document.getElementById("mp-grade").textContent = user.gradeLabel;
+  document.getElementById("mp-grade").textContent = user.gradeLabel || ["","B1","B2","B3","B4","M1","M2","OB/OG"][user.grade];
   document.getElementById("mp-line").textContent  = user.lineName;
   document.getElementById("mp-email").textContent = user.email;
-  document.getElementById("mp-role").textContent = user.roleLabel;
+  document.getElementById("mp-role").textContent = user.roleLabel || ["役職なし","部長","副部長","会計","文連"][user.role];
 
   document.getElementById("logoutBtn").onclick = () => {
     sessionStorage.clear();
