@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(userJson);
 
   document.getElementById("mp-name").textContent  = user.name;
-  document.getElementById("mp-grade").textContent = user.grade ?? "ー";
+  document.getElementById("mp-grade").textContent = user.gradeLabel;
   document.getElementById("mp-line").textContent  = user.lineName;
   document.getElementById("mp-email").textContent = user.email;
-  document.getElementById("mp-role").textContent  = user.role ?? "ー";
+  document.getElementById("mp-role").textContent = user.roleLabel;
 
   document.getElementById("logoutBtn").onclick = () => {
     sessionStorage.clear();
