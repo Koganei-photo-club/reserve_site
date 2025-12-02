@@ -26,7 +26,7 @@ async function loadUsers() {
   const gradeNames = ["","B1","B2","B3","B4","M1","M2","OB/OG"];
 
   const tbody = document.getElementById("users-table");
-  tbody.innerHTML = users.map(u => `
+  tbody.innerHTML = users.map((u, i) => `
     <tr>
       <td>${u.name}</td>
       <td>${gradeNames[u.grade] || "-"}</td>
