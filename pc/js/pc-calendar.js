@@ -338,7 +338,7 @@ cancelConfirm.addEventListener("click", async () => {
   const payload = {
     mode: "cancel",
     email: user.email,
-    equip: cancelSlot,
+    slot: cancelSlot,
     start: cancelDate,
     code
   };
