@@ -27,6 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("mp-line").textContent  = user.lineName;
   document.getElementById("mp-email").textContent = user.email;
   document.getElementById("mp-role").textContent = user.roleLabel || ["役職なし","部長","副部長","会計","文連"][user.role];
+  // 管理者メニューの表示切り替え
+  const adminMenu = document.getElementById("admin-menu");
+  if (adminMenu) {
+    if (adminRoles.includes(Number(user.role))) {
+      adminMenu.style.display = "block";
+    } else {
+      adminMenu.style.display = "none";
+    }
+  }
 
   document.getElementById("logoutBtn").onclick = () => {
     sessionStorage.clear();
