@@ -44,12 +44,13 @@
 </main>
 
 <!-- 編集モーダル -->
-<div id="edit-modal" class="modal" style="display:none;">
+<div id="editModal" class="modal" style="display:none;">
   <div class="modal-box">
     <h3>ユーザー編集</h3>
-    <p id="edit-name"></p>
 
-    <label>学年</label>
+    <input type="hidden" id="edit-email">
+
+    <label>学年</label><br>
     <select id="edit-grade">
       <option value="1">B1</option>
       <option value="2">B2</option>
@@ -58,21 +59,21 @@
       <option value="5">M1</option>
       <option value="6">M2</option>
       <option value="7">OB/OG</option>
-    </select>
+    </select><br><br>
 
-    <label>役職</label>
+    <label>役職</label><br>
     <select id="edit-role">
       <option value="0">役職なし</option>
       <option value="1">部長</option>
       <option value="2">副部長</option>
       <option value="3">会計</option>
       <option value="4">文連</option>
-    </select>
+    </select><br><br>
 
-    <p id="edit-message" class="message"></p>
-
-    <button id="edit-save"   class="btn-primary">保存</button>
-    <button id="edit-cancel" class="btn-secondary">キャンセル</button>
+    <button id="editSave">保存</button>
+    <button onclick="document.getElementById('editModal').style.display='none'">
+      ✖ 閉じる
+    </button>
   </div>
 </div>
 
