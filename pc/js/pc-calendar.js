@@ -1,31 +1,19 @@
 /**********************************************
- * 💻 PC予約カレンダー（フォームに飛ばない版）
- *  - 予約一覧取得: PC_API (GET) → {status, rows}
- *  - 予約登録   : PC_API (POST, mode:"reserve")
- *  - 予約取消   : PC_API (POST, mode:"cancel")
- *
- *  rows の形:
- *   {
- *     email, name, lineName,
- *     equip: "10:50〜11:40",    // 時間枠
- *     start: "2025-12-09",      // 予約日
- *     end:   "2025-12-09",
- *     code:  "1234"
- *   }
+ * 💻 PC予約カレンダー
  **********************************************/
+
+const API_URL = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
 
 document.addEventListener("DOMContentLoaded", async function () {
 
-  const calendarEl = document.getElementById("calendar");
-  const apiUrl = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
-
-  // ログインユーザー情報（カメラと同じセッション）
   const userJson = sessionStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
 
   if (!user) {
-    alert("⚠ PC予約を行うにはログインが必要です。（閲覧のみ可能）");
+    alert("⚠ 予約を行うにはログインが必要です。");
   }
+
+  const calendarEl = document.getElementById("calendar");
 
   const TIME_SLOTS = [
     "10:50〜11:40", "11:40〜12:30",
@@ -60,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
    * 予約データ取得
    ************************************************/
   try {
-    const res = await fetch(apiUrl);
+    const res = await fetch(API_URL);
     const data = await res.json();
     // GAS が { status, rows } を返している想定
     rawData = Array.isArray(data.rows) ? data.rows : (Array.isArray(data) ? data : []);
