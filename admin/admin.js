@@ -1,4 +1,4 @@
-const USER_API = "https://script.google.com/macros/s/AKfycbxWNWz8aIr_8DqTTHsk9y089ZLZO6B8m2ywd6e1kCWi6Fyhr4AIOcS5QwdXpHxjx8w/exec";
+// const USER_API = "https://script.google.com/macros/s/AKfycbxWNWz8aIr_8DqTTHsk9y089ZLZO6B8m2ywd6e1kCWi6Fyhr4AIOcS5QwdXpHxjx8w/exec";
 
 // 管理者役職番号
 const adminRoles = [1, 2, 3, 4];
