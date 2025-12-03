@@ -1,0 +1,61 @@
+<!-- /reserve_site/camera/admin.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>カメラ管理画面 | PoCKet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通デザイン -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- ナビゲーション制御（既存） -->
+  <script src="../auth/js/app-auth.js" defer></script>
+  <!-- カメラ管理用スクリプト -->
+  <script src="./admin-camera.js" defer></script>
+</head>
+<body class="page-transition fade-in">
+
+<div id="header-wrapper">
+  <header id="main-header">
+    <div class="header-content">
+      <a href="../index.html">
+        <img src="../assets/images/club-icon.JPG" alt="写真技術研究会ロゴ" class="logo">
+        <div class="site-title">
+          <h1>カメラ管理画面</h1>
+          <p>PoCKet Camera Admin</p>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="../index.html">トップ</a></li>
+      <li><a href="../camera/index.html">カメラ予約</a></li>
+      <li><a href="../pc/index.html">PC予約</a></li>
+      <li><a href="../mypage.html">マイページ</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main class="camera-center-section">
+  <h2>📷 カメラ予約一覧（管理者用）</h2>
+  <p style="text-align:center;">
+    役職者のみアクセスできます。<br>
+    各行の「管理者キャンセル」ボタンから予約を削除できます。
+  </p>
+
+  <section class="mypage-card">
+    <div id="camera-admin-table">
+      読み込み中…
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 写真技術研究会 PoCKet</p>
+</footer>
+
+</body>
+</html>
