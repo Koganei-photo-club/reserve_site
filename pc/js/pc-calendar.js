@@ -85,6 +85,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     },
 
     dateClick(info) {
+      if (!user) {
+        alert("ログインユーザーのみ予約できます");
+        return;
+      }
       openDayModal(info.dateStr);
     }
   });
@@ -261,7 +265,7 @@ document.addEventListener("DOMContentLoaded", async function () {
    ************************************************/
   async function openReserveConfirm(date, slot) {
     if (!user) {
-      alert("⚠ ログインユーザーのみ予約できます");
+      alert("ログインユーザーのみ予約できます");
       return;
     }
 
@@ -273,13 +277,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       email: user.email,
       name: user.name,
       lineName: user.lineName,
-      equip: slot,  // 時間枠
+      slot: slot,  // 時間枠
       start: date,  // 予約日
-      end: date
     };
 
     try {
-      const res = await fetch(apiUrl, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
