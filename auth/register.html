@@ -57,14 +57,15 @@
       </select>
       <br><br>
 
-      <label>役職</label><br>
+      <!-- 役職選択なし（管理者を登録後にコメントアウトする）-->
+      <!-- <label>役職</label><br>
       <select id="reg-role" style="width:100%; padding:8px;">
         <option value="0">役職なし</option>
         <option value="1">部長</option>
         <option value="2">副部長</option>
         <option value="3">会計</option>
         <option value="4">文連</option>
-      </select>
+      </select> -->
       <br><br>
 
       <button class="button" onclick="sendRegister()">登録する</button>
@@ -93,7 +94,9 @@ async function sendRegister() {
     name: document.getElementById("reg-name").value.trim(),
     lineName: document.getElementById("reg-line").value.trim(),
     grade: document.getElementById("reg-grade").value,
-    role: document.getElementById("reg-role").value
+    role: 0   // ★自動で役職なし
+    // role: document.getElementById("reg-role").value
+    // ↑役職なし対応(管理者登録後にコメントアウト)
   };
 
   if (!payload.email || !payload.name || !payload.lineName) {
