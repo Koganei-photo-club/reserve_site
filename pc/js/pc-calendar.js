@@ -121,7 +121,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     showModal("dayModal");
   }
 
-  $("#dayClose").onclick = () => hideModal("dayModal");
+  // 🔻 この部分を差し替え！ 🔻
+  const dayCloseBtn = document.getElementById("dayClose");
+  if (dayCloseBtn) {
+    dayCloseBtn.onclick = () => hideModal("dayModal");
+  }
 
 
   /**********************************************
@@ -164,7 +168,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     showModal("cancelModal");
   }
 
-  $("#cancelClose").onclick = () => hideModal("cancelModal");
+  // 🔻nullチェック付きに変更！（ここがポイント）🔻
+  const cancelCloseBtn = document.getElementById("cancelClose");
+  if (cancelCloseBtn) {
+    cancelCloseBtn.onclick = () => hideModal("cancelModal");
+  }
 
   async function cancel(date, slot) {
     const code = $("#cancelCode").value.trim();
