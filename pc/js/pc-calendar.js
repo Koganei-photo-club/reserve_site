@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   /**********************************************
    * 📅 FullCalendar
    **********************************************/
-  const calendar = new FullCalendar.Calendar($("#calendar"), {
+  const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "ja",
 
