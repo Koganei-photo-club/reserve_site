@@ -129,9 +129,11 @@
     <p>© 2025 法政大学 小金井写真部</p>
   </footer>
 
-<script src="../auth/js/app-auth.js"></script>
+<!-- ✘ app-auth.js が先だと失敗する場合あり -->
+
 <script src="../calendar/js/common-calendar.js"></script>
-<script src="js/pc-calendar.js"></script>
+<script src="../auth/js/app-auth.js"></script>
+<script src="js/pc-calendar.js" defer></script>
 
 </body>
 </html>
