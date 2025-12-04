@@ -32,6 +32,10 @@
       const res  = await fetch(CAMERA_API);
       const data = await res.json();
       const rows = data.rows || [];
+      // 🔽 新しいstart日時順にソート
+      rows.sort((a, b) => {
+        return new Date(b.start) - new Date(a.start); // 降順（新しい → 古い）
+      });
 
       if (rows.length === 0) {
         box.innerHTML = "<p>現在、カメラの予約はありません。</p>";
