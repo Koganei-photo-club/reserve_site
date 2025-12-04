@@ -722,6 +722,14 @@ footer p {
   border: 1px solid #ccc;
 }
 
+.fc-daygrid-day .pc-mark {
+  pointer-events: none !important;
+}
+
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
 
 /* ===============================
    📌 カメラ予約トップ専用の中央レイアウト

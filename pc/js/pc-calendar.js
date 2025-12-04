@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     },
 
     dateClick(info) {
+      console.log("クリック検知:", info.dateStr);
       if (!user) {
         alert("ログインユーザーのみ予約できます");
         return;
