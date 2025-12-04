@@ -18,6 +18,15 @@ const TIME_SLOTS = [
 
 document.addEventListener("DOMContentLoaded", async function () {
 
+  const calendarEl = document.getElementById("calendar");
+  if (!calendarEl) {
+    console.error("❌ #calendar が見つかりません");
+    return;
+  }
+  
+  /**********************************************
+   * 📌 ユーザー情報取得
+   **********************************************/
   const userJson = sessionStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
 
