@@ -1,94 +1,59 @@
 /**********************************************
- * 💻 PC予約カレンダー
+ * 💻 PC予約カレンダー（共通化版）
  **********************************************/
 
 const API_URL = "https://pc-proxy.photo-club-at-koganei.workers.dev/";
+const {
+  toDate, toYMD, $, showModal, hideModal,
+  fetchReservations
+} = CalendarUtil;
+
+// 固定の時間枠
+const TIME_SLOTS = [
+  "10:50〜11:40", "11:40〜12:30",
+  "13:20〜14:10", "14:10〜15:00",
+  "15:10〜16:00", "16:00〜16:50",
+  "17:00〜17:50", "17:50〜18:40"
+];
 
 document.addEventListener("DOMContentLoaded", async function () {
 
   const userJson = sessionStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
 
-  if (!user) {
-    alert("⚠ 予約を行うにはログインが必要です。");
-  }
+  if (!user) alert("⚠ 予約にはログインが必要です");
 
-  const calendarEl = document.getElementById("calendar");
+  // 🎯 API 経由で予約を取得
+  let reservations = await fetchReservations(API_URL);
 
-  const TIME_SLOTS = [
-    "10:50〜11:40", "11:40〜12:30",
-    "13:20〜14:10", "14:10〜15:00",
-    "15:10〜16:00", "16:00〜16:50",
-    "17:00〜17:50", "17:50〜18:40"
-  ];
-
-  // ===============================
-  // PC予約：JSTで前日締切
-  // ===============================
-  function isPcSlotAvailable(dateStr) {
-    // 今日の JST YYYY-MM-DD を作成
-    const now = new Date();
-    const jstOffsetMs = 9 * 60 * 60 * 1000;
-    const todayJst = new Date(now.getTime() + jstOffsetMs);
-    const todayStr = todayJst.toISOString().split("T")[0];
-
-    // 今日の JST 00:00
-    const today0 = new Date(`${todayStr}T00:00:00+09:00`);
-
-    // 対象日を JST 00:00 に固定
-    const target = new Date(`${dateStr}T00:00:00+09:00`);
-
-    // 今日より未来の日付だけ予約可能
-    return target > today0;
-  }
-
-  let rawData = [];
-
-  /************************************************
-   * 予約データ取得
-   ************************************************/
-  try {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-    // GAS が { status, rows } を返している想定
-    rawData = Array.isArray(data.rows) ? data.rows : (Array.isArray(data) ? data : []);
-  } catch (err) {
-    console.error("予約データ取得エラー:", err);
-    return;
-  }
-
-  /************************************************
-   * 日付別の予約カウント
-   ************************************************/
-  const countByDate = {};
-  rawData.forEach(r => {
-    const date = r.start;  // PCでは start = 予約日
-    if (!date) return;
-    if (!countByDate[date]) countByDate[date] = 0;
-    countByDate[date]++;
+  // 日付毎の予約数表示用
+  const dailyCount = {};
+  reservations.forEach(r => {
+    const d = r.start;
+    dailyCount[d] = (dailyCount[d] || 0) + 1;
   });
 
-  /************************************************
-   * カレンダー本体
-   ************************************************/
-  const calendar = new FullCalendar.Calendar(calendarEl, {
+  /**********************************************
+   * 📅 FullCalendar
+   **********************************************/
+  const calendar = new FullCalendar.Calendar($("#calendar"), {
     initialView: "dayGridMonth",
     locale: "ja",
-    height: "auto",
 
     dayCellDidMount(info) {
-      paintCell(info, calendar);
-    },
+      // 日別予約数に応じて色分け
+      const d = info.date.toISOString().split("T")[0];
+      const cnt = dailyCount[d] || 0;
+      let bg = "#c8f7c5", mark = "◯";
+      if (cnt >= 4) { bg = "#ffd6d6"; mark = "×"; }
+      else if (cnt >= 2) { bg = "#ffe8b3"; mark = "△"; }
 
-    datesSet(info) {
-      fixMonthPaint(calendar, countByDate);
+      info.el.style.background = bg;
+      info.el.innerHTML += `<div class="pc-mark">${mark}</div>`;
     },
 
     dateClick(info) {
-      if (!user) {
-        alert("ログインユーザーのみ予約できます");
-        return;
-      }
+      if (!user) return alert("ログインが必要です");
       openDayModal(info.dateStr);
     }
   });
@@ -96,304 +61,127 @@ document.addEventListener("DOMContentLoaded", async function () {
   calendar.render();
 
 
-  /************************************************
-   * 日セルの色付け（関数化）
-   ************************************************/
-  function paintCell(info, calendarInstance) {
-
-    const cellDate = info.date;
-    const dispMonth = info.view.currentStart.getMonth();
-    const dispYear  = info.view.currentStart.getFullYear();
-
-    if (cellDate.getMonth() !== dispMonth || cellDate.getFullYear() !== dispYear) {
-      const old = info.el.querySelector(".pc-mark");
-      if (old) old.remove();
-      info.el.style.background = "";
-      return;
-    }
-
-    const dateStr = cellDate.toISOString().split("T")[0];
-    const cnt = countByDate[dateStr] || 0;
-
-    let mark = "◯";
-    let color = "#c8f7c5";
-    if (cnt >= 4 && cnt <= 7) {
-      mark = "△";
-      color = "#ffe8b3";
-    } else if (cnt >= 8) {
-      mark = "×";
-      color = "#ffd6d6";
-    }
-
-    info.el.style.position = "relative";
-    info.el.style.background = color;
-
-    const oldMark = info.el.querySelector(".pc-mark");
-    if (oldMark) oldMark.remove();
-
-    const div = document.createElement("div");
-    div.className = "pc-mark";
-    div.textContent = mark;
-
-    Object.assign(div.style, {
-      position: "absolute",
-      bottom: "4px",
-      right: "4px",
-      fontSize: "1.4em",
-      fontWeight: "bold",
-      pointerEvents: "none"
-    });
-
-    info.el.appendChild(div);
+  /**********************************************
+   * 🔹 PC：締切判定 (JST)
+   **********************************************/
+  function isSlotAvailable(date) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const d = new Date(date + "T00:00:00+09:00");
+    return d > today; // 前日締切
   }
 
-  /************************************************
-   * 月が確定した後に全日セルを再塗り
-   ************************************************/
-  function fixMonthPaint(calendarInstance, countMap) {
 
-    const view = calendarInstance.view;
-    const start = new Date(view.currentStart);
-    const end   = new Date(view.currentEnd);
-    const mid = new Date((start.getTime() + end.getTime()) / 2);
-
-    const dispMonth = mid.getMonth();
-    const dispYear  = mid.getFullYear();
-
-    document.querySelectorAll(".fc-daygrid-day").forEach(cell => {
-
-      const dateStr = cell.getAttribute("data-date");
-      if (!dateStr) return;
-
-      const d = new Date(dateStr);
-
-      if (d.getMonth() !== dispMonth || d.getFullYear() !== dispYear) {
-        cell.style.background = "";
-        const old = cell.querySelector(".pc-mark");
-        if (old) old.remove();
-        return;
-      }
-
-      const cnt = countMap[dateStr] || 0;
-
-      let mark = "◯";
-      let color = "#c8f7c5";
-      if (cnt >= 4 && cnt <= 7) {
-        mark = "△";
-        color = "#ffe8b3";
-      } else if (cnt >= 8) {
-        mark = "×";
-        color = "#ffd6d6";
-      }
-
-      cell.style.background = color;
-      cell.style.position = "relative";
-
-      const old = cell.querySelector(".pc-mark");
-      if (old) old.remove();
-
-      const div = document.createElement("div");
-      div.className = "pc-mark";
-      div.textContent = mark;
-
-      Object.assign(div.style, {
-        position: "absolute",
-        bottom: "4px",
-        right: "4px",
-        fontSize: "1.4em",
-        fontWeight: "bold",
-        pointerEvents: "none"
-      });
-
-      cell.appendChild(div);
-    });
-  }
-
-  /************************************************
-   * 日別モーダル
-   ************************************************/
-  const dayModal = document.getElementById("dayModal");
-  const dayTitle = document.getElementById("dayTitle");
-  const timeSlotsEl = document.getElementById("timeSlots");
-  const dayClose = document.getElementById("dayClose");
-
-  dayClose.addEventListener("click", () => {
-    dayModal.style.display = "none";
-  });
+  /**********************************************
+   * 🔹 日別モーダル
+   **********************************************/
+  const dayModal = $("#dayModal");
+  const timeSlotsEl = $("#timeSlots");
 
   function openDayModal(date) {
-    dayTitle.textContent = `${date} の予約状況`;
-
-    const todaysData = rawData.filter(r => r.start === date);
+    $("#dayTitle").textContent = `${date} の予約状況`;
     timeSlotsEl.innerHTML = "";
 
+    const todays = reservations.filter(r => r.start === date);
+
     TIME_SLOTS.forEach(slot => {
-      const reserved = todaysData.some(r => r.equip === slot);
-      const available = isPcSlotAvailable(date);
+      const reserved = todays.some(r => r.slot === slot);
+      const available = isSlotAvailable(date);
 
       const btn = document.createElement("button");
 
-      // 予約済チェック（締切より優先）
       if (reserved) {
         btn.className = "slot booked";
         btn.textContent = `${slot}（予約済）`;
-        btn.addEventListener("click",()=> openCancelModal(date, slot));
+        btn.onclick = () => openCancelModal(date, slot);
       }
-      // 予約はないが締切済→キャンセル不可
       else if (!available) {
         btn.className = "slot closed";
-        btn.textContent = `${slot}（予約締切）`;
+        btn.textContent = `${slot}（締切）`;
         btn.disabled = true;
-        // timeSlotsEl.appendChild(btn);
-        // return;
       }
-      // 上記以外→予約可能
       else {
         btn.className = "slot free";
         btn.textContent = `${slot}（空き）`;
-        btn.addEventListener("click", () => openReserveConfirm(date, slot));
+        btn.onclick = () => reserve(date, slot);
       }
 
       timeSlotsEl.appendChild(btn);
     });
 
-    dayModal.style.display = "flex";
+    showModal("dayModal");
   }
 
-  /************************************************
-   * 予約（Googleフォームに飛ばさず、直接API）
-   ************************************************/
-  async function openReserveConfirm(date, slot) {
-    if (!user) {
-      alert("ログインユーザーのみ予約できます");
-      return;
-    }
+  $("#dayClose").onclick = () => hideModal("dayModal");
 
-    const ok = confirm(`${date} / ${slot}\nこの枠を予約しますか？`);
-    if (!ok) return;
+
+  /**********************************************
+   * 📌 予約
+   **********************************************/
+  async function reserve(date, slot) {
+    if (!confirm(`${date} / ${slot} を予約しますか？`)) return;
 
     const payload = {
       mode: "reserve",
       email: user.email,
       name: user.name,
       lineName: user.lineName,
-      slot: slot,  // 時間枠
-      start: date,  // 予約日
+      start: date,
+      slot
     };
 
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const result = await res.json();
-      alert("予約が完了しました！（認証コード: " + (result.code || "----") + "）");
-      window.location.reload();
-
-    } catch (err) {
-      console.error(err);
-      alert("予約送信でエラーが発生しました。");
-    }
-  }
-
-  /************************************************
-   * キャンセル申請
-   ************************************************/
-  const cancelModal = document.getElementById("cancelModal");
-  const cancelTarget = document.getElementById("cancelTarget");
-  const cancelClose = document.getElementById("cancelClose");
-  const cancelConfirm = document.getElementById("cancelConfirm");
-  const cancelMessage = document.getElementById("cancelMessage");
-
-  cancelClose.addEventListener("click", () => {
-    cancelModal.style.display = "none";
-  });
-
-  let cancelDate = "";
-  let cancelSlot = "";
-
-  function openCancelModal(date, slot) {
-    cancelDate = date;
-    cancelSlot = slot;
-    cancelTarget.textContent = `${date} / ${slot}`;
-    cancelMessage.textContent = "";
-    cancelModal.style.display = "flex";
-  }
-
-const DEBUG = true; // ←切り替えスイッチ！（trueでデバッグ表示）
-
-cancelConfirm.addEventListener("click", async () => {
-  if (!user) {
-    cancelMessage.textContent = "⚠ ログインしていません。";
-    return;
-  }
-
-  const code = document.getElementById("cancelCode").value.trim();
-  if (!code) {
-    cancelMessage.textContent = "⚠ 認証コードを入力してください。";
-    return;
-  }
-
-  const payload = {
-    mode: "cancel",
-    email: user.email,
-    slot: cancelSlot,
-    start: cancelDate,
-    code
-  };
-
-  if (DEBUG) console.log("🔥Send cancel payload:", payload);
-
-  cancelMessage.textContent = DEBUG
-    ? "⏳送信中…（デバッグ: 結果はログ表示）"
-    : "⏳キャンセル申請中…";
-
-  try {
-    const res = await fetch(apiUrl, {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    const result = await res.json().catch(() => null);
-
-    if (DEBUG) {
-      console.log("📥Cancel response:", result);
-      cancelMessage.textContent = "✔ 完了（ログで結果確認）";
-    } else {
-      if (result.result === "success") {
-        cancelMessage.textContent = "✔ キャンセル完了！";
-        setTimeout(() => window.location.reload(), 1500);
-      } else {
-        cancelMessage.textContent = "⚠ 一致する予約が見つかりません";
-      }
-    }
-
-  } catch (err) {
-    console.error(err);
-    cancelMessage.textContent = "⚠ 通信エラー";
+    const data = await res.json();
+    alert(`予約完了！認証コード: ${data.code}`);
+    location.reload();
   }
-});
 
-});
 
-/**********************************************
- * 📱 アプリ風ページ遷移（フェードアニメーション）
- **********************************************/
-document.querySelectorAll("a").forEach(a => {
-  const href = a.getAttribute("href");
-  if (!href || href.startsWith("http") || href.startsWith("#") || a.target === "_blank") return;
+  /**********************************************
+   * 📌 キャンセル
+   **********************************************/
+  const cancelModal = $("#cancelModal");
 
-  a.addEventListener("click", (e) => {
-    e.preventDefault();
-    const url = href;
+  function openCancelModal(date, slot) {
+    $("#cancelTarget").textContent = `${date} / ${slot}`;
+    $("#cancelCode").value = "";
+    $("#cancelMessage").textContent = "";
+    $("#cancelConfirm").onclick = () => cancel(date, slot);
+    showModal("cancelModal");
+  }
 
-    document.body.classList.add("fade-in");
-    document.body.classList.add("fade-out");
+  $("#cancelClose").onclick = () => hideModal("cancelModal");
 
-    setTimeout(() => {
-      window.location.href = url;
-    }, 350);
-  });
+  async function cancel(date, slot) {
+    const code = $("#cancelCode").value.trim();
+    if (!code) return $("#cancelMessage").textContent = "❌ 認証コード入力";
+
+    const payload = {
+      mode: "cancel",
+      email: user.email,
+      start: date,
+      slot,
+      code
+    };
+
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+    if (result?.result === "success") {
+      alert("キャンセル成功");
+      location.reload();
+    } else {
+      $("#cancelMessage").textContent = "一致なし / エラー";
+    }
+  }
+
 });
