@@ -71,6 +71,26 @@
       <p id="cancelMessage" style="margin-top: 1rem; font-weight:bold;"></p>
     </div>
   </div>
+
+  <!-- 🔶 PC予約・カメラ予約 共通キャンセルモーダル -->
+  <div id="cancelModal" class="cancel-modal" style="display:none;">
+    <div class="cancel-box">
+      <h3 id="cancelTitle">予約キャンセル</h3>
+      <p id="cancelTarget">対象予約：</p>
+
+      <!-- 氏名入力（PCでは自動判定 → 非表示にしてもOK）-->
+      <input type="text" id="cancelName" placeholder="氏名を入力（カメラ予約のみ）">
+
+      <input type="text" id="cancelCode" placeholder="認証番号（4桁）を入力">
+
+      <div class="cancel-buttons">
+        <button id="cancelSend">キャンセル送信</button>
+        <button id="cancelClose">閉じる</button>
+      </div>
+
+      <p id="cancelMessage" style="margin-top: 1rem; font-weight:bold;"></p>
+    </div>
+  </div>
 </main>
 
 </body>

@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       list.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           openMyCancelModal(
+            "pc",               // type
             btn.dataset.slot,    // slot
             btn.dataset.date,   // startOrDate
             btn.dataset.code    // code
