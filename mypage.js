@@ -190,12 +190,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // マイページ用キャンセル操作
   // =============================
 
-  // 既存キャンセルモーダルを利用
-  function openMyCancelModal(equip, startOrDate, code) {
+  // 共通モーダル表示
+  function openMyCancelModal(type, slotOrEquip, date, code) {
     const m = document.getElementById("cancelModal");
 
     document.getElementById("cancelTarget").textContent =
-      `${equip} / ${startOrDate}`;
+      `${date} / ${slotOrEquip}`;
     document.getElementById("cancelMessage").textContent = "";
     document.getElementById("cancelCode").value = "";
 
@@ -204,59 +204,79 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => m.classList.add("show"), 10);
 
     document.getElementById("cancelSend").onclick = () =>
-      myCancelSend(equip, startOrDate, code);
+      myCancelSend(type, slotOrEquip, date, code);
   }
 
-async function myCancelSend(equip, startOrDate, correctCode) {
+  // =============================
+  // 🚫 キャンセル送信
+  // =============================
+  async function myCancelSend(type, slotOrEquip, date, correctCode) {
+    const input = document.getElementById("cancelCode").value.trim();
+    if (!input)
+      return document.getElementById("cancelMessage").textContent =
+        "❌ コード入力してください";
+    if (input !== correctCode)
+      return document.getElementById("cancelMessage").textContent =
+        "❌ 認証コードが違います";
 
-  const input = document.getElementById("cancelCode").value.trim();
-  if (!input) return document.getElementById("cancelMessage").textContent = "❌ コードを入力";
-  if (input !== correctCode) return document.getElementById("cancelMessage").textContent = "❌ コードが違います";
+    document.getElementById("cancelMessage").textContent = "⏳送信中…";
 
-  let targetAPI;
-  let payload;
-
-  // PC予約判定（時間枠は "〜" を含む）
-  const isPC = equip.includes("〜");
-
-  if (isPC) {
-    targetAPI = PC_API;
-    payload = {
-      requestType: "PCキャンセル",
-      date: startOrDate,
-      slot: equip,
-      auth: correctCode,
-      name: user.name
-    };
-  } else {
-    targetAPI = CAMERA_API;
-    payload = {
+  // =============================
+  // 📌 PC予約キャンセル
+  // =============================
+  if (type === "pc") {
+    const payload = {
       mode: "cancel",
       email: user.email,
-      equip,
-      start: startOrDate,
+      start: date,
+      slot: slotOrEquip,
       code: correctCode
     };
+
+    const res = await fetch(PC_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json().catch(() => null);
+    console.log("📥PC Cancel response:", result);
+
+    if (result?.result === "success") {
+      document.getElementById("cancelMessage").textContent = "✔ キャンセル成功！";
+      return setTimeout(() => location.reload(), 1000);
+    } else {
+      return document.getElementById("cancelMessage").textContent =
+        "⚠ 一致する予約がありません";
+    }
   }
 
-  console.log("🔥Send cancel payload:", payload);
-  document.getElementById("cancelMessage").textContent = "⏳通信中…";
+  // =============================
+  // 📸 カメラ貸出キャンセル
+  // =============================
+  const payload = {
+    mode: "cancel",
+    email: user.email,
+    equip: slotOrEquip, // カメラの機材名
+    start: date,
+    code: correctCode
+  };
 
-  const res = await fetch(targetAPI, {
+  const res = await fetch(CAMERA_API, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   });
 
   const result = await res.json().catch(() => null);
-  console.log("📥Cancel response:", result);
+  console.log("📥CAMERA Cancel response:", result);
 
-  if (result?.status === "success" || result?.result === "success") {
-    document.getElementById("cancelMessage").textContent = "✔ キャンセル完了！";
-    setTimeout(() => location.reload(), 800);
+  if (result?.result === "success") {
+    document.getElementById("cancelMessage").textContent = "✔ キャンセル成功！";
+    setTimeout(() => location.reload(), 1000);
   } else {
-    document.getElementById("cancelMessage").textContent = "⚠ エラー：" + (result?.message || result?.error);
+    document.getElementById("cancelMessage").textContent =
+      "⚠ エラー：" + (result?.message || "不明なエラー");
   }
 }
-
 });  // DOMContentLoaded end
