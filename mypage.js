@@ -112,10 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res  = await fetch(PC_API);
       const data = await res.json();
+
+      // PC API のフィールドに合わせて正しく取り出す
       const rows = (data.rows || []).map(r => ({
         email: r.email,
         name:  r.name,
-        slot:  r.equip,
+        slot:  r.slot,
         date:  r.start,
         auth:  r.code
       }));
@@ -149,12 +151,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </table>
       `;
 
-      // PC リスト内のボタンだけにイベントを付与
+      // 📌 Cancelボタンにイベントをつける
       list.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          // PC のときは slot を equip として渡し、date を start 扱いにする
           openMyCancelModal(
-            btn.dataset.slot,   // equip (実際は時刻枠)
+            btn.dataset.slot,    // slot
             btn.dataset.date,   // startOrDate
             btn.dataset.code    // code
           );
