@@ -219,6 +219,15 @@ main.mypage-center-section {
     margin: 1em auto;
 }
 
+.reserve-item {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    text-align: left;
+}
+
 /* =============================
     スマホ表示用
     ============================= */
