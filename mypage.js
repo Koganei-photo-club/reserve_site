@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       list.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           openMyCancelModal(
+            "camera",            // type
             btn.dataset.equip,   // equip
             btn.dataset.start,   // start
             btn.dataset.code     // code
@@ -194,6 +195,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // 共通モーダル表示
   function openMyCancelModal(type, slotOrEquip, date, code) {
     const m = document.getElementById("cancelModal");
+
+    // タイトル切り替え（お好みで）
+    const title = document.getElementById("cancelTitle");
+    if (title) {
+      title.textContent = (type === "pc")
+        ? "PC予約のキャンセル"
+        : "カメラ予約のキャンセル";
+    }
 
     document.getElementById("cancelTarget").textContent =
       `${date} / ${slotOrEquip}`;
