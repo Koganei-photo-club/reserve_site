@@ -494,8 +494,8 @@ footer p {
 
 /* 📱 スマホ対応 */
 @media screen and (max-width: 768px) {
-  #main-header { height: 60px; }
-  .logo { height: 32px; margin-right: 0.6em; }
+  #main-header { height: 70px; }
+  .logo { height: 40px; margin-right: 0.6em; }
   .site-title h1 { font-size: 1em; }
   .site-title p { font-size: 0.8em; }
 
