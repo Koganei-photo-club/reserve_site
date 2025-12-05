@@ -151,7 +151,7 @@ body {
 /* 本文の位置 */
 main {
     padding: 2em;
-    margin-top: 180px; /* トップページは160px */
+    margin-top: 360px; /* トップページは160px */
 }
 
 h2 {
@@ -273,6 +273,54 @@ main.mypage-center-section {
 .button:hover {
     background: navy;
 }
+
+/* ==============================
+    キャンセルモーダルスタイル
+    ============================= */
+.cancel-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.cancel-box {
+    background: #f5f5f5;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+}
+
+.cancel-box input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cancel-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.cancel-buttons button {
+    flex: 1;
+    margin: 0 4px;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    color: #f5f5f5;
+    cursor: pointer;
+}
+
+#cancelConfirm { background-color: #d9534f; }
+#cancelClose { background-color: #6c757d; }
 
 /* =============================
     スマホ表示用
