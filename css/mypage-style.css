@@ -258,14 +258,14 @@ main.mypage-center-section {
     スマホ表示用
     ============================= */
 /* ヘッダー（スマホ用） */
-@media screen and (max-width:480px) {
+@media screen and (max-width:400px) {
     #main-header { height: 70px; }
     .logo { height: 40px; margin-right: 0.6em; }
     .site-title h1 { font-size: 1em; }
     .site-title p { font-size: 0.8em; }
 }
 /* ナビゲーション（スマホ用） */
-@media screen and (max-width:480px) {
+@media screen and (max-width:400px) {
     .navbar.two-rows ul {
         display: flex;
         justify-content: center;
