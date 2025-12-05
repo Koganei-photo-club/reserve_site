@@ -145,8 +145,23 @@ body {
     }
 }
 
+/* ==============================
+    マイページ固有デザイン
+    ============================= */
 /* 本文の位置 */
 main {
     padding: 2em;
-    margin-top: 140px;
+    margin-top: 140px; /* トップページは160px */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.mypage-center-section {
+    max-width: 900px;
+    margin:2em auto;
+    text-align: center;
+    padding: 0 1rem;
 }
