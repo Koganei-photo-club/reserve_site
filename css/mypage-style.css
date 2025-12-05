@@ -136,3 +136,17 @@ body {
 .navbar.two-row a:hover {
     background: #777;
 }
+
+/* ナビゲーション（スマホ用） */
+@media (max-width:480px) {
+    .navbar.tow-rows a {
+        font-size: 0.8em;
+        padding: 0.4em 0.8em;
+    }
+}
+
+/* 本文の位置 */
+main {
+    padding: 2em;
+    margin-top: 160px;
+}
