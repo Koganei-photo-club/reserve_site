@@ -188,6 +188,25 @@ main.mypage-center-section {
     cursor: pointer;
 }
 
+/* 予約一覧 */
+.mypage-section {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.mypage-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    font-size: 1rem;
+    background: #f5f5f5;
+}
+
+.reserve-list-box {
+    max-width: 700px;
+    margin: 1em auto;
+}
+
 /* =============================
     スマホ表示用
     ============================= */
