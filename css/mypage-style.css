@@ -151,7 +151,7 @@ body {
 /* 本文の位置 */
 main {
     padding: 2em;
-    margin-top: 140px; /* トップページは160px */
+    margin-top: 180px; /* トップページは160px */
 }
 
 h2 {
