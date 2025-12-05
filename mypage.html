@@ -9,17 +9,27 @@
 </head>
 <body>
 
-<header id="main-header">
-  <div class="header-content">
-    <a href="index.html">
-      <img src="./assets/images/club-icon.JPG" class="logo">
-      <div class="site-title"><h1>PoCKet</h1><p>PhotoClub Koganei</p></div>
-    </a>
+  <div id="header-wrapper">
+  <header id="main-header">
+    <div class="header-content">
+      <a href="index.html">
+        <img src="./assets/images/club-icon.JPG" class="logo">
+        <div class="site-title"><h1>PoCKet</h1><p>PhotoClub Koganei</p></div>
+      </a>
+    </div>
+  </header>
+
+  <nav class="navbar two-rows">
+    div class="nav-row user-links">
+      <ul>
+        <li id="nav-login" style="display:none;"><a href="/reserve_site/auth/login.html">ログイン</a></li>
+        <li id="nav-mypage"><a href="/reserve_site/mypage.html">マイページ</a></li>
+        <li id="nav-logout" style="display:none;"><a href="#" id="logoutBtnNav">ログアウト</a></li>
+      </ul>
+  </nav>
   </div>
-</header>
 
-<main class="camera-center-section page-transition">
-
+  <main class="camera-center-section page-transition">
   <h2>マイページ</h2>
 
   <!-- 🔹 プロフィールカード -->
