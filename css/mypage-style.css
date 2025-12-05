@@ -154,7 +154,7 @@ h2 {
 
 main.mypage-center-section {
     max-width: 900px;
-    margin:2em auto;
+    margin: 2em auto;
     text-align: center;
     padding: 0 1rem;
 }
@@ -181,6 +181,13 @@ main.mypage-center-section {
 /* =============================
     スマホ表示用
     ============================= */
+/* ヘッダー（スマホ用） */
+@media screen and (max-width:480px) {
+    #main-header { height: 60px; }
+    .logo { height: 32px; margin-right: 0.6em; }
+    .site-title h1 { font-size: 1em; }
+    .site-title p { font-size: 0.8em; }
+}
 /* ナビゲーション（スマホ用） */
 @media screen and (max-width:480px) {
     .navbar.two-rows ul {
@@ -194,4 +201,20 @@ main.mypage-center-section {
         font-size: 12px;
         margin: 0;
     }
+}
+
+/* =============================
+    アプリ風ページ遷移アニメーション
+    ============================= */
+.page-transition {
+    opacity: 1;
+    transition: opacity 0.35s ease-in-out;
+}
+
+.page-transition.fade-in {
+    opacity: 1;
+}
+
+.page-transition.fade-out {
+    opacity: 0;
 }
