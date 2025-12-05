@@ -10,6 +10,34 @@ const DEBUG_MODE = false;   // ← ログを見たい間は true、本番運用�
 // 1:部長 / 2:副部長 / 3:会計 / 4:文連
 const adminRoles = [1, 2, 3, 4];
 
+/***********************
+ * ヘッダー/ナビの出し入れ
+ ***********************/
+let lastScrollY = window.scrollY;
+const header = document.getElementById("main-header");
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+
+  if (scrollTop <= 0) {
+    header.style.top = "0";
+    navbar.style.top = "70px";
+  } else if (scrollTop + windowHeight >= docHeight) {
+    header.style.top = "-70px";
+    navbar.style.top = "0";
+  } else if (scrollTop > lastScrollY) {
+    header.style.top = "-70px";
+    navbar.style.top = "0";
+  } else {
+    header.style.top = "0";
+    navbar.style.top = "70px";
+  }
+  lastScrollY = scrollTop;
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ----------------------
