@@ -1,0 +1,93 @@
+/* ==============================
+    共通デザイン
+    ============================= */
+body {
+    background-color: #f5f5f5;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+/* ラッパー */
+#header-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ヘッダー */
+#main-header {
+    position: relative;
+    background: #333;
+    color: #f5f5f5;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: top 0.25s ease;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 1em;
+}
+
+.header-content a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 1em;
+}
+
+.site-title h1 {
+    font-size: 1.2em;
+    margin: 0;
+    color: #f5f5f5;
+}
+
+.site-title p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+/* ナビゲーション */
+.navbar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #555;
+    transition: top 0.25s ease;
+    z-index: 999;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.navbar li {
+    margin: 0 0.5em;
+}
+
+.navbar a {
+    display: block;
+    padding: 0.8em 1.2em;
+    color: #f5f5f5;
+    text-decoration: none;
+    border-radius: 6px;
+}
