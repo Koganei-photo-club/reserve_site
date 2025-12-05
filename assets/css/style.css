@@ -63,7 +63,7 @@ body {
 
 /* --- ナビゲーション --- */
 .navbar {
-  position: fixed;
+  position: relative !important;
   top: 70px;
   left: 0;
   width: 100%;
