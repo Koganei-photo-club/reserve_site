@@ -178,6 +178,16 @@ main.mypage-center-section {
     margin: 6px 0;
 }
 
+.mypage-card button {
+    width: 100%;
+    padding: 0.8em;
+    background: #d9534f;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 /* =============================
     スマホ表示用
     ============================= */
