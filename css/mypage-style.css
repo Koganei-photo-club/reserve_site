@@ -208,6 +208,25 @@ main.mypage-center-section {
     text-align: left;
 }
 
+.reserve-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reserve-table th, .reserve-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.reserve-table th {
+  background: #007bff;
+  color: #fff;
+}
+
 .mypage-table th {
     background: #007bff;
     color: #f5f5f5;
