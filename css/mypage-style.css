@@ -406,13 +406,15 @@ h2 {
 
 /* モーダルボタン */
 .btn-primary {
-  background: darkblue;
+  background: #0078d4;
+  color: #fff;
 }
 .btn-primary:hover {
   background: navy;
 }
 .btn-secondary {
   background: #555;
+  color: #fff;
 }
 .btn-secondary:hover {
   background: #333;
