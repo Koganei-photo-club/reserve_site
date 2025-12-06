@@ -187,14 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // 🔹 返却日変更ボタン
+      // 🔹 返却日変更ボタンのイベント
       list.querySelectorAll(".modify-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          openReturnModal(
-            btn.dataset.equip,
-            btn.dataset.start,
-            btn.dataset.code
-          );
+          const r = {
+            equip: btn.dataset.equip,
+            start: btn.dataset.start,
+            end:   btn.dataset.end,
+            code:  btn.dataset.code
+          };
+          openModifyModal(r, todayStr);
         });
       });
 
@@ -488,73 +490,93 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 // =========================
-// 🛠 返却日変更モーダル
+// 🔁 返却日変更モーダル
 // =========================
-let currentModify = null;
+const modifyModal = document.getElementById("modifyModal");
+const modifyTargetEl = document.getElementById("modifyTarget");
+const modifySelectEl = document.getElementById("modifySelect");
+const modifyNameEl = document.getElementById("modifyName");
+const modifyCodeEl = document.getElementById("modifyCode");
+const modifyMsgEl = document.getElementById("modifyMessage");
 
-// モーダルを開く
-function openReturnModal(equip, start, code) {
-  currentModify = { equip, start, code };
-
-  document.getElementById("returnTarget").textContent =
-    `${equip} / ${start}`;
-
-  document.getElementById("newReturnDate").value = "";
-  document.getElementById("returnMessage").textContent = "";
-
-  const m = document.getElementById("returnModal");
-  m.style.display = "flex";
-  setTimeout(() => m.classList.add("show"), 10);
-}
-
-// 閉じるボタン
-document.getElementById("returnClose").onclick = () => {
-  const m = document.getElementById("returnModal");
-  m.classList.remove("show");
-  setTimeout(() => m.style.display = "none", 200);
+document.getElementById("modifyClose").onclick = () => {
+  modifyModal.classList.remove("show");
+  setTimeout(() => modifyModal.style.display = "none", 200);
 };
 
-// 変更送信
-document.getElementById("returnSend").onclick = async () => {
-  if (!currentModify) return;
+/** 🔹 候補日生成：貸出開始から7日以内 */
+function getEndDatesForModify(r, todayStr) {
+  const results = [];
+  let d = new Date(todayStr);
 
-  const newEnd = document.getElementById("newReturnDate").value;
-  const msg = document.getElementById("returnMessage");
+  for (let i = 0; i < 7; i++) {
+    const ymd = d.toISOString().split("T")[0];
+    if (ymd >= r.start) results.push(ymd);
+    d.setDate(d.getDate() + 1);
+  }
+  return results;
+}
 
-  if (!newEnd) {
-    msg.textContent = "❌ 返却日を選択してください";
+/** 🔹 モーダル開く */
+function openModifyModal(r, todayStr) {
+  modifyTargetEl.textContent = `${r.equip} / ${r.start}〜${r.end}`;
+  modifyNameEl.value = "";
+  modifyCodeEl.value = "";
+  modifyMsgEl.textContent = "";
+  modifySelectEl.innerHTML = "";
+
+  const candidates = getEndDatesForModify(r, todayStr);
+  if (candidates.length === 0) {
+    alert("返却日を変更できる候補日がありません");
     return;
   }
 
-  msg.textContent = "⏳送信中…";
+  candidates.forEach(d => {
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
+    modifySelectEl.appendChild(opt);
+  });
 
-  const payload = {
-    mode: "modify",
-    email: user.email,
-    equip: currentModify.equip,
-    start: currentModify.start,
-    code: currentModify.code,
-    newEnd
-  };
+  modifyModal.style.display = "flex";
+  setTimeout(() => modifyModal.classList.add("show"), 10);
 
-  try {
+  document.getElementById("modifySend").onclick = async () => {
+    const name = modifyNameEl.value.trim();
+    const code = modifyCodeEl.value.trim();
+    const newEnd = modifySelectEl.value;
+
+    if (!name || !code) {
+      modifyMsgEl.textContent = "❌ 氏名とコードを入力してください";
+      return;
+    }
+
+    modifyMsgEl.textContent = "⏳送信中…";
+
+    const payload = {
+      mode: "modify",
+      name,
+      email: user.email,
+      equip: r.equip,
+      start: r.start,
+      code,
+      newEnd
+    };
+
     const res = await fetch(CAMERA_API, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify(payload)
     });
 
     const result = await res.json().catch(() => null);
 
     if (result?.result === "success") {
-      msg.textContent = "✔ 変更しました";
+      modifyMsgEl.textContent = "✔ 返却日を変更しました！";
       setTimeout(() => location.reload(), 900);
     } else {
-      msg.textContent = "⚠ " + (result?.message || "変更失敗");
+      modifyMsgEl.textContent = "⚠ エラー：" + (result?.message || "変更できませんでした");
     }
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "⚠ 通信エラー";
-  }
-};
+  };
+}
 });  // DOMContentLoaded end
