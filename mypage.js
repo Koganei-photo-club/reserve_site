@@ -90,10 +90,54 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const now = new Date();
+      const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+      const todayStr = jst.toISOString().split("T")[0];
+
       list.innerHTML = `
         <table class="reserve-table">
-          <tr><th>機材</th><th>期間</th><th>認証コード</th><th></th></tr>
-          ${myRes.map(r => `
+          <tr>
+            <th>機材</th>
+            <th>期間</th>
+            <th>認証コード</th>
+            <th>取り消し</th>
+            <th>状態チェック</th>
+          </tr>
+          ${myRes.map(r => {
+            // 状態チェックボタンを決定
+            let statusCell = "";
+
+            if (todayStr === r.start && !r.beforeChecked) {
+              // 利用開始日 & 利用前チェックまだ → 「借りる」
+              statusCell = `
+              <button class="status-btn"
+                data-type="before"
+                data-equip="${r.equip}"
+                data-start="${r.start}"
+                data-end="${r.end}"
+                data-code="${r.code}">
+                借りる
+              </button>`;
+            } else if (todayStr === r.end && r.beforeChecked && !r.afterChecked) {
+              // 返却予定日 & 利用前済 & 利用後まだ → 「返す」
+              statusCell = `
+              <button class="status-btn"
+                data-type="after"
+                data-equip="${r.equip}"
+                data-start="${r.start}"
+                data-end="${r.end}"
+                data-code="${r.code}">
+                返す
+              </button>`;
+            } else if (r.afterChecked) {
+              statusCell = `<span class="status-done">返却済み</span>`;
+            } else if (r.beforeChecked && !r.afterChecked) {
+              statusCell = `<span class="status-ing">貸出中</span>`;
+            } else {
+              statusCell = `<span class="status-plan">貸出予定</span>`;
+            }
+
+            return `
             <tr>
               <td>${r.equip}</td>
               <td>${r.start}〜${r.end}</td>
@@ -106,8 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
                   取り消し
                 </button>
               </td>
+              <td>${statusCell}</td>
             </tr>
-          `).join("")}
+          `;
+          }).join("")}
         </table>
       `;
 
@@ -119,6 +165,19 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.dataset.equip,   // equip
             btn.dataset.start,   // start
             btn.dataset.code     // code
+          );
+        });
+      });
+
+      // 🔹 状態チェックボタンのイベント
+      list.querySelectorAll(".status-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          openConditionModal(
+            btn.dataset.type,    // "before" or "after"
+            btn.dataset.equip,
+            btn.dataset.start,
+            btn.dataset.end,
+            btn.dataset.code
           );
         });
       });
@@ -207,6 +266,87 @@ document.addEventListener("DOMContentLoaded", () => {
       const m = document.getElementById("cancelModal");
       m.classList.remove("show");
       setTimeout(() => m.style.display = "none", 200);
+    };
+  }
+
+    // =========================
+  // 🔹 利用前 / 後 チェックモーダル
+  // =========================
+  let currentCondition = null; // { type, equip, start, end, code }
+
+  function openConditionModal(type, equip, start, end, code) {
+    currentCondition = { type, equip, start, end, code };
+
+    const titleEl = document.getElementById("conditionTitle");
+    const targetEl = document.getElementById("conditionTarget");
+    const msgEl    = document.getElementById("conditionMessage");
+
+    titleEl.textContent = (type === "after") ? "利用後チェック" : "利用前チェック";
+    targetEl.textContent = `${equip} / ${start}〜${end}`;
+    msgEl.textContent = "";
+
+    // 初期値リセット
+    document.getElementById("bodyCondition").value = "ok";
+    document.getElementById("lensCondition").value = "ok";
+    document.getElementById("accessoriesCondition").value = "ok";
+    document.getElementById("conditionRemarks").value = "";
+
+    const m = document.getElementById("conditionModal");
+    m.style.display = "flex";
+    setTimeout(() => m.classList.add("show"), 10);
+  }
+
+  const conditionCloseBtn = document.getElementById("conditionClose");
+  if (conditionCloseBtn) {
+    conditionCloseBtn.onclick = () => {
+      const m = document.getElementById("conditionModal");
+      m.classList.remove("show");
+      setTimeout(() => m.style.display = "none", 200);
+    };
+  }
+
+  const conditionSendBtn = document.getElementById("conditionSend");
+  if (conditionSendBtn) {
+    conditionSendBtn.onclick = async () => {
+      if (!currentCondition) return;
+      const msgEl = document.getElementById("conditionMessage");
+
+      const payload = {
+        mode: "condition",
+        email: user.email,
+        name:  user.name,
+        equip: currentCondition.equip,
+        start: currentCondition.start,
+        end:   currentCondition.end,
+        code:  currentCondition.code,
+        type:  currentCondition.type,      // "before" or "after"
+        bodyCondition:  document.getElementById("bodyCondition").value,
+        lensCondition:  document.getElementById("lensCondition").value,
+        accessories:    document.getElementById("accessoriesCondition").value,
+        remarks:        document.getElementById("conditionRemarks").value.trim()
+      };
+
+      msgEl.textContent = "⏳送信中…";
+
+      try {
+        const res = await fetch(CAMERA_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json().catch(() => null);
+        console.log("📥Condition response:", result);
+
+        if (result?.result === "success") {
+          msgEl.textContent = "✔ 記録しました";
+          setTimeout(() => location.reload(), 900);
+        } else {
+          msgEl.textContent = "⚠ エラー：" + (result?.message || "記録に失敗しました");
+        }
+      } catch (e) {
+        console.error(e);
+        msgEl.textContent = "⚠ 通信エラー";
+      }
     };
   }
 

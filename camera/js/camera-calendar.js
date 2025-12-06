@@ -77,6 +77,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   /***** 📌 FullCalendar描画 *****/
   const events = reservations.map(r => {
     const ev = buildContinuousEvent(r);
+
+    // 🔽 貸出状態に応じてタイトル変更
+    if (!r.beforeChecked) {
+      ev.title = `${r.equip}（貸出予定）`;
+    } else if (r.beforeChecked && !r.afterChecked) {
+      ev.title = `${r.equip}（貸出中）`;
+    } else if (r.afterChecked) {
+      ev.title = `${r.equip}（返却済）`;
+    }
+
     ev.backgroundColor = COLOR_MAP[r.equip] ?? "#777";
     ev.textColor = "#fff";
     return ev;

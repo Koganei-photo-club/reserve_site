@@ -154,7 +154,7 @@ h2 {
 
 main.mypage-center-section {
     max-width: 900px;
-    margin: 140px auto;
+    margin: 140px auto; /* ナビゲーション分の余白調整 */
     text-align: center;
     padding: 0 1rem;
 }

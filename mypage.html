@@ -89,6 +89,50 @@
       <p id="cancelMessage" style="margin-top: 1rem; font-weight:bold;"></p>
     </div>
   </div>
+
+  <!-- 🔶 利用前 / 利用後 チェック用モーダル -->
+  <div id="conditionModal" class="modal" style="display:none;">
+    <div class="modal-box">
+      <h3 id="conditionTitle">利用前チェック</h3>
+      <p id="conditionTarget">対象予約：</p>
+
+      <label style="display:block; text-align:left; margin-top:0.5em;">
+        本体の状態：
+        <select id="bodyCondition">
+          <option value="ok">問題なし</option>
+          <option value="minor">小さなキズ・汚れあり</option>
+          <option value="problem">要注意（問題あり）</option>
+        </select>
+      </label>
+
+      <label style="display:block; text-align:left; margin-top:0.5em;">
+        レンズ・光学系：
+        <select id="lensCondition">
+          <option value="ok">問題なし</option>
+          <option value="dust">ホコリ・汚れあり</option>
+          <option value="problem">要注意（曇り・キズなど）</option>
+        </select>
+      </label>
+
+      <label style="display:block; text-align:left; margin-top:0.5em;">
+        付属品（バッテリー・ストラップ等）：
+        <select id="accessoriesCondition">
+          <option value="ok">すべて揃っている</option>
+          <option value="missing">不足あり</option>
+        </select>
+      </label>
+
+      <textarea id="conditionRemarks"
+        rows="3"
+        placeholder="気になる点やメモがあれば記入してください"
+        style="width:100%; margin-top:0.8em;"></textarea>
+
+      <p id="conditionMessage" class="message" style="margin-top:0.5em;"></p>
+
+      <button id="conditionSend" class="btn-primary">送信</button>
+      <button id="conditionClose" class="btn-secondary">閉じる</button>
+    </div>
+  </div>
 </main>
 
 </body>
