@@ -194,7 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
           const r = {
             equip: btn.dataset.equip,
             start: btn.dataset.start,
-            end:   btn.dataset.end,
+            end:   rows.find(row =>
+              row.equip === btn.dataset.equip &&
+              row.start === btn.dataset.start &&
+              row.code === btn.dataset.code
+            )?.end,
             code:  btn.dataset.code
           };
           openModifyModal(r, todayStr);
