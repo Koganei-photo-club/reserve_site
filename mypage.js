@@ -167,13 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${r.equip}</td>
               <td>${r.start}〜${r.end}</td>
               <td>${r.code}</td>
-              <tr>
-                <td>${r.equip}</td>
-                <td>${r.start}〜${r.end}</td>
-                <td>${r.code}</td>
-                <td>${actionCell}</td>
-                <td>${statusCell}</td>
-              </tr>
+              <td>${actionCell}</td>
+              <td>${statusCell}</td>
             </tr>
           `;
           }).join("")}
