@@ -440,6 +440,70 @@ h2 {
   background-color: #138496;
 }
 
+/* ===============================
+      モーダル共通修正版
+      =============================== */
+.modal,
+.day-modal,
+.cancel-modal,
+#modifyModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55); /* 濃くして視認性UP */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 30000; /* 最前面 */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal.show,
+.day-modal.show,
+.cancel-modal.show,
+#modifyModal.show {
+  display: flex;
+  opacity: 1;
+}
+
+/* 共通ボックススタイル */
+.modal-content,
+.modal-box,
+.day-box,
+.cancel-box,
+.modify-box {
+  background: #fff; /* 白背景 */
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px; /* PCでも大きくなりすぎない */
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.modal.show .modal-content,
+.day-modal.show .day-box,
+.cancel-modal.show .cancel-box,
+#modifyModal.show .modify-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 入力欄スタイル */
+.modal-content input,
+.modal-content select,
+.modify-box input,
+.modify-box select {
+  width: 100%;
+  padding: 12px;
+  margin: 0.5em 0 1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
 /* =============================
     スマホ表示用
     ============================= */
