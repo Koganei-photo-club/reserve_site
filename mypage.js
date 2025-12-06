@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = new Date();
       const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
       const todayStr = jst.toISOString().split("T")[0];
-
+      
       list.innerHTML = `
         <table class="reserve-table">
           <tr>
@@ -104,9 +104,34 @@ document.addEventListener("DOMContentLoaded", () => {
             <th>状態チェック</th>
           </tr>
           ${myRes.map(r => {
-            // 状態チェックボタンを決定
-            let statusCell = "";
+            const now = new Date();
+            const jst = new Date(now.getTime() +9 *60 *60 *1000);
+            const todayStr = jst.toISOString().split("T")[0];
+            
+            // キャンセル/変更/終了
+            let actionCell = "";
+            if (todayStr < r.start) {
+              actionCell = `
+              <button class="cancel-btn"
+                data-equip="${r.equip}"
+                data-start="${r.start}"
+                data-code="${r.code}">
+                取り消し
+                </button>`;
+            } else if (todayStr >= r.start && todayStr < r.end && !r.afterChecked) {
+              actionCell = `
+              <button class="modify-btn"
+                data-equip="${r.equip}"
+                data-start="${r.start}"
+                data-code="${r.code}">
+                返却日変更
+              </button>`;
+            } else {
+              actionCell = `<span class="disabled-btn">終了</span>`;
+            }
 
+            // 状態チェック
+            let statusCell = "";
             if (todayStr === r.start && !r.beforeChecked) {
               // 利用開始日 & 利用前チェックまだ → 「借りる」
               statusCell = `
@@ -142,15 +167,13 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${r.equip}</td>
               <td>${r.start}〜${r.end}</td>
               <td>${r.code}</td>
-              <td>
-                <button class="cancel-btn"
-                  data-equip="${r.equip}"
-                  data-start="${r.start}"
-                  data-code="${r.code}">
-                  取り消し
-                </button>
-              </td>
-              <td>${statusCell}</td>
+              <tr>
+                <td>${r.equip}</td>
+                <td>${r.start}〜${r.end}</td>
+                <td>${r.code}</td>
+                <td>${actionCell}</td>   ←✨これに差し替え！
+                <td>${statusCell}</td>
+              </tr>
             </tr>
           `;
           }).join("")}
