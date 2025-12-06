@@ -334,6 +334,10 @@ main.mypage-center-section {
 }
 /* ナビゲーション（スマホ用） */
 @media screen and (max-width:900px) {
+    .navbar ul {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
     .navbar.two-rows ul {
         display: flex;
         justify-content: center;
@@ -344,6 +348,13 @@ main.mypage-center-section {
     .navbar.two-rows li {
         font-size: 12px;
         margin: 0;
+    }
+}
+
+/* メインコンテンツ（スマホ用） */
+@media screen and (max-width:900px) {
+    main {
+        margin-top: 180px;
     }
 }
 
