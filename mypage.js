@@ -517,19 +517,13 @@ function getEndDatesForModify(r, todayStr) {
   return results;
 }
 
-/** 🔹 モーダル開く */
 function openModifyModal(r, todayStr) {
   modifyTargetEl.textContent = `${r.equip} / ${r.start}〜${r.end}`;
-  modifyNameEl.value = "";
-  modifyCodeEl.value = "";
   modifyMsgEl.textContent = "";
   modifySelectEl.innerHTML = "";
 
   const candidates = getEndDatesForModify(r, todayStr);
-  if (candidates.length === 0) {
-    alert("返却日を変更できる候補日がありません");
-    return;
-  }
+  if (candidates.length === 0) return alert("候補日なし");
 
   candidates.forEach(d => {
     const opt = document.createElement("option");
@@ -542,25 +536,15 @@ function openModifyModal(r, todayStr) {
   setTimeout(() => modifyModal.classList.add("show"), 10);
 
   document.getElementById("modifySend").onclick = async () => {
-    const name = modifyNameEl.value.trim();
-    const code = modifyCodeEl.value.trim();
-    const newEnd = modifySelectEl.value;
-
-    if (!name || !code) {
-      modifyMsgEl.textContent = "❌ 氏名とコードを入力してください";
-      return;
-    }
-
     modifyMsgEl.textContent = "⏳送信中…";
 
     const payload = {
       mode: "modify",
-      name,
       email: user.email,
       equip: r.equip,
       start: r.start,
-      code,
-      newEnd
+      code: r.code,  // ← 認証コードは自動設定
+      newEnd: modifySelectEl.value
     };
 
     const res = await fetch(CAMERA_API, {
@@ -575,7 +559,8 @@ function openModifyModal(r, todayStr) {
       modifyMsgEl.textContent = "✔ 返却日を変更しました！";
       setTimeout(() => location.reload(), 900);
     } else {
-      modifyMsgEl.textContent = "⚠ エラー：" + (result?.message || "変更できませんでした");
+      modifyMsgEl.textContent =
+        "⚠ エラー：" + (result?.message || "変更できませんでした");
     }
   };
 }
