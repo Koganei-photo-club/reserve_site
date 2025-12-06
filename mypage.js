@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${r.equip}</td>
                 <td>${r.start}〜${r.end}</td>
                 <td>${r.code}</td>
-                <td>${actionCell}</td>   ←✨これに差し替え！
+                <td>${actionCell}</td>
                 <td>${statusCell}</td>
               </tr>
             </tr>
