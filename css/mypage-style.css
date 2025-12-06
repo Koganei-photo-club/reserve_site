@@ -423,6 +423,23 @@ h2 {
   color: #c33;
 }
 
+.disabled-btn {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+.modify-btn {
+  background-color: #17a2b8;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.modify-btn:hover {
+  background-color: #138496;
+}
+
 /* =============================
     スマホ表示用
     ============================= */

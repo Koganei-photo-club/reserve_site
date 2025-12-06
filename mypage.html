@@ -90,6 +90,26 @@
     </div>
   </div>
 
+  <!-- 🔶 返却日変更用モーダル -->
+  <div id="modifyModal" class="cancel-modal" style="display:none;">
+    <div class="cancel-box">
+      <h3 id="modifyTitle">返却日変更</h3>
+      <p id="modifyTarget">対象予約：</p>
+
+      <label>
+        新しい返却日：
+        <input type="date" id="modifyNewEnd">
+      </label>
+
+      <div class="cancel-buttons">
+        <button id="modifySend">変更送信</button>
+        <button id="modifyClose">閉じる</button>
+      </div>
+
+      <p id="modifyMessage" style="margin-top: 1rem; font-weight:bold;"></p>
+    </div>
+  </div>
+
   <!-- 🔶 利用前 / 利用後 チェック用モーダル -->
   <div id="conditionModal" class="modal" style="display:none;">
     <div class="modal-box">

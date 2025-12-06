@@ -192,6 +192,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
+      // 🔹 返却日変更ボタンのイベント
+      list.querySelectorAll(".modify-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          openModifyModal(
+            btn.dataset.equip,
+            btn.dataset.start,
+            btn.dataset.code
+          );
+        });
+      });
+
       // 🔹 状態チェックボタンのイベント
       list.querySelectorAll(".status-btn").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -480,4 +491,71 @@ document.addEventListener("DOMContentLoaded", () => {
       "⚠ エラー：" + (result?.message || "不明なエラー");
   }
 }
+
+// =========================
+// 🔹 返却日変更モーダル
+// =========================
+let currentModify = null;
+
+function openModifyModal(equip, start, code) {
+  currentModify = { equip, start, code };
+
+  document.getElementById("modifyTitle").textContent = "返却日変更";
+  document.getElementById("modifyTarget").textContent = `${start} / ${equip}`;
+  document.getElementById("modifyMessage").textContent = "";
+
+  // 初期値
+  document.getElementById("modifyNewEnd").value = "";
+
+  const m = document.getElementById("modifyModal");
+  m.style.display = "flex";
+  setTimeout(() => m.classList.add("show"), 10);
+}
+
+document.getElementById("modifyClose").onclick = () => {
+  const m = document.getElementById("modifyModal");
+  m.classList.remove("show");
+  setTimeout(() => m.style.display = "none", 200);
+};
+
+document.getElementById("modifySend").onclick = async () => {
+  if (!currentModify) return;
+
+  const newEnd = document.getElementById("modifyNewEnd").value;
+  const msg = document.getElementById("modifyMessage");
+
+  if (!newEnd) return msg.textContent = "❌ 日付を入力してください";
+
+  msg.textContent = "⏳送信中…";
+
+  const payload = {
+    mode: "modify",
+    email: user.email,
+    equip: currentModify.equip,
+    start: currentModify.start,
+    code: currentModify.code,
+    newEnd
+  };
+
+  try {
+    const res = await fetch(CAMERA_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+    console.log("📥Modify response:", result);
+
+    if (result?.result === "success") {
+      msg.textContent = "✔ 変更完了！";
+      return setTimeout(() => location.reload(), 900);
+    } else {
+      msg.textContent = "⚠ " + (result?.message || "変更できませんでした");
+    }
+  } catch (e) {
+    console.error(e);
+    msg.textContent = "⚠ 通信エラー";
+  }
+};
 });  // DOMContentLoaded end
