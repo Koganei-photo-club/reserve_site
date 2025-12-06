@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <button class="modify-btn"
                 data-equip="${r.equip}"
                 data-start="${r.start}"
+                data-end="${r.end}"
                 data-code="${r.code}">
                 返却日変更
               </button>`;
