@@ -142,21 +142,16 @@ body {
     マイページ固有デザイン
     ============================= */
 /* 本文の位置 */
-main {
-    padding: 2em;
-    margin-top: 120px; /* トップページは160px */
+main.mypage-center-section {
+    max-width: 900px;
+    margin: 160px auto 60px; /* ナビゲーション分の余白調整 */
+    text-align: center;
+    padding: 0 1rem;
 }
 
 h2 {
     text-align: center;
     color: #333;
-}
-
-main.mypage-center-section {
-    max-width: 900px;
-    margin: 140px auto; /* ナビゲーション分の余白調整 */
-    text-align: center;
-    padding: 0 1rem;
 }
 
 .mypage-card {
@@ -314,6 +309,119 @@ main.mypage-center-section {
 
 #cancelConfirm { background-color: #d9534f; }
 #cancelClose { background-color: #6c757d; }
+
+.cancel-btn {
+  padding: 6px 12px;
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: 0.2s;
+}
+.cancel-btn:hover {
+  background: #c0392b;
+}
+
+/* 状態チェックボタンとステータス */
+.status-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  font-size: .9rem;
+}
+.status-btn[data-type="before"] {
+  background: #007bff;
+}
+.status-btn[data-type="after"] {
+  background: #17a2b8;
+}
+.status-btn:hover {
+  opacity: 0.85;
+}
+
+/* 状態の表示 */
+.status-plan {
+  background: #ddd;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.status-ing {
+  background: #ffc107;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.status-done {
+  background: #28a745;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* 利用チェックモーダル */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 30000;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.modal.show .modal-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal textarea,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin: 0.6em 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* モーダルボタン */
+.btn-primary {
+  background: darkblue;
+}
+.btn-primary:hover {
+  background: navy;
+}
+.btn-secondary {
+  background: #555;
+}
+.btn-secondary:hover {
+  background: #333;
+}
+
+.message {
+  font-size: 0.9rem;
+  color: #c33;
+}
 
 /* =============================
     スマホ表示用
