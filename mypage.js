@@ -187,10 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // 🔹 返却日変更ボタンのイベント
+      // 🔹 返却日変更ボタン
       list.querySelectorAll(".modify-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          openModifyModal(
+          openReturnModal(
             btn.dataset.equip,
             btn.dataset.start,
             btn.dataset.code
@@ -488,38 +488,43 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 // =========================
-// 🔹 返却日変更モーダル
+// 🛠 返却日変更モーダル
 // =========================
 let currentModify = null;
 
-function openModifyModal(equip, start, code) {
+// モーダルを開く
+function openReturnModal(equip, start, code) {
   currentModify = { equip, start, code };
 
-  document.getElementById("modifyTitle").textContent = "返却日変更";
-  document.getElementById("modifyTarget").textContent = `${start} / ${equip}`;
-  document.getElementById("modifyMessage").textContent = "";
+  document.getElementById("returnTarget").textContent =
+    `${equip} / ${start}`;
 
-  // 初期値
-  document.getElementById("modifyNewEnd").value = "";
+  document.getElementById("newReturnDate").value = "";
+  document.getElementById("returnMessage").textContent = "";
 
-  const m = document.getElementById("modifyModal");
+  const m = document.getElementById("returnModal");
   m.style.display = "flex";
   setTimeout(() => m.classList.add("show"), 10);
 }
 
-document.getElementById("modifyClose").onclick = () => {
-  const m = document.getElementById("modifyModal");
+// 閉じるボタン
+document.getElementById("returnClose").onclick = () => {
+  const m = document.getElementById("returnModal");
   m.classList.remove("show");
   setTimeout(() => m.style.display = "none", 200);
 };
 
-document.getElementById("modifySend").onclick = async () => {
+// 変更送信
+document.getElementById("returnSend").onclick = async () => {
   if (!currentModify) return;
 
-  const newEnd = document.getElementById("modifyNewEnd").value;
-  const msg = document.getElementById("modifyMessage");
+  const newEnd = document.getElementById("newReturnDate").value;
+  const msg = document.getElementById("returnMessage");
 
-  if (!newEnd) return msg.textContent = "❌ 日付を入力してください";
+  if (!newEnd) {
+    msg.textContent = "❌ 返却日を選択してください";
+    return;
+  }
 
   msg.textContent = "⏳送信中…";
 
@@ -539,17 +544,16 @@ document.getElementById("modifySend").onclick = async () => {
       body: JSON.stringify(payload)
     });
 
-    const result = await res.json();
-    console.log("📥Modify response:", result);
+    const result = await res.json().catch(() => null);
 
     if (result?.result === "success") {
-      msg.textContent = "✔ 変更完了！";
-      return setTimeout(() => location.reload(), 900);
+      msg.textContent = "✔ 変更しました";
+      setTimeout(() => location.reload(), 900);
     } else {
-      msg.textContent = "⚠ " + (result?.message || "変更できませんでした");
+      msg.textContent = "⚠ " + (result?.message || "変更失敗");
     }
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
     msg.textContent = "⚠ 通信エラー";
   }
 };
