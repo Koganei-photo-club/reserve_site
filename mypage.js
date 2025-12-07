@@ -305,84 +305,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-    // =========================
-  // 🔹 利用前 / 後 チェックモーダル
   // =========================
-  let currentCondition = null; // { type, equip, start, end, code }
-
-  function openConditionModal(type, equip, start, end, code) {
-    currentCondition = { type, equip, start, end, code };
-
-    const titleEl = document.getElementById("conditionTitle");
-    const targetEl = document.getElementById("conditionTarget");
-    const msgEl    = document.getElementById("conditionMessage");
-
-    titleEl.textContent = (type === "after") ? "利用後チェック" : "利用前チェック";
-    targetEl.textContent = `${equip} / ${start}〜${end}`;
-    msgEl.textContent = "";
-
-    // 初期値リセット
-    document.getElementById("bodyCondition").value = "ok";
-    document.getElementById("lensCondition").value = "ok";
-    document.getElementById("accessoriesCondition").value = "ok";
-    document.getElementById("conditionRemarks").value = "";
-
-    const m = document.getElementById("conditionModal");
-    m.style.display = "flex";
-    setTimeout(() => m.classList.add("show"), 10);
-  }
-
-  const conditionCloseBtn = document.getElementById("conditionClose");
-  if (conditionCloseBtn) {
-    conditionCloseBtn.onclick = () => {
-      const m = document.getElementById("conditionModal");
+  // 🔹 返却日変更モーダルの「閉じる」
+  // =========================
+  const modifyCloseBtn = document.getElementById("modifyClose");
+  if (modifyCloseBtn) {
+    modifyCloseBtn.onclick = () => {
+      const m = document.getElementById("modifyModal");
       m.classList.remove("show");
       setTimeout(() => m.style.display = "none", 200);
-    };
-  }
-
-  const conditionSendBtn = document.getElementById("conditionSend");
-  if (conditionSendBtn) {
-    conditionSendBtn.onclick = async () => {
-      if (!currentCondition) return;
-      const msgEl = document.getElementById("conditionMessage");
-
-      const payload = {
-        mode: "condition",
-        email: user.email,
-        name:  user.name,
-        equip: currentCondition.equip,
-        start: currentCondition.start,
-        end:   currentCondition.end,
-        code:  currentCondition.code,
-        type:  currentCondition.type,      // "before" or "after"
-        bodyCondition:  document.getElementById("bodyCondition").value,
-        lensCondition:  document.getElementById("lensCondition").value,
-        accessories:    document.getElementById("accessoriesCondition").value,
-        remarks:        document.getElementById("conditionRemarks").value.trim()
-      };
-
-      msgEl.textContent = "⏳送信中…";
-
-      try {
-        const res = await fetch(CAMERA_API, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        const result = await res.json().catch(() => null);
-        console.log("📥Condition response:", result);
-
-        if (result?.result === "success") {
-          msgEl.textContent = "✔ 記録しました";
-          setTimeout(() => location.reload(), 900);
-        } else {
-          msgEl.textContent = "⚠ エラー：" + (result?.message || "記録に失敗しました");
-        }
-      } catch (e) {
-        console.error(e);
-        msgEl.textContent = "⚠ 通信エラー";
-      }
     };
   }
 
@@ -495,78 +426,141 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 // =========================
-// 🔁 返却日変更モーダル
-// =========================
-const modifyModal = document.getElementById("modifyModal");
-const modifyTargetEl = document.getElementById("modifyTarget");
-const modifySelectEl = document.getElementById("modifySelect");
-const modifyNameEl = document.getElementById("modifyName");
-const modifyCodeEl = document.getElementById("modifyCode");
-const modifyMsgEl = document.getElementById("modifyMessage");
+  // 🔹 返却日変更モーダル表示
+  // =========================
+  function openModifyModal(r, todayStr) {
+    const m = document.getElementById("modifyModal");
+    document.getElementById("modifyTarget").textContent =
+      `${r.equip} / ${r.start}〜${r.end}`;
+    document.getElementById("modifyMessage").textContent = "";
+    document.getElementById("newEndDate").value = r.end;
+    document.getElementById("modifyCode").value = "";
 
-document.getElementById("modifyClose").onclick = () => {
-  modifyModal.classList.remove("show");
-  setTimeout(() => modifyModal.style.display = "none", 200);
-};
+    // 表示＋ふわっと
+    m.style.display = "flex";
+    setTimeout(() => m.classList.addU("show"), 10);
 
-/** 🔹 候補日生成：貸出開始から7日以内 */
-function getEndDatesForModify(r, todayStr) {
-  const results = [];
-  let d = new Date(todayStr);
-
-  for (let i = 0; i < 7; i++) {
-    const ymd = d.toISOString().split("T")[0];
-    if (ymd >= r.start) results.push(ymd);
-    d.setDate(d.getDate() + 1);
+    document.getElementById("modifySend").onclick =() =>
+      modifySend(r, todayStr);
   }
-  return results;
-}
 
-function openModifyModal(r, todayStr) {
-  modifyTargetEl.textContent = `${r.equip} / ${r.start}〜${r.end}`;
-  modifyMsgEl.textContent = "";
-  modifySelectEl.innerHTML = "";
+  // =============================
+  // 🔄 返却日変更送信
+  // =============================
+  async function modifySend(r, todayStr) {
+    const input = document.getElementById("modifyCode").value.trim();
+    if (!input)
+      return document.getElementById("modifyMessage").textContent =
+        "❌ コード入力してください";
+    if (input !== r.code)
+      return document.getElementById("modifyMessage").textContent =
+        "❌ 認証コードが違います";
+    
+        document.getElementById("modifyMessage").textContent = "⏳送信中…";
 
-  const candidates = getEndDatesForModify(r, todayStr);
-  if (candidates.length === 0) return alert("候補日なし");
-
-  candidates.forEach(d => {
-    const opt = document.createElement("option");
-    opt.value = d;
-    opt.textContent = d;
-    modifySelectEl.appendChild(opt);
-  });
-
-  modifyModal.style.display = "flex";
-  setTimeout(() => modifyModal.classList.add("show"), 10);
-
-  document.getElementById("modifySend").onclick = async () => {
-    modifyMsgEl.textContent = "⏳送信中…";
+    const newEnd = document.getElementById("newEndDate").value;
+    if (newEnd < todayStr)
+      return document.getElementById("modifyMessage").textContent =
+        "❌ 返却日は今日以降にしてください";
 
     const payload = {
       mode: "modify",
       email: user.email,
       equip: r.equip,
       start: r.start,
-      code: r.code,  // ← 認証コードは自動設定
-      newEnd: modifySelectEl.value
+      oldEnd: r.end,
+      newEnd: newEnd,
+      code: r.code
     };
 
     const res = await fetch(CAMERA_API, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
     const result = await res.json().catch(() => null);
+    console.log("📥Modify Return response:", result);
+  }
 
-    if (result?.result === "success") {
-      modifyMsgEl.textContent = "✔ 返却日を変更しました！";
-      setTimeout(() => location.reload(), 900);
-    } else {
-      modifyMsgEl.textContent =
-        "⚠ エラー：" + (result?.message || "変更できませんでした");
-    }
-  };
-}
+  // =========================
+  // 🔹 利用前 / 後 チェックモーダル
+  // =========================
+  let currentCondition = null; // { type, equip, start, end, code }
+
+  function openConditionModal(type, equip, start, end, code) {
+    currentCondition = { type, equip, start, end, code };
+
+    const titleEl = document.getElementById("conditionTitle");
+    const targetEl = document.getElementById("conditionTarget");
+    const msgEl    = document.getElementById("conditionMessage");
+
+    titleEl.textContent = (type === "after") ? "利用後チェック" : "利用前チェック";
+    targetEl.textContent = `${equip} / ${start}〜${end}`;
+    msgEl.textContent = "";
+
+    // 初期値リセット
+    document.getElementById("bodyCondition").value = "ok";
+    document.getElementById("lensCondition").value = "ok";
+    document.getElementById("accessoriesCondition").value = "ok";
+    document.getElementById("conditionRemarks").value = "";
+
+    const m = document.getElementById("conditionModal");
+    m.style.display = "flex";
+    setTimeout(() => m.classList.add("show"), 10);
+  }
+
+  const conditionCloseBtn = document.getElementById("conditionClose");
+  if (conditionCloseBtn) {
+    conditionCloseBtn.onclick = () => {
+      const m = document.getElementById("conditionModal");
+      m.classList.remove("show");
+      setTimeout(() => m.style.display = "none", 200);
+    };
+  }
+
+  const conditionSendBtn = document.getElementById("conditionSend");
+  if (conditionSendBtn) {
+    conditionSendBtn.onclick = async () => {
+      if (!currentCondition) return;
+      const msgEl = document.getElementById("conditionMessage");
+
+      const payload = {
+        mode: "condition",
+        email: user.email,
+        name:  user.name,
+        equip: currentCondition.equip,
+        start: currentCondition.start,
+        end:   currentCondition.end,
+        code:  currentCondition.code,
+        type:  currentCondition.type,      // "before" or "after"
+        bodyCondition:  document.getElementById("bodyCondition").value,
+        lensCondition:  document.getElementById("lensCondition").value,
+        accessories:    document.getElementById("accessoriesCondition").value,
+        remarks:        document.getElementById("conditionRemarks").value.trim()
+      };
+
+      msgEl.textContent = "⏳送信中…";
+
+      try {
+        const res = await fetch(CAMERA_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json().catch(() => null);
+        console.log("📥Condition response:", result);
+
+        if (result?.result === "success") {
+          msgEl.textContent = "✔ 記録しました";
+          setTimeout(() => location.reload(), 900);
+        } else {
+          msgEl.textContent = "⚠ エラー：" + (result?.message || "記録に失敗しました");
+        }
+      } catch (e) {
+        console.error(e);
+        msgEl.textContent = "⚠ 通信エラー";
+      }
+    };
+  }
 });  // DOMContentLoaded end
