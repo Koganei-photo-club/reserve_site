@@ -226,4 +226,59 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  /***** 返却日変更 *******/
+  hideModal("modifyClose").onclick = () => hideModal("modifyModal");
+
+  function openModifyModal(r, today) {
+    modifyTargetEquip.textContent = `${r.equip} / ${r.start}〜${r.end}`;
+    modifyNameEl.value = " ";
+    modifyCodeEl.value = " ";
+    modifyMsgEl.textContent = "";
+    modifySelect.innerHTML = "";
+
+    const candidates = getEndDatesForModify(r, today);
+    if (candidates.length === 0) {
+      alert("返却日を変更できる候補日がありません");
+      return;
+    }
+
+    candidates.firEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = d;
+      modifySelectEl.appendChild(opt);
+    });
+
+    showModal("modifyModal");
+
+    modai("modifySend").onclick = async () => {
+      const name = modifyNameEl.value.trim();
+      const code = modifyCodeEl.value.trim();
+      const newEnd = modifySelectEl.value;
+
+      if(!name || !code) {
+        modifyMsgEl.textContent = "❌ 名前とコードを入力してください";
+        return;
+      }
+
+      const paylpoad = {
+        mode: "modify",
+        name,
+        equip: r.equip,
+        start: r.start,
+        code,
+        newEnd
+    };
+
+    await fetch(API_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+
+    modifyMsgEl.textContent = "✔ 返却日を変更しました！";
+    setTimeout(() => location.reload(), 800);
+    };
+  }
+
 });
