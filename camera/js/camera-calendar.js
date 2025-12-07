@@ -227,9 +227,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   /***** 返却日変更 *******/
-  hideModal("modifyClose").onclick = () => hideModal("modifyModal");
+  $("modifyClose").onclick = () => hideModal("modifyModal");
+  // hideModal("modifyClose").onclick = () => hideModal("modifyModal");
 
   function openModifyModal(r, today) {
+    showModal("modifyModal");
     modifyTargetEquip.textContent = `${r.equip} / ${r.start}〜${r.end}`;
     modifyNameEl.value = " ";
     modifyCodeEl.value = " ";
@@ -242,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
 
-    candidates.firEach(d => {
+    candidates.forEach(d => {
       const opt = document.createElement("option");
       opt.value = d;
       opt.textContent = d;
@@ -251,7 +253,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     showModal("modifyModal");
 
-    modai("modifySend").onclick = async () => {
+    modal("modifySend").onclick = async () => {
       const name = modifyNameEl.value.trim();
       const code = modifyCodeEl.value.trim();
       const newEnd = modifySelectEl.value;
@@ -261,7 +263,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      const paylpoad = {
+      const payload = {
         mode: "modify",
         name,
         equip: r.equip,
