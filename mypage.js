@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <th>機材</th>
             <th>期間</th>
             <th>認証コード</th>
-            <th>取り消し</th>
+            <th>変更</th></th>
             <th>状態チェック</th>
           </tr>
           ${myRes.map(r => {
