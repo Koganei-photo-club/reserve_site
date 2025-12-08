@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       list.innerHTML = `
         <table class="reserve-table">
-          <tr><th>予約日</th><th>枠</th><th>認証コード</th><th></th></tr>
+          <tr><th>予約日</th><th>枠</th><th>認証コード</th><th>状態</th></tr>
           ${myRes.map(r => `
             <tr>
               <td>${r.date || "?"}</td>

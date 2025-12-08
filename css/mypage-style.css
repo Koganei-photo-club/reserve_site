@@ -560,6 +560,14 @@ h2 {
     }
 }
 
+@media screen and (max-width: 600px) {
+  .mypage-table th,
+  .mypage-table td {
+    font-size: 0.85rem;
+    padding: 10px 6px;
+  }
+}
+
 .app-floating-btn {
     position: fixed;
     bottom: 20px;
