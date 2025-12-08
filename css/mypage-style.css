@@ -404,6 +404,24 @@ h2 {
   border-radius: 6px;
 }
 
+/* ステータススタイル */
+.status-label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.status-available {
+  background: #e6f4ff;
+  color: #007bff;
+}
+
+.status-done {
+  background: #e0e0e0;
+  color: #555;
+}
+
 /* モーダルボタン */
 .btn-primary {
   background: #0078d4;

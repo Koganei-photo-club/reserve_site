@@ -100,124 +100,55 @@ document.addEventListener("DOMContentLoaded", () => {
             <th>機材</th>
             <th>期間</th>
             <th>認証コード</th>
-            <th>変更</th></th>
-            <th>状態チェック</th>
+            <th>状態</th>
           </tr>
           ${myRes.map(r => {
             const now = new Date();
             const jst = new Date(now.getTime() +9 *60 *60 *1000);
             const todayStr = jst.toISOString().split("T")[0];
-            
-            // キャンセル/変更/終了
-            let actionCell = "";
-            if (todayStr < r.start) {
-              actionCell = `
-              <button class="cancel-btn"
-                data-equip="${r.equip}"
-                data-start="${r.start}"
-                data-code="${r.code}">
-                取り消し
-                </button>`;
-            } else if (todayStr >= r.start && todayStr < r.end && !r.afterChecked) {
-              actionCell = `
-              <button class="modify-btn"
-                data-equip="${r.equip}"
-                data-start="${r.start}"
-                data-end="${r.end}"
-                data-code="${r.code}">
-                返却日変更
-              </button>`;
-            } else {
-              actionCell = `<span class="disabled-btn">終了</span>`;
-            }
 
-            // 状態チェック
             let statusCell = "";
-            if (todayStr === r.start && !r.beforeChecked) {
-              // 利用開始日 & 利用前チェックまだ → 「借りる」
+
+            if (!r.beforeChecked && !r.afterChecked) {
+              // 管理者による貸出処理前→キャンセルボタン表示
               statusCell = `
-              <button class="status-btn"
-                data-type="before"
-                data-equip="${r.equip}"
-                data-start="${r.start}"
-                data-end="${r.end}"
-                data-code="${r.code}">
-                借りる
-              </button>`;
-            } else if (todayStr === r.end && r.beforeChecked && !r.afterChecked) {
-              // 返却予定日 & 利用前済 & 利用後まだ → 「返す」
-              statusCell = `
-              <button class="status-btn"
-                data-type="after"
-                data-equip="${r.equip}"
-                data-start="${r.start}"
-                data-end="${r.end}"
-                data-code="${r.code}">
-                返す
-              </button>`;
-            } else if (r.afterChecked) {
-              statusCell = `<span class="status-done">返却済み</span>`;
+                <button class="cancel-btn"
+                  data-equip="${r.equip}"
+                  data-start="${r.start}"
+                  data-code="${r.code}">
+                  キャンセル
+                </button>`;
             } else if (r.beforeChecked && !r.afterChecked) {
-              statusCell = `<span class="status-ing">貸出中</span>`;
+              // 貸出処理済み・返却処理前
+              statusCell = `<span class="status-label status-available">利用可能</span>`;
             } else {
-              statusCell = `<span class="status-plan">貸出予定</span>`;
+              // 返却処理済み
+              statusCell = `<span class="status-label status-done">返却済み</span>`;
             }
 
             return `
             <tr>
               <td>${r.equip}</td>
-              <td>${r.start}〜${r.end}</td>
+              <td>${r.start} ～ ${r.end}</td>
               <td>${r.code}</td>
-              <td>${actionCell}</td>
               <td>${statusCell}</td>
             </tr>
-          `;
+            `;
           }).join("")}
         </table>
       `;
 
-      // このリストの中のボタンだけにイベントを付与
+      // 「キャンセル」ボタンだけモーダルに繋ぐ
       list.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           openMyCancelModal(
-            "camera",            // type
-            btn.dataset.equip,   // equip
-            btn.dataset.start,   // start
-            btn.dataset.code     // code
+            "camera",               // type
+            btn.dataset.equip,      // slotOrEquip
+            btn.dataset.start,     // startOrDate
+            btn.dataset.code       // code
           );
         });
       });
-
-      // 🔹 返却日変更ボタンのイベント
-      list.querySelectorAll(".modify-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const r = {
-            equip: btn.dataset.equip,
-            start: btn.dataset.start,
-            end:   rows.find(row =>
-              row.equip === btn.dataset.equip &&
-              row.start === btn.dataset.start &&
-              row.code === btn.dataset.code
-            )?.end,
-            code:  btn.dataset.code
-          };
-          openModifyModal(r, todayStr);
-        });
-      });
-
-      // 🔹 状態チェックボタンのイベント
-      list.querySelectorAll(".status-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          openConditionModal(
-            btn.dataset.type,    // "before" or "after"
-            btn.dataset.equip,
-            btn.dataset.start,
-            btn.dataset.end,
-            btn.dataset.code
-          );
-        });
-      });
-
     } catch (err) {
       console.error(err);
       list.innerHTML = "予約情報取得失敗…";
