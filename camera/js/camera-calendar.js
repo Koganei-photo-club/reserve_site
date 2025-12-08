@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /***** 📌 モーダル操作 *****/
   function openDayModal(dateStr) {
+    dayTitle.textContent = `${dateStr} の予約`;
+    
     const camWrap = $("cameraButtons");
     camWrap.innerHTML = "";
     CAMERA_LIST.forEach(c => {
