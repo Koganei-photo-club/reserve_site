@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   /***** 📌 モーダル操作 *****/
   function openDayModal(dateStr) {
     dayTitle.textContent = `${dateStr} の予約`;
-    
+
     const camWrap = $("cameraButtons");
     camWrap.innerHTML = "";
     CAMERA_LIST.forEach(c => {
@@ -169,6 +169,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   $("applyClose").onclick = () => hideModal("applyModal");
 
   $("applySend").onclick = async () => {
+
+    $("applyMessage").textContent = "⏳予約申請中…";
+
     const payload = {
       mode: "reserve",
       email: user.email,
@@ -185,8 +188,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       body: JSON.stringify(payload)
     });
 
-    $("applyMessage").textContent = "✔ 予約完了！";
-    setTimeout(() => location.reload(), 800);
+    const result = await res.json().catch(() => null);
+
+    if (result?.result === "success") {
+      $("applyMessage").textContent = "✔ 予約完了！";
+      setTimeout(() => location.reload(), 800);
+    } else {
+      $("applyMessage").textContent = "⚠ エラー";
+    }
   };
 
   function openCancelModal(equip, start, code) {
