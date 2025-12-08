@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // 🔽 貸出状態に応じてタイトル変更
     if (!r.beforeChecked) {
-      ev.title = `${r.equip}（貸出予定）`;
+      ev.title = `${r.equip}（準備中）`;
     } else if (r.beforeChecked && !r.afterChecked) {
       ev.title = `${r.equip}（貸出中）`;
     } else if (r.afterChecked) {
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const b = document.createElement("button");
       b.className = "camera-btn";
       if (isBooked(dateStr, c.name)) {
-        b.textContent = `${c.name}（貸出中）`;
+        b.textContent = `${c.name}（予約不可）`;
         b.disabled = true;
       } else {
         b.textContent = `${c.name} を予約`;
