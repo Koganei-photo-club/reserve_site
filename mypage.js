@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return `
             <tr>
               <td>${r.equip}</td>
-              <td>${r.start} ～ ${r.end}</td>
+              <td>${r.start} ～ <wbr> ${r.end}</td>
               <td>${r.code}</td>
               <td>${statusCell}</td>
             </tr>
