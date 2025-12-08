@@ -51,28 +51,64 @@
               <th>機材</th>
               <th>期間</th>
               <th>認証コード</th>
-              <th>操作</th>
+              <th>処理</th>
+              <th>キャンセル</th>
             </tr>
           </thead>
           <tbody>
-            ${rows.map((r, i) => `
+            ${rows.map((r, i) => {
+              let procHtml = "";
+
+              if (!r.beforeChecked) {
+                // 貸出処理まだ
+                procHtml = `
+                <button class="process-btn"
+                  data-index="${i}"
+                  data-type="lend">
+                  貸出処理
+                </button>`;
+              } else if (r.beforeChecked && !r.afterChecked) {
+                // 貸出済み・返却前
+                procHtml = `
+                <button class="process-btn"
+                  data-index="${i}"
+                  data-type="return">
+                  返却処理
+                </button>`;
+              } else {
+                // 返却処理済み
+                procHtml = `<span class="process-done">返却済み</span>`;
+              }
+              
+              return `
               <tr data-index="${i}">
                 <td>${r.name || "?"}</td>
                 <td>${r.equip || "?"}</td>
                 <td>${r.start || "?"}〜${r.end || "?"}</td>
                 <td>${r.code || "?"}</td>
+                <td>${procHtml}</td>
                 <td>
                   <button class="cancel-btn" data-index="${i}">
                     管理者キャンセル
                   </button>
                 </td>
               </tr>
-            `).join("")}
+              `;
+            }).join("")}
           </tbody>
         </table>
       `;
 
-      // ボタンにイベント付与
+      // 貸出処理/返却処理ボタンにイベント付与
+      box.querySelectorAll(".process-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx  = Number(btn.dataset.index);
+          const type = btn.dataset.type; // "lend" or "return"
+          const r    = rows[idx];
+          handleProcess(r, type);
+        });
+      });
+      // キャンセルボタンにイベント付与
       box.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const idx = Number(btn.dataset.index);
@@ -84,6 +120,48 @@
     } catch (err) {
       console.error(err);
       box.textContent = "予約情報取得に失敗しました。";
+    }
+  }
+
+  // ✴ 管理者：貸出／返却処理
+  async function handleProcess(r, type) {
+    const label = (type === "return") ? "返却処理" : "貸出処理";
+
+    const ok = confirm(
+      `次の予約に対して「${label}」を記録しますか？\n\n` +
+      `氏名：${r.name}\n` +
+      `機材：${r.equip}\n` +
+      `期間：${r.start}〜${r.end}\n` +
+      `認証コード：${r.code}`
+    );
+    if (!ok) return;
+
+    const payload = {
+      mode: "process",
+      type,           // "lend" or "return"
+      email: r.email, // ← doGet で email を返している想定
+      equip: r.equip,
+      start: r.start,
+      code:  r.code
+    };
+
+    try {
+      const res = await fetch(CAMERA_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+        });
+      const result = await res.json().catch(() => null);
+
+      if (result?.result === "success") {
+        alert(`${label}を記録しました。`);
+        location.reload();
+      } else {
+        alert("処理に失敗しました：" + (result?.message || JSON.stringify(result)));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("通信エラーが発生しました。");
     }
   }
 
