@@ -4,7 +4,10 @@
 const USER_API =
   "https://script.google.com/macros/s/AKfycbxWNWz8aIr_8DqTTHsk9y089ZLZO6B8m2ywd6e1kCWi6Fyhr4AIOcS5QwdXpHxjx8w/exec";
 
-/**
+
+  const DEMO_MODE = true;  // ← 動画撮影中は true、本番は false
+
+  /**
  * Google Identity Services のコールバック
  * index.html の data-callback="handleCredentialResponse" から呼ばれる
  */
@@ -20,9 +23,11 @@ async function handleCredentialResponse(response) {
 
     const data = await res.json();
 
-    if (data.result === "forbidden") {
-      alert("⚠ 大学アカウント（@stu.hosei.ac.jp）のみ利用できます。");
-      return;
+    if (DEMO_MODE) {
+      if (data.result === "forbidden") {
+        alert("⚠ 大学アカウント（@stu.hosei.ac.jp）のみ利用できます。");
+        return;
+      }
     }
 
     if (data.result === "register-required") {
