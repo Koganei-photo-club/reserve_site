@@ -23,7 +23,7 @@ async function handleCredentialResponse(response) {
 
     const data = await res.json();
 
-    if (DEMO_MODE) {
+    if (!DEMO_MODE) {
       if (data.result === "forbidden") {
         alert("⚠ 大学アカウント（@stu.hosei.ac.jp）のみ利用できます。");
         return;
