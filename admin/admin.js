@@ -63,7 +63,15 @@ function openEditModal(index) {
   document.getElementById("edit-grade").value = u.grade;
   document.getElementById("edit-role").value = u.role;
 
-  document.getElementById("editModal").style.display = "flex";
+  const m = document.getElementById("editModal");
+  m.style.display = "flex";    // 表示
+  setTimeout(() => m.classList.add("show"), 10);  // ★ 透明解除（fade in）
+}
+
+function closeEditModal() {
+  const m = document.getElementById("editModal");
+  m.classList.remove("show");
+  setTimeout(() => m.style.display = "none", 200); // フェードアウト待ち
 }
 
 // ====================
