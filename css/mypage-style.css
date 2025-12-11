@@ -137,6 +137,20 @@ body {
     background: #777;
 }
 
+/* フッター */
+footer {
+  background: #ccc;
+  text-align: center;
+  padding: 1.5em;
+  margin-top: 2em;
+}
+
+footer p {
+  margin: 0.3em 0;
+  font-size: 14px;
+  color: #555;
+}
+
 
 /* ==============================
     マイページ固有デザイン
