@@ -1,0 +1,121 @@
+/* ===============================
+   📱 マイページ スマホ専用CSS
+   max-width: 480px の時のみ適用
+=============================== */
+
+/* 全体のフォントを少し大きく＆読みやすく */
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* カード全体の余白を広げる */
+.mypage-card {
+  padding: 1.2em;
+  border-radius: 10px;
+  margin: 1em auto;
+}
+
+/* プロフィールの行間アップ */
+.mypage-card li {
+  margin: 0.6em 0;
+  font-size: 1rem;
+}
+
+/* ボタンを押しやすく */
+.mypage-card button {
+  padding: 1em;
+  font-size: 1.1rem;
+  border-radius: 10px;
+}
+
+/* ==========
+   予約リスト
+========== */
+.reserve-list-box {
+  width: 100%;
+  overflow-x: auto; /* 横スクロール可にして崩れ防止 */
+}
+
+.reserve-table {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+/* TH を縦並びでも見やすくする */
+.reserve-table th {
+  padding: 10px 6px;
+  font-size: 0.95rem;
+}
+
+/* TD の行間調整 */
+.reserve-table td {
+  padding: 12px 6px;
+  word-break: break-word; /* 長い文字で崩れない */
+}
+
+/* ボタンを横幅いっぱいに */
+.cancel-btn,
+.modify-btn,
+.status-btn {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+/* ==========
+   モーダル
+========== */
+
+.modal-box,
+.cancel-box,
+.modify-box {
+  width: 92%;
+  padding: 1.5em;
+}
+
+.modal-box button,
+.cancel-box button,
+.modify-box button {
+  font-size: 1.05rem;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* 入力欄のサイズUP */
+.modal-box input,
+.modal-box select,
+.modify-box input,
+.modify-box select {
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* ==========
+   見出し
+========== */
+h2, h3 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 0.6em;
+}
+
+/* ==========
+   ナビゲーション調整
+========== */
+.navbar ul {
+  flex-direction: column; /* 縦並び */
+  align-items: center;
+}
+
+.navbar li {
+  margin: 6px 0;
+}
+
+.navbar a {
+  padding: 12px 18px;
+  font-size: 1.1rem;
+}
