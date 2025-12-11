@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         hideModal("applyModal");
 
         // リロードしてカレンダーを更新
-        setTimeout(() => location.reload(), 300);
+        setTimeout(() => location.reload(), 800);
       } else {
         $("applyMessage").textContent = "⚠ エラー";
       }
