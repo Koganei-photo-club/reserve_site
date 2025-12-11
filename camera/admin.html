@@ -30,13 +30,20 @@
     </div>
   </header>
 
-  <nav class="navbar">
-    <ul>
-      <li><a href="../index.html">トップ</a></li>
-      <li><a href="../camera/index.html">カメラ予約</a></li>
-      <li><a href="../pc/index.html">PC予約</a></li>
-      <li><a href="../mypage.html">マイページ</a></li>
-    </ul>
+  <nav class="navbar two-rows">
+    <div class="nav-row user-links">
+      <ul>
+        <li id="nav-login" style="display: none;"><a href="../auth/login.html">ログイン</a></li>
+        <li id="nav-mypage"><a href="../mypage.html">マイページ</a></li>
+        <li id="nav-logout" style="display: none;"><a href="#">ログアウト</a></li>
+      </ul>
+    </div>
+    <div class="nav-row category-links">
+      <ul>
+        <li><a href="index.html">📷 カメラ予約</a></li>
+        <li><a href="../pc/index.html">💻 PC予約</a></li>
+      </ul>
+    </div>
   </nav>
 </div>
 
