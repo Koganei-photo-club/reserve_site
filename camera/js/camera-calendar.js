@@ -182,19 +182,28 @@ document.addEventListener("DOMContentLoaded", async function () {
       end: APPLY_END
     };
 
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-    const result = await res.json().catch(() => null);
+      const result = await res.json().catch(() => null);
 
-    if (result?.result === "success") {
-      $("applyMessage").textContent = "✔ 予約完了！";
-      setTimeout(() => location.reload(), 800);
-    } else {
-      $("applyMessage").textContent = "⚠ エラー";
+      if (result?.result === "success") {
+        $("applyMessage").textContent = "✔ 予約完了！";
+        // モーダルを閉じる
+        hideModal("applyModal");
+
+        // リロードしてカレンダーを更新
+        setTimeout(() => location.reload(), 300);
+      } else {
+        $("applyMessage").textContent = "⚠ エラー";
+      }
+    } catch (e) {
+      console.error(e);
+      $("applyMessage").textContent = "⚠ 通信エラーが発生しました";
     }
   };
 
