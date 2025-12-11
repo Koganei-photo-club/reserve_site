@@ -138,6 +138,22 @@ h2, h3 {
     margin: 0;
 }
 
+/* ==========
+   フッター
+========== */
+footer {
+  background: #ccc;
+  text-align: center;
+  padding: 1.5em;
+  margin-top: 2em;
+}
+
+footer p {
+  margin: 0.3em 0;
+  font-size: 0.9rem;
+    color: #555;
+}
+
 .app-floating-btn {
     position: fixed;
     bottom: 20px;
