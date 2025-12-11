@@ -17,30 +17,26 @@ let lastScrollY = window.scrollY;
 const header = document.getElementById("main-header");
 const navbar = document.querySelector(".navbar");
 
-function updateNavPositions() {
-  const headerHeight = header.offsetHeight;
-
-  navbar.style.top = headerHeight + "px";
-}
-
-window.addEventListener("resize", updateNavPositions);
-document.addEventListener("DOMContentLoaded", updateNavPositions);
-
 window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const headerHeight = header.offsetHeight;
+  const currentY = window.scrollY;
 
-  if (scrollTop > lastScrollY) {
-    // 下へスクロール → ヘッダー隠す
-    header.style.top = `-${headerHeight}px`;
-    navbar.style.top = "0";
-  } else {
-    // 上へスクロール → ヘッダーすぐに出す
+  // ページ最上部 → ヘッダーを必ず表示
+  if (currentY <= 0) {
     header.style.top = "0";
-    navbar.style.top = `${headerHeight}px`;
+    navbar.style.top = "70px";
+  }
+  // 下方向へスクロール → ヘッダー隠す
+  else if (currentY > lastScrollY) {
+    header.style.top = "-70px";
+    navbar.style.top = "0";
+  }
+  // 上方向へスクロール → ヘッダー表示
+  else {
+    header.style.top = "0";
+    navbar.style.top = "70px";
   }
 
-  lastScrollY = scrollTop;
+  lastScrollY = currentY;
 });
 
 document.addEventListener("DOMContentLoaded", () => {
