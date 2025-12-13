@@ -17,26 +17,47 @@ let lastScrollY = window.scrollY;
 const header = document.getElementById("main-header");
 const navbar = document.querySelector(".navbar");
 
-window.addEventListener("scroll", () => {
-  const currentY = window.scrollY;
+// window.addEventListener("scroll", () => {
+//   const currentY = window.scrollY;
 
-  // ページ最上部 → ヘッダーを必ず表示
-  if (currentY <= 0) {
+//   // ページ最上部 → ヘッダーを必ず表示
+//   if (currentY <= 0) {
+//     header.style.top = "0";
+//     navbar.style.top = "70px";
+//   }
+//   // 下方向へスクロール → ヘッダー隠す
+//   else if (currentY > lastScrollY) {
+//     header.style.top = "-70px";
+//     navbar.style.top = "0";
+//   }
+//   // 上方向へスクロール → ヘッダー表示
+//   else {
+//     header.style.top = "0";
+//     navbar.style.top = "70px";
+//   }
+
+//   lastScrollY = currentY;
+// });
+
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+
+  if (scrollTop <= 0) {
     header.style.top = "0";
     navbar.style.top = "70px";
-  }
-  // 下方向へスクロール → ヘッダー隠す
-  else if (currentY > lastScrollY) {
+  } else if (scrollTop + windowHeight >= docHeight) {
     header.style.top = "-70px";
     navbar.style.top = "0";
-  }
-  // 上方向へスクロール → ヘッダー表示
-  else {
+  } else if (scrollTop > lastScrollY) {
+    header.style.top = "-70px";
+    navbar.style.top = "0";
+  } else {
     header.style.top = "0";
     navbar.style.top = "70px";
   }
-
-  lastScrollY = currentY;
+  lastScrollY = scrollTop;
 });
 
 document.addEventListener("DOMContentLoaded", () => {
