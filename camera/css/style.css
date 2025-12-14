@@ -386,6 +386,12 @@ footer p {
   padding: 1em;
 }
 
+.work-description {
+  font-size: 0.9em;
+  margin: 0.5em 0;
+  text-align: left;
+}
+
 /* 📱 スマホ対応 */
 @media screen and (max-width: 768px) {
   #main-header { height: 60px; }
