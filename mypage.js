@@ -10,6 +10,8 @@ const DEBUG_MODE = false;   // ← ログを見たい間は true、本番運用�
 // 1:部長 / 2:副部長 / 3:会計 / 4:文連
 const adminRoles = [1, 2, 3, 4];
 
+document.addEventListener("DOMContentLoaded", () => {
+
 /***********************
  * ヘッダー/ナビの出し入れ
  ***********************/
@@ -37,8 +39,6 @@ window.addEventListener("scroll", () => {
   }
   lastScrollY = scrollTop;
 });
-
-document.addEventListener("DOMContentLoaded", () => {
 
   // ----------------------
   // ログインユーザー取得
