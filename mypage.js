@@ -38,24 +38,6 @@ window.addEventListener("scroll", () => {
   lastScrollY = scrollTop;
 });
 
-const toggleBtn = document.querySelector(".nav-toggle");
-const offcanvas = document.querySelector(".offcanvas-nav");
-const backdrop  = document.querySelector(".offcanvas-backdrop");
-
-if (toggleBtn) {
-  toggleBtn.addEventListener("click", () => {
-    offcanvas.classList.toggle("show");
-    backdrop.classList.toggle("show");
-  });
-}
-
-if (backdrop) {
-  backdrop.addEventListener("click", () => {
-    offcanvas.classList.remove("show");
-    backdrop.classList.remove("show");
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
 
   // ----------------------
@@ -511,5 +493,26 @@ document.addEventListener("DOMContentLoaded", () => {
         msgEl.textContent = "⚠ 通信エラー";
       }
     };
+  }
+
+  // =========================
+  // 🔹オフキャンバスナビ
+  // =========================
+  const toggleBtn = document.querySelector(".nav-toggle");
+  const offcanvas = document.querySelector(".offcanvas-nav");
+  const backdrop  = document.querySelector(".offcanvas-backdrop");
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      offcanvas.classList.toggle("show");
+      backdrop.classList.toggle("show");
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener("click", () => {
+      offcanvas.classList.remove("show");
+      backdrop.classList.remove("show");
+    });
   }
 });  // DOMContentLoaded end
