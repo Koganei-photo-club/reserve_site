@@ -9,6 +9,10 @@ body {
   line-height: 1.6;
 }
 
+main.mypage-center-section {
+  margin-top: 90px; /* header + nav 1段分 */
+}
+
 /* カード全体の余白を広げる */
 .mypage-card {
   padding: 1.2em;
@@ -110,6 +114,14 @@ h2, h3 {
 /* ==========
    ナビゲーション調整
 ========== */
+.navbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+
 .navbar ul {
   flex-direction: row;
   justify-content: space-evenly;
@@ -125,7 +137,7 @@ h2, h3 {
   font-size: 1.1rem;
 }
 
-.navbar.two-rows ul {
+/* .navbar.two-rows ul {
     display: flex;
     justify-content: center;
     list-style: none;
@@ -136,6 +148,74 @@ h2, h3 {
 .navbar.two-rows li {
     font-size: 14px;
     margin: 0;
+} */
+
+.navbar.two-rows .nav-row {
+  display: none;
+}
+
+/* ------------------------
+    オフキャンバスナビゲーション 
+------------------------ */
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-toggle {
+   display: block;
+}
+
+.offcanvas-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 260px;
+  height: 100%;
+  background: #222;
+  color: #fff;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 20000;
+}
+
+.offcanvas-nav.show {
+  transform: translateX(0);
+}
+
+.offcanvas-menu {
+  list-style: none;
+  padding: 1.5rem;
+  margin: 0;
+}
+
+.offcanvas-menu li {
+  margin: 1rem 0;
+}
+
+.offcanvas-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 15000;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ==========
