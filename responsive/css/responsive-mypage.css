@@ -230,7 +230,7 @@ h2, h3 {
   color: #fff;
   transform: translateX(100%);
   transition: transform 0.3s ease;
-  z-index: 10000;
+  z-index: 15000;
 }
 
 .offcanvas-nav.show {
@@ -260,7 +260,7 @@ h2, h3 {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 15000;
+  z-index: 10000;
 }
 
 .offcanvas-backdrop.show {
