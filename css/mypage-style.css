@@ -142,6 +142,12 @@ body {
   display: none;
 }
 
+.navbar a.active {
+  background: #007bff;
+  color: #fff;
+  border-radius: 6px;
+}
+
 /* =========================
    PCではオフキャンバス完全無効
 ========================= */
