@@ -34,14 +34,14 @@
     <div class="nav-row user-links">
       <ul>
         <li id="nav-login"><a href="/reserve_site/auth/login.html">ログイン</a></li>
-        <li id="nav-mypage"><a href="/reserve_site/mypage.html">マイページ</a></li>
+        <li id="nav-mypage"><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
         <li id="nav-logout" style="display:none;"><a href="#" id="logoutBtnNav">ログアウト</a></li>
       </ul>
     </div>
     <div class="nav-row category-links">
       <ul>
-        <li id="nav-camera"><a href="camera/index.html">📷 カメラ予約</a></li>
-        <li><a href="pc/index.html">💻 PC予約</a></li>
+        <li id="nav-camera"><a href="camera/index.html" data-page="camera">📷 カメラ予約</a></li>
+        <li><a href="pc/index.html" data-page="pc">💻 PC予約</a></li>
       </ul>
     </div>
   </nav>
@@ -170,7 +170,7 @@
   <!-- オフキャンバスナビ  -->
   <div class="offcanvas-nav">
     <ul class="offcanvas-menu">
-      <li><a href="/reserve_site/mypage.html">マイページ</a></li>
+      <li><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
       <hr>
       <li><a href="#" id="/reserve_site/index.html">総合トップ</a></li>
       <hr>
@@ -182,8 +182,8 @@
           <span class="arrow">▶</span>
         </button>
         <ul class="offcanvas-submenu">
-          <li><a href="camera/index.html">カメラトップ</a></li>
-          <li><a href="camera/reserve.html">カレンダー</a></li>
+          <li><a href="camera/index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
         </ul>
       </li>
 
@@ -194,8 +194,8 @@
           <span class="arrow">▶</span>
         </button>
         <ul class="offcanvas-submenu">
-          <li><a href="pc/index.html">PCトップ</a></li>
-          <li><a href="pc/reserve.html">カレンダー</a></li>
+          <li><a href="pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
         </ul>
       </li>
 
