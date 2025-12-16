@@ -137,8 +137,16 @@ body {
     background: #777;
 }
 
-通常CSS（mypage-style.css）
+/* 通常CSS（mypage-style.css） */
 .nav-toggle {
+  display: none;
+}
+
+/* =========================
+   PCではオフキャンバス完全無効
+========================= */
+.offcanvas-nav,
+.offcanvas-backdrop {
   display: none;
 }
 
