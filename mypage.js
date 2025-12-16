@@ -498,27 +498,48 @@ window.addEventListener("scroll", () => {
   // =========================
   // 🔹オフキャンバスナビ
   // =========================
+
+  /* 要素取得 */
   const toggleBtn = document.querySelector(".nav-toggle");
   const offcanvas = document.querySelector(".offcanvas-nav");
   const backdrop  = document.querySelector(".offcanvas-backdrop");
 
+  /* オフキャンバスを閉じる共通関数 */
+  function closeOffcanvas() {
+    offcanvas.classList.remove("show");
+    backdrop.classList.remove("show");
+    document.body.classList.remove("scroll-lock");
+
+    /* ドロップダウンメニュー状態リセット */
+    document.querySelectorAll(".offcanvas-group.open")
+      .forEach(g => g.classList.remove("open"));
+  }
+
+  /* ハンバーガーで開閉 */
   if (toggleBtn) {
     toggleBtn.addEventListener("click", () => {
-      offcanvas.classList.toggle("show");
-      backdrop.classList.toggle("show");
+      const isOpen = offcanvas.classList.contains("show");
 
-      // スクロールロック
-      document.body.classList.toggle("scroll-lock");
+      if (isOpen) {
+        closeOffcanvas();
+      } else {
+        offcanvas.classList.add("show");
+        backdrop.classList.add("show");
+        document.body.classList.add("scroll-lock");
+      }
     });
   }
 
+  /* 背景クリックで閉じる */
   if (backdrop) {
-    backdrop.addEventListener("click", () => {
-      offcanvas.classList.remove("show");
-      backdrop.classList.remove("show");
-
-      // スクロールロック解除
-      document.body.classList.remove("scroll-lock");
-    });
+    backdrop.addEventListener("click", closeOffcanvas);
   }
+
+  // オフキャンバス内DropDownメニュー
+  document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest(".offcanvas-group");
+      group.classList.toggle("open");
+    });
+  });
 });  // DOMContentLoaded end

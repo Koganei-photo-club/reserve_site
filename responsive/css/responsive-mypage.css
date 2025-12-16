@@ -243,6 +243,59 @@ h2, h3 {
   pointer-events: auto;
 }
 
+/* オフキャンバス トグルボタン */
+.offcanvas-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 0.6rem 0;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offcanvas-toggle:active {
+  opacity: 0.7;
+}
+
+.offcanvas-toggle .arrow {
+  transition: transform 0.25s ease;
+}
+
+/* 矢印回転 */
+.offcanvas-group.open .arrow {
+  transform: rotate(90deg);
+}
+
+.offcanvas-submenu {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0.3rem 0 0.6rem;
+  display: none;
+}
+
+.offcanvas-group.open .offcanvas-submenu {
+  display: block;
+}
+
+/* オフキャンバス サブメニュー */
+.offcanvas-submenu a {
+  display: block;
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.offcanvas-submenu a:hover {
+  color: #fff;
+}
+
 /* ===== スクロールロック ===== */
 body.scroll-lock {
   overflow: hidden;
