@@ -137,6 +137,15 @@ h2, h3 {
   font-size: 1.1rem;
 }
 
+/* スマホ用
+.navbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+} */
+
 /* .navbar.two-rows ul {
     display: flex;
     justify-content: center;
@@ -158,16 +167,32 @@ h2, h3 {
     オフキャンバスナビゲーション 
 ------------------------ */
 .nav-toggle {
-  display: none;
-  font-size: 1.8rem;
-  background: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  background: rgba(255, 255, 255, 0.12);
   border: none;
-  color: #fff;
+  border-radius: 10px;
+
   cursor: pointer;
+  padding: 0;
 }
 
-.nav-toggle {
-   display: block;
+.nav-toggle:active{
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
 }
 
 .offcanvas-nav {

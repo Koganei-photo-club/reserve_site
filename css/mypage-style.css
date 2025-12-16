@@ -137,6 +137,11 @@ body {
     background: #777;
 }
 
+/* 通常CSS（mypage-style.css）
+.nav-toggle {
+  display: none;
+} */
+
 /* フッター */
 footer {
   background: #ccc;
