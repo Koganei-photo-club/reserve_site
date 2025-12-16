@@ -556,21 +556,20 @@ window.addEventListener("scroll", () => {
   // active表示
   // =========================
   const page = document.body.dataset.page;
-  if(!page) return;
+  if (page && offcanvas) {
+    // navbar
+    document
+      .querySelectorAll(`.navbar a[data-page="${page}"]`)
+      .forEach(a => a.classList.add("active"));
 
-  // navbar
-  document
-    .querySelectorAll(`.navbar a[data-page="${page}"]`)
-    .forEach(a => a.classList.add("active"));
-
-  // offcanvas nav
-  document
-    .querySelectorAll(`.offcanvas-nav a[data-page="${page}"]`)
-    .forEach(a => {
-      a.classList.add("active");
-
+    // offcanvas nav
+    document
+      .querySelectorAll(`.offcanvas-nav a[data-page="${page}"]`)
+      .forEach(a => {
+        a.classList.add("active");
       // 親グループを自動で開く
       const group = a.closest(".offcanvas-group");
       if (group) group.classList.add("open");
     });
+  }  // if (page) end
 });  // DOMContentLoaded end
