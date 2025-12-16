@@ -13,6 +13,31 @@ main.mypage-center-section {
   margin-top: 90px; /* header + nav 1段分 */
 }
 
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+main.mypage-center-section {
+  margin-top: 70px;
+}
+
+/* ヘッダー右側にハンバーガー */
+#main-header .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ロゴ側を左寄せ */
+#main-header .header-content a {
+  display: flex;
+  align-items: center;
+}
+
 /* カード全体の余白を広げる */
 .mypage-card {
   padding: 1.2em;
@@ -116,7 +141,7 @@ h2, h3 {
 ========== */
 .navbar {
   height: 56px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: flex-end;
   padding-right: 1rem;
