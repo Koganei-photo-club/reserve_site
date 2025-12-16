@@ -539,7 +539,16 @@ window.addEventListener("scroll", () => {
   document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
       const group = btn.closest(".offcanvas-group");
-      group.classList.toggle("open");
+      const isOpen = targetGroup.classList.contains("open");
+      
+      // 他のメニューが開いていたら閉じる
+      document.querySelectorAll(".offcanvas-group.open")
+        .forEach(g => g.classList.remove("open"));
+      
+      // 押したものだけ、元々閉じていたなら開く
+      if (!isOpen) {
+        targetGroup.classList.add("open");
+      }
     });
   });
 });  // DOMContentLoaded end
