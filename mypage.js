@@ -369,7 +369,7 @@ window.addEventListener("scroll", () => {
 
     // 表示＋ふわっと
     m.style.display = "flex";
-    setTimeout(() => m.classList.addU("show"), 10);
+    setTimeout(() => m.classList.add("show"), 10);
 
     document.getElementById("modifySend").onclick =() =>
       modifySend(r, todayStr);
