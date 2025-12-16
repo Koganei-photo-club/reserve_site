@@ -296,6 +296,20 @@ h2, h3 {
   color: #fff;
 }
 
+/* ==========
+  ナビactive表示
+ ================= */
+.navbar a.active,
+.offcanvas-menu a.active {
+  background: #007bff;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.offcanvas-submenu a.active {
+  font-weight: bold;
+}
+
 /* ===== スクロールロック ===== */
 body.scroll-lock {
   overflow: hidden;

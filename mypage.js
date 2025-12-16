@@ -538,7 +538,7 @@ window.addEventListener("scroll", () => {
   // オフキャンバス内DropDownメニュー
   document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
-      const group = btn.closest(".offcanvas-group");
+      const targetGroup = btn.closest(".offcanvas-group");
       const isOpen = targetGroup.classList.contains("open");
       
       // 他のメニューが開いていたら閉じる
@@ -551,4 +551,26 @@ window.addEventListener("scroll", () => {
       }
     });
   });
+
+  // =========================
+  // active表示
+  // =========================
+  const page = document.body.dataset.page;
+  if(!page) return;
+
+  // navbar
+  document
+    .querySelectorAll(`.navbar a[data-page="${page}"]`)
+    .forEach(a => a.classList.add("active"));
+
+  // offcanvas nav
+  document
+    .querySelectorAll(`.offcanvas-nav a[data-page="${page}"]`)
+    .forEach(a => {
+      a.classList.add("active");
+
+      // 親グループを自動で開く
+      const group = a.closest(".offcanvas-group");
+      if (group) group.classList.add("open");
+    });
 });  // DOMContentLoaded end
