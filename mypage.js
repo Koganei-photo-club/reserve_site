@@ -506,6 +506,9 @@ window.addEventListener("scroll", () => {
     toggleBtn.addEventListener("click", () => {
       offcanvas.classList.toggle("show");
       backdrop.classList.toggle("show");
+
+      // スクロールロック
+      document.body.classList.toggle("scroll-lock");
     });
   }
 
@@ -513,6 +516,9 @@ window.addEventListener("scroll", () => {
     backdrop.addEventListener("click", () => {
       offcanvas.classList.remove("show");
       backdrop.classList.remove("show");
+
+      // スクロールロック解除
+      document.body.classList.remove("scroll-lock");
     });
   }
 });  // DOMContentLoaded end

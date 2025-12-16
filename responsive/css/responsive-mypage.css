@@ -243,6 +243,12 @@ h2, h3 {
   pointer-events: auto;
 }
 
+/* ===== スクロールロック ===== */
+body.scroll-lock {
+  overflow: hidden;
+  touch-action: none; /* iOS対策 */
+}
+
 /* ==========
    フッター
 ========== */
