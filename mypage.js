@@ -11,6 +11,16 @@ const DEBUG_MODE = false;   // ← ログを見たい間は true、本番運用�
 const adminRoles = [1, 2, 3, 4];
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  // =========================
+// 📅 今日の日付（JST）取得
+// =========================
+function getTodayJST() {
+  const now = new Date();
+  const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  return jst.toISOString().split("T")[0]; // "YYYY-MM-DD"
+}
+
   // ----------------------
   // ログインユーザー取得
   // ----------------------
@@ -54,16 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       const rows = data.rows || [];
 
-      const myRes = rows.filter(r => r.name === user.name);
+      const myRes = rows.filter(r => r.name === user.name && todayStr <= r.end);
 
       if (myRes.length === 0) {
         list.innerHTML = `<div class="reserve-item">カメラの予約はありません</div>`;
         return;
       }
 
-      const now = new Date();
-      const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-      const todayStr = jst.toISOString().split("T")[0];
+      const todayStr = getTodayJST();
       
       list.innerHTML = `
         <table class="reserve-table">
@@ -74,9 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <th>状態</th>
           </tr>
           ${myRes.map(r => {
-            const now = new Date();
-            const jst = new Date(now.getTime() +9 *60 *60 *1000);
-            const todayStr = jst.toISOString().split("T")[0];
+            // const now = new Date();
+            // const jst = new Date(now.getTime() +9 *60 *60 *1000);
+            // const todayStr = jst.toISOString().split("T")[0];
 
             let statusCell = "";
 
@@ -149,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
 
       // PC 側は email で紐付け
-      const myRes = rows.filter(r => r.email === user.email);
+      const myRes = rows.filter(r => r.email === user.email && todayStr <= r.date);
 
       if (myRes.length === 0) {
         list.innerHTML = `<div class="reserve-item">PC の予約はありません</div>`;
