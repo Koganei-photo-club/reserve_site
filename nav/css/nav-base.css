@@ -20,6 +20,7 @@
   border-radius: 10px;
   cursor: pointer;
   padding: 0;
+  z-index: 2101; /* ヘッダーより前面 */
 }
 
 .nav-toggle span {
