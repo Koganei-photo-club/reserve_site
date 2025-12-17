@@ -1,15 +1,80 @@
-@media (min-width: 769px) {
+/* ==========================
+   Nav Desktop（>= 769px）
+========================== */
+@media screen and (min-width: 769px) {
 
-  .offcanvas-nav {
-    top: 70px;          /* ヘッダー高さ */
-    left: 0;
-    width: 100%;
-    height: auto;
-    transform: translateY(-10px);
+  /* 旧 navbar は完全に無効化 */
+  .navbar {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 
+  /* ハンバーガーボタンは PC でも表示 */
+  .nav-toggle {
+    display: flex !important;
+  }
+
+  /* ===== オフキャンバスを「下方向ドロップダウン化」 ===== */
+
+  .offcanvas-nav {
+    position: fixed;
+    top: 70px;              /* ヘッダー直下（header 高さに合わせる） */
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+
+    transform: translateY(-100%);
+    transition: transform 0.25s ease;
+
+    background: #222;
+    z-index: 2000;
+  }
+
+  /* show 状態で下に展開 */
   .offcanvas-nav.show {
     transform: translateY(0);
   }
 
+  /* backdrop は PC では使わない（UX的に不要） */
+  .offcanvas-backdrop {
+    display: none !important;
+  }
+
+  /* ===== 中身の見た目を PC 向けに ===== */
+
+  .offcanvas-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+  }
+
+  .offcanvas-menu li {
+    margin: 0;
+  }
+
+  /* dropdown（camera / PC） */
+  .offcanvas-group {
+    position: relative;
+  }
+
+  .offcanvas-submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+
+    min-width: 180px;
+    display: none;
+  }
+
+  .offcanvas-group.open .offcanvas-submenu {
+    display: block;
+  }
 }

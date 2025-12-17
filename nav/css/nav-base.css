@@ -1,28 +1,41 @@
+/* ==========================
+   Nav Base（全端末共通）
+========================== */
+
 /* =========================
-   共通ナビ（PC / スマホ）
+   Hamburger Button (Base)
 ========================= */
 
-/* ハンバーガー */
 .nav-toggle {
   position: absolute;
+  right: 12px;
   top: 50%;
-  right: 16px;
   transform: translateY(-50%);
+
   width: 44px;
   height: 44px;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,.12);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 10px;
+
   cursor: pointer;
-  z-index: 1100;
+  padding: 0;
 }
 
+.nav-toggle:active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* 三本線 */
 .nav-toggle span {
+  display: block;
   width: 22px;
   height: 2px;
   background: #fff;
@@ -30,33 +43,39 @@
 }
 
 /* =========================
-   Offcanvas 共通
+   Offcanvas Base
 ========================= */
+
 .offcanvas-nav {
   position: fixed;
   background: #222;
   color: #fff;
+
+  /* 向き・初期位置は device CSS に任せる */
+  transition: transform 0.25s ease;
+
   z-index: 2000;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .3s ease, opacity .2s ease;
 }
 
+/* 表示状態（transform は device 側で定義） */
 .offcanvas-nav.show {
-  opacity: 1;
-  pointer-events: auto;
+  transform: translate(0, 0);
 }
 
-/* backdrop */
+/* =========================
+   Backdrop
+========================= */
+
 .offcanvas-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.4);
+  background: rgba(0,0,0,0.45);
+
   opacity: 0;
   pointer-events: none;
-  transition: opacity .2s ease;
-  z-index: 1900;
+  transition: opacity 0.25s ease;
+
+  z-index: 1500;
 }
 
 .offcanvas-backdrop.show {
@@ -64,34 +83,55 @@
   pointer-events: auto;
 }
 
-/* メニュー中身 */
+/* =========================
+   Menu / Dropdown
+========================= */
+
 .offcanvas-menu {
   list-style: none;
   margin: 0;
   padding: 1.5rem;
 }
 
-.offcanvas-menu li {
-  margin: 1rem 0;
-}
-
 .offcanvas-menu a {
   color: #fff;
   text-decoration: none;
-  font-size: 1.05rem;
+}
+
+.offcanvas-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.offcanvas-submenu {
+  display: none;
+}
+
+.offcanvas-group.open .offcanvas-submenu {
+  display: block;
 }
 
 /* =========================
-   navbar 無効化（全端末共通）
+   Active State
 ========================= */
 
-.navbar {
-  display: none !important;
-  height: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  visibility: hidden;
-  pointer-events: none;
-  height: 0;
+.navbar a.active,
+.offcanvas-menu a.active {
+  background: #007bff;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.offcanvas-submenu a.active {
+  font-weight: bold;
+}
+
+/* =========================
+   Scroll Lock
+========================= */
+
+body.scroll-lock {
   overflow: hidden;
 }

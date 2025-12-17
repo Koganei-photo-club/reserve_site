@@ -1,15 +1,34 @@
-@media (max-width: 768px) {
+/* ==========================
+   Nav Mobile（<= 768px）
+========================== */
+@media screen and (max-width: 768px) {
 
+  /* PC用の通常ナビ（.navbar）をスマホでは使わない */
+  .navbar {
+    display: none !important;
+  }
+
+  /* ハンバーガーボタンをスマホでは表示する */
+  .nav-toggle {
+    display: flex !important;
+  }
+
+  /* offcanvas本体は存在させる */
+  .offcanvas-nav {
+    display: block;
+  }
+
+  /* backdrop は base の .show 制御に任せる */
+  .offcanvas-backdrop {
+    display: block;
+  }
+
+  /* スマホ時のサイズだけここで決める（必要なら） */
   .offcanvas-nav {
     top: 0;
     right: 0;
-    width: 260px;
+    width: 260px;   /* 好きな幅に調整OK */
     height: 100vh;
     transform: translateX(100%);
   }
-
-  .offcanvas-nav.show {
-    transform: translateX(0);
-  }
-
 }

@@ -62,40 +62,6 @@ body {
     color: #ccc;
 }
 
-/* ナビゲーション */
-.navbar {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: #555;
-    transition: top 0.25s ease;
-    z-index: 999;
-}
-
-.navbar ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    margin: 0;
-    padding: 0.5em;
-}
-
-.navbar a {
-    display: block;
-    padding: 0.8em 1.2em;
-    color: #f5f5f5;
-    text-decoration: none;
-    border-radius: 6px;
-}
-
-.navbar li {
-    margin: 0 0.5em;
-}
-
-.navbar a:hover {
-    background: #777;
-}
 
 /* 無効化リンク */
 .navbar a.disabled {
@@ -104,58 +70,6 @@ body {
     pointer-events: none;
     background: transparent;
 }
-
-/* 2段ナビゲーション */
-.navbar.two-rows .nav-row {
-    display: flex;
-    justify-content: center;
-    background: #555;
-    padding: 0.4em 0;
-    border-bottom: 1px solid #666;
-}
-
-.navbar.two-rows .nav-row:last-child {
-    border-bottom: none;
-}
-
-.navbar.two-rows ul {
-    display: flex;
-    gap: 0.5em;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.navbar.two-rows a {
-    padding: 0.5em 1em;
-    font-size: 0.9em;
-    color: #f5f5f5;
-    text-decoration: none;
-    border-radius: 6px;
-}
-
-.navbar.two-row a:hover {
-    background: #777;
-}
-
-/* 通常CSS（mypage-style.css） */
-.nav-toggle {
-  display: none;
-}
-
-.navbar a.active {
-  background: #007bff;
-  color: #fff;
-  border-radius: 6px;
-}
-
-/* =========================
-   PCではオフキャンバス完全無効
-========================= */
-/* .offcanvas-nav,
-.offcanvas-backdrop {
-  display: none;
-} */
 
 /* フッター */
 footer {
@@ -558,14 +472,6 @@ h2 {
   border: 1px solid #ccc;
   font-size: 1rem;
 }
-
-/* ------------------------------
-    オフキャンバスメニュー
-    ============================= */
-  /* .offcanvas-nav,
-  .offcanvas-backdrop {
-    display: none;
-  } */
 
 /* =============================
     アプリ風ページ遷移アニメーション
