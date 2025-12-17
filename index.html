@@ -7,6 +7,9 @@
 
   <!-- cssはroot/indexのためのものを採用、アイコンはroot/cameraのものを採用 -->
   <link rel="icon" href="camera/images/club-icon.JPG" type="image/jpeg">
+  <link rel="stylesheet" href="./nav/css/nav-base.css">
+  <link rel="stylesheet" href="./nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="./nav/css/nav-mobile.css">
   <link rel="stylesheet" href="css/root-style.css">
 
   <link rel="manifest" href="/reserve_site/manifest.json">
@@ -52,7 +55,12 @@
     </div>
   </header>
 
-  <nav class="navbar two-rows">
+  <button class="nav-toggle" aria-label="メニュー">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <!-- <nav class="navbar two-rows">
     <div class="nav-row user-links">
       <ul>
         <li id="nav-login"><a href="/reserve_site/auth/login.html">ログイン</a></li>
@@ -66,7 +74,7 @@
         <li><a href="pc/index.html">💻 PC予約</a></li>
       </ul>
     </div>
-  </nav>
+  </nav> -->
   </div>
 
   <!-- ===== 本文エリア ===== -->
@@ -118,6 +126,46 @@
 
   </main>
 
+  <!-- オフキャンバスナビ  -->
+  <div class="offcanvas-nav">
+    <ul class="offcanvas-menu">
+      <li><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
+      <hr>
+      <li><a href="/reserve_site/index.html">総合トップ</a></li>
+      <hr>
+
+      <!-- カメラ -->
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          カメラ
+          <span class="arrow">▶</span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="camera/index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <!-- PC -->
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          PC
+          <span class="arrow">▶</span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <hr>
+      
+      <li><a href="#" id="logoutBtnOffcanvas">ログアウト</a></li>
+    </ul>
+  </div>
+
+  <div class="offcanvas-backdrop"></div>
+
   <!-- ===== フッター ===== -->
   <footer>
     <p><img src="icons/club-icon.JPG" style="height:40px;"></p>
@@ -126,6 +174,7 @@
   </footer>
 
   <!-- Java -->
+  <script src="./nav/js/nav-base.js"></script>
   <script src="js/root-script.js"></script>
 </body>
 </html>
