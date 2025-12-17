@@ -1,0 +1,97 @@
+/* =========================
+   共通ナビ（PC / スマホ）
+========================= */
+
+/* ハンバーガー */
+.nav-toggle {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* =========================
+   Offcanvas 共通
+========================= */
+.offcanvas-nav {
+  position: fixed;
+  background: #222;
+  color: #fff;
+  z-index: 2000;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .3s ease, opacity .2s ease;
+}
+
+.offcanvas-nav.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* backdrop */
+.offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 1900;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* メニュー中身 */
+.offcanvas-menu {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem;
+}
+
+.offcanvas-menu li {
+  margin: 1rem 0;
+}
+
+.offcanvas-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+/* =========================
+   navbar 無効化（全端末共通）
+========================= */
+
+.navbar {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+}

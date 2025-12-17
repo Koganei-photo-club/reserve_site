@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+
+  .offcanvas-nav {
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    transform: translateX(100%);
+  }
+
+  .offcanvas-nav.show {
+    transform: translateX(0);
+  }
+
+}

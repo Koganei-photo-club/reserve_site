@@ -1,0 +1,15 @@
+@media (min-width: 769px) {
+
+  .offcanvas-nav {
+    top: 70px;          /* ヘッダー高さ */
+    left: 0;
+    width: 100%;
+    height: auto;
+    transform: translateY(-10px);
+  }
+
+  .offcanvas-nav.show {
+    transform: translateY(0);
+  }
+
+}
