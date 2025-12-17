@@ -504,6 +504,10 @@ window.addEventListener("scroll", () => {
   const offcanvas = document.querySelector(".offcanvas-nav");
   const backdrop  = document.querySelector(".offcanvas-backdrop");
 
+  console.log("[OFFCANVAS] toggleBtn:", toggleBtn);
+  console.log("[OFFCANVAS] offcanvas:", offcanvas);
+  console.log("[OFFCANVAS] backdrop:", backdrop);
+
   /* オフキャンバスを閉じる共通関数 */
   function closeOffcanvas() {
     offcanvas.classList.remove("show");
@@ -518,14 +522,19 @@ window.addEventListener("scroll", () => {
   /* ハンバーガーで開閉 */
   if (toggleBtn) {
     toggleBtn.addEventListener("click", () => {
+      console.log("[OFFCANVAS] toggle clicked");
       const isOpen = offcanvas.classList.contains("show");
+      console.log("[OFFCANVAS] isOpen:", isOpen);
 
       if (isOpen) {
         closeOffcanvas();
       } else {
+        console.log("[OFFCANVAS] opening offcanvas");
         offcanvas.classList.add("show");
         backdrop.classList.add("show");
         document.body.classList.add("scroll-lock");
+
+        console.log("[OFFCANVAS] classList after open:", offcanvas.className);
       }
     });
   }
