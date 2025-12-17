@@ -24,7 +24,7 @@
 
   .offcanvas-nav {
     position: absolute;
-    top: 100%;              /* ヘッダー直下（header 高さに合わせる） */
+    top: 70px;              /* ヘッダー直下（header 高さに合わせる） */
     left: 0;
     right: 0;
     width: 100%;
