@@ -339,7 +339,6 @@ h2, h3 {
   position: fixed;
   inset: 0;
   z-index: 100000;
-  pointer-events: none;
 }
 
 #ui-layer > * {
