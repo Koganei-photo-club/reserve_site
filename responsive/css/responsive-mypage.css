@@ -241,6 +241,11 @@ h2, h3 {
 /* ← この直後に追加 */
 .offcanvas-nav,
 .offcanvas-backdrop {
+  display: none;
+}
+
+.offcanvas-nav.show,
+.offcanvas-backdrop.show {
   display: block;
 }
 
