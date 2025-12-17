@@ -27,7 +27,7 @@ body {
   justify-content: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: top 0.25s ease;
-  z-index: 1000;
+  z-index: 3000;
 }
 
 .header-content {
