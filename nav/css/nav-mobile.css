@@ -25,7 +25,7 @@
 
   /* スマホ時のサイズだけここで決める（必要なら） */
   .offcanvas-nav {
-    top: 0;
+    top: 70px;
     right: 0;
     width: 260px;   /* 好きな幅に調整OK */
     height: 100vh;
