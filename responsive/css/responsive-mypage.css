@@ -244,11 +244,6 @@ h2, h3 {
   display: none;
 }
 
-.offcanvas-nav.show,
-.offcanvas-backdrop.show {
-  display: block;
-}
-
 .offcanvas-nav {
   background: red !important;
   opacity: 1 !important;
@@ -257,6 +252,7 @@ h2, h3 {
 
 .offcanvas-nav.show {
   transform: translateX(0) !important;
+  display: block;
 }
 
 .offcanvas-menu {
@@ -280,14 +276,15 @@ h2, h3 {
   inset: 0;
   background: rgba(0,0,0,0.4);
   opacity: 0;
-  pointer-events: auto;
+  pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 10000;
+  z-index: 90000;
 }
 
 .offcanvas-backdrop.show {
   opacity: 1;
   pointer-events: auto;
+  display: block;
 }
 
 /* オフキャンバス トグルボタン */
