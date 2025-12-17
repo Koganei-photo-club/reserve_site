@@ -238,6 +238,12 @@ h2, h3 {
   pointer-events: auto;
 }
 
+/* ← この直後に追加 */
+.offcanvas-nav,
+.offcanvas-backdrop {
+  display: block;
+}
+
 .offcanvas-nav {
   background: red !important;
   opacity: 1 !important;
