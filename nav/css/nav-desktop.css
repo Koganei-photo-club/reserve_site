@@ -3,6 +3,11 @@
 ========================== */
 @media screen and (min-width: 769px) {
 
+  #main-header {
+    position: relative;
+    z-index: 3000;
+  }
+
   /* 旧 navbar は完全に無効化 */
   .navbar {
     display: none !important;
