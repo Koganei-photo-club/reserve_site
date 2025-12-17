@@ -21,6 +21,8 @@ function getTodayJST() {
   return jst.toISOString().split("T")[0]; // "YYYY-MM-DD"
 }
 
+const todayStr = getTodayJST();
+
   // ----------------------
   // ログインユーザー取得
   // ----------------------
@@ -70,8 +72,6 @@ function getTodayJST() {
         list.innerHTML = `<div class="reserve-item">カメラの予約はありません</div>`;
         return;
       }
-
-      const todayStr = getTodayJST();
       
       list.innerHTML = `
         <table class="reserve-table">
