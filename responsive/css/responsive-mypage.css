@@ -351,6 +351,11 @@ h2, h3 {
   pointer-events: auto;
 }
 
+/* offcanvas or modal 表示時だけ有効化 */
+body.ui-active #ui-layer {
+  pointer-events: auto;
+}
+
 /* ==========
   ナビactive表示
  ================= */

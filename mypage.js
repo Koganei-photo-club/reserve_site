@@ -513,6 +513,7 @@ window.addEventListener("scroll", () => {
     offcanvas.classList.remove("show");
     backdrop.classList.remove("show");
     document.body.classList.remove("scroll-lock");
+    document.body.classList.remove("ui-active");
 
     /* ドロップダウンメニュー状態リセット */
     document.querySelectorAll(".offcanvas-group.open")
@@ -533,6 +534,7 @@ window.addEventListener("scroll", () => {
         offcanvas.classList.add("show");
         backdrop.classList.add("show");
         document.body.classList.add("scroll-lock");
+        document.body.classList.add("ui-active");
 
         console.log("[OFFCANVAS] classList after open:", offcanvas.className);
       }
