@@ -235,13 +235,7 @@ h2, h3 {
   transform: translateX(100%);
   transition: transform 0.3s ease;
   z-index: 100000;
-  pointer-events: auto;
-}
-
-/* ← この直後に追加 */
-.offcanvas-nav,
-.offcanvas-backdrop {
-  display: none;
+  /* pointer-events: auto; */
 }
 
 .offcanvas-nav {
@@ -252,7 +246,6 @@ h2, h3 {
 
 .offcanvas-nav.show {
   transform: translateX(0) !important;
-  display: block;
 }
 
 .offcanvas-menu {
@@ -284,7 +277,7 @@ h2, h3 {
 .offcanvas-backdrop.show {
   opacity: 1;
   pointer-events: auto;
-  display: block;
+  /* display: block; */
 }
 
 /* オフキャンバス トグルボタン */
