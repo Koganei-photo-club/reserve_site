@@ -3,7 +3,7 @@
 ========================== */
 @media screen and (min-width: 769px) {
 
-  #main-header {
+  #header-wrapper {
     position: relative;
     z-index: 3000;
   }
@@ -23,7 +23,7 @@
   /* ===== オフキャンバスを「下方向ドロップダウン化」 ===== */
 
   .offcanvas-nav {
-    position: fixed;
+    position: absolute;
     top: 70px;              /* ヘッダー直下（header 高さに合わせる） */
     left: 0;
     right: 0;
