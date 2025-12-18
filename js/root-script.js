@@ -3,35 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /***********************
- * ヘッダー/ナビの出し入れ
- ***********************/
-let lastScrollY = window.scrollY;
-const header = document.getElementById("main-header");
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const docHeight = document.documentElement.scrollHeight;
-
-  if (scrollTop <= 0) {
-    header.style.top = "0";
-    navbar.style.top = "70px";
-  } else if (scrollTop + windowHeight >= docHeight) {
-    header.style.top = "-70px";
-    navbar.style.top = "0";
-  } else if (scrollTop > lastScrollY) {
-    header.style.top = "-70px";
-    navbar.style.top = "0";
-  } else {
-    header.style.top = "0";
-    navbar.style.top = "70px";
-  }
-  lastScrollY = scrollTop;
-});
-
-
-/***********************
  * Instagram ポップアップ
  ***********************/
 document.addEventListener("DOMContentLoaded", function() {
