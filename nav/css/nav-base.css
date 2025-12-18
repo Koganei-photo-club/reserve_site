@@ -93,6 +93,10 @@
   text-decoration: none;
 }
 
+.offcanvas-toggle .arrow {
+  pointer-events: none;
+}
+
 /* Dropdown submenu（常にDOM上に存在） */
 .offcanvas-submenu {
   list-style: none;
