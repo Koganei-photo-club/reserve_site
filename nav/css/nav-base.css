@@ -44,6 +44,26 @@
   transform: translate(0, 0);
 }
 
+.offcanvas-toggle {
+  width: 100%;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.offcanvas-toggle:hover {
+  background: rgba(255,255,255,0.08);
+}
+
 /* Backdrop */
 .offcanvas-backdrop {
   position: fixed;
@@ -72,12 +92,63 @@
   text-decoration: none;
 }
 
-/* Dropdown */
+/* Dropdown submenu（常にDOM上に存在） */
 .offcanvas-submenu {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
 }
-.offcanvas-group.open .offcanvas-submenu {
+
+/* ユーザー操作で開いたときだけ展開 */
+.offcanvas-group.is-open > .offcanvas-submenu {
+  max-height: 500px; /* 十分大きければOK */
+}
+
+.offcanvas-submenu li a {
   display: block;
+  padding: 8px 12px 8px 28px;
+  font-size: 0.95rem;
+  color: #ddd;
+  position: relative;
+}
+
+.offcanvas-submenu li a::before {
+  content: "—";
+  position: absolute;
+  left: 14px;
+  color: #777;
+}
+
+/* Dropdown Arrow */
+.arrow {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 6px solid #ccc;
+  transition: transform .2s ease, opacity .2s;
+  opacity: .7;
+}
+
+/* 開いたら下向き */
+.offcanvas-group.is-open .arrow {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* Active control */
+.offcanvas-group.active > .offcanvas-toggle {
+  background: rgba(255,255,255,0.12);
+}
+
+.offcanvas-group.active.is-open > .offcanvas-toggle {
+  background: rgba(255,255,255,0.06);
+}
+
+.offcanvas-submenu a.active {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border-radius: 6px;
 }
 
 /* Scroll lock */

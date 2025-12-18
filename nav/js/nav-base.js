@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("scroll-lock");
 
     // dropdown リセット
-    document.querySelectorAll(".offcanvas-group.open")
-      .forEach(g => g.classList.remove("open"));
+    document.querySelectorAll(".offcanvas-group.is-open")
+      .forEach(g => g.classList.remove("is-open"));
   }
 
   /* 🍔 トグル */
@@ -36,37 +36,43 @@ document.addEventListener("DOMContentLoaded", () => {
   /* backdrop クリックで閉じる（主にスマホ） */
   backdrop?.addEventListener("click", closeOffcanvas);
 
-  /* dropdown（1つだけ開く） */
-  document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const group = btn.closest(".offcanvas-group");
-      if (!group) return;
+document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-      const isOpen = group.classList.contains("open");
+    const group = btn.closest(".offcanvas-group");
+    if (!group) return;
 
-      document.querySelectorAll(".offcanvas-group.open")
-        .forEach(g => g.classList.remove("open"));
+    const isOpen = group.classList.contains("is-open");
 
-      if (!isOpen) {
-        group.classList.add("open");
-      }
-    });
+    // 他はすべて閉じる
+    document.querySelectorAll(".offcanvas-group.is-open")
+      .forEach(g => g.classList.remove("is-open"));
+
+    // 自分だけ開く（トグル）
+    if (!isOpen) {
+      group.classList.add("is-open");
+    }
   });
+});
 
 // ==========================
 // Active 表示（共通）
 // ==========================
 const page = document.body.dataset.page;
+
 if (page) {
-  // オフキャンバス
   document
     .querySelectorAll(`.offcanvas-nav a[data-page="${page}"]`)
     .forEach(a => {
       a.classList.add("active");
 
-      // dropdown内なら親を開く
+      // dropdown内なら「親をactiveにするだけ」
       const group = a.closest(".offcanvas-group");
-      if (group) group.classList.add("open");
+      if (group) {
+        group.classList.add("active");
+        // ❌ is-open は付けない
+      }
     });
 }
 
