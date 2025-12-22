@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
+  <link rel="stylesheet" href="../nav/css/nav-base.css">
+  <link rel="stylesheet" href="../nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="../nav/css/nav-mobile.css">
   <link rel="stylesheet" href="css/style.css">
 
   <link rel="manifest" href="/reserve_site/manifest.json">
@@ -62,10 +65,16 @@
           <p>PC予約システム</p>
         </div>
       </a>
+      <!-- 🍔 ハンバーガーボタン -->
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <nav class="navbar">
+  <!-- <nav class="navbar">
     <ul id="nav-menu">
       <li id="nav-login"><a href="/reserve_site/auth/login.html">ログイン</a></li>
       <li id="nav-pc"><a href="/reserve_site/pc/index.html">PC予約トップ</a></li>
@@ -73,7 +82,7 @@
       <li id="nav-mypage" style="display:none;"><a href="/reserve_site/mypage.html">マイページ</a></li>
       <li id="nav-logout" style="display:none;"><a href="#" id="logoutBtnNav">ログアウト</a></li>
     </ul>
-  </nav>
+  </nav> -->
 </div>
 
 <main>
@@ -124,6 +133,41 @@
   </div>
 </div>
 
+<!--  オフキャンバスナビ  -->
+<div id="offcanvas-nav" class="offcanvas-nav">
+  <ul class="offcanvas-menu">
+    <li><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
+    <hr>
+    <li><a href="/reserve_site/index.html">総合トップ</a></li>
+    <hr>
+
+    <!-- カメラ -->
+    <li class="offcanvas-group">
+      <button class="offcanvas-toggle">
+        カメラ
+        <span class="arrow"></span>
+      </button>
+      <ul class="offcanvas-submenu">
+        <li><a href="../camera/index.html" data-page="camera">カメラトップ</a></li>
+        <li><a href="../camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+      </ul>
+    </li>
+    <hr>
+    <!-- PC -->
+    <li class="offcanvas-group">
+      <button class="offcanvas-toggle">
+        PC
+        <span class="arrow"></span>
+      </button>
+      <ul class="offcanvas-submenu">
+        <li><a href="index.html" data-page="pc">PCトップ</a></li>
+        <li><a href="reserve.html" data-page="pc-calendar">カレンダー</a></li>
+      </ul>
+    </li>
+    <hr>
+    <li><a href="../auth/login.html" id="logoutBtnOffcanvas">ログアウト</a></li>
+  </ul>
+
   <!-- ===== フッター ===== -->
   <footer>
     <p><img src="images/club-icon.JPG" style="height:40px;"></p>
@@ -131,7 +175,7 @@
   </footer>
 
 <!-- ✘ app-auth.js が先だと失敗する場合あり -->
-
+<script src="../nav/js/nav-base.js"></script>
 <script src="../calendar/js/common-calendar.js"></script>
 <script src="../auth/js/app-auth.js"></script>
 <script src="js/pc-calendar.js" defer></script>
