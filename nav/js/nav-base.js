@@ -3,6 +3,31 @@
 // ==========================
 document.addEventListener("DOMContentLoaded", () => {
 
+  // ==========================
+  // header offcanvas offset
+  // ==========================
+  function updateHeaderOffset() {
+    const header = document.getElementById("main-header");
+    if (!header) return;
+
+    const height = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty(
+      "--header-height",
+      `${height}px`
+    );
+  }
+
+  // 初期化
+  updateHeaderOffset();
+
+  // リサイズ対応
+  window.addEventListener("resize", updateHeaderOffset);
+
+  // スクロールで header 高さが変わるページ対策
+  window.addEventListener("scroll", () => {
+    requestAnimationFrame(updateHeaderOffset);
+  });
+
   const toggleBtn = document.querySelector(".nav-toggle");
   const offcanvas = document.querySelector(".offcanvas-nav");
   const backdrop  = document.querySelector(".offcanvas-backdrop");

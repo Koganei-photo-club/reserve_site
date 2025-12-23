@@ -33,11 +33,15 @@
 /* Offcanvas（存在のみ） */
 .offcanvas-nav {
   position: fixed;
+  left: 0;
+  width: 100%;
   background: #222;
   color: #fff;
   overflow: visible;
   transition: transform 0.25s ease;
   z-index: 2000;
+
+  top: var(--header-height, 0px);
 }
 
 /* show は transform を有効化するだけ */
