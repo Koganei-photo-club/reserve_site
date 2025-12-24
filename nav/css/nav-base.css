@@ -34,7 +34,6 @@
 .offcanvas-nav {
   position: fixed;
   left: 0;
-  right: 0;
   width: 100%;
   height: calc(100vh - var(--header-height, 0px));
   background: #222;
@@ -44,7 +43,6 @@
   z-index: 2000;
 
   top: var(--header-height, 0px);
-  transform: translateX(100%);   /* ← 初期は画面外 */
   transition: transform 0.25s ease;
 }
 
