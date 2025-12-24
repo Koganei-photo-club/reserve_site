@@ -61,6 +61,10 @@
     margin: 0;
   }
 
+  .offcanvas-toggle .arrow {
+    display: none;
+  }
+
   /* dropdown（camera / PC） */
   .offcanvas-group {
     position: relative;
@@ -83,11 +87,7 @@
     display: none;
   }
 
-  .offcanvas-group.open .offcanvas-submenu {
+  .offcanvas-group.is-open .offcanvas-submenu {
     display: block;
-  }
-
-  .offcanvas-group:not(.is-open) > .offcanvas-submenu {
-    display: none;
   }
 }

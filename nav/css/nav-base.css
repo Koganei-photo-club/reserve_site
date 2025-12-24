@@ -36,6 +36,7 @@
   left: 0;
   right: 0;
   width: 100%;
+  height: calc(100vh - var(--header-height, 0px));
   background: #222;
   color: #fff;
   overflow: visible;

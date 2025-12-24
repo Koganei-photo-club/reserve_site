@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const height = header.getBoundingClientRect().height;
     document.documentElement.style.setProperty(
       "--header-height",
-      `${height}px`
+      `${header.offsetHeight}px`
     );
   }
 
