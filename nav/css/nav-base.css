@@ -30,6 +30,14 @@
   border-radius: 2px;
 }
 
+.nav-muted {
+  color: #aaa;
+  padding: 12px 14px;
+  display: block;
+  font-size: 0.9rem;
+  cursor: default;
+}
+
 /* Offcanvas（存在のみ） */
 .offcanvas-nav {
   position: fixed;
