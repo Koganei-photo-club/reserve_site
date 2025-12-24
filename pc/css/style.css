@@ -708,6 +708,11 @@ footer p {
   padding: 0 1rem;
 }
 
+.pc-center-section h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
 /* 説明文の文章ブロック（中身だけ左寄せ） */
 .pc-description {
   max-width: 600px;      /* 説明文の幅 */
