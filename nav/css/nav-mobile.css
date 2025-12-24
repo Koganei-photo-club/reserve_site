@@ -18,16 +18,16 @@
     position: fixed;
     top: var(--header-height, 0px);
 
-    left: 100%;
+    left: calc(100% - 260px);
     right: auto;
-    width: 260px;   /* 好きな幅に調整OK */
+    width: min(260px, 85vw);   /* 好きな幅に調整OK */
     height: calc(100vh - var(--header-height, 0px));
-    transform: translateX(0);
+    transform: translateX(260px); /* ← 画面外に隠す */
     display: block;
   }
 
   .offcanvas-nav .show {
-    transform: translateX(-260px); /* ← 左に引き戻す */
+    transform: translateX(0); /* ← 左に引き戻す */
   }
 
   /* backdrop は base の .show 制御に任せる */
