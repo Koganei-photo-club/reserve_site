@@ -102,7 +102,7 @@ h2 {
     color: #333;
 }
 
-.center-text {
+.center-text .h2{
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
