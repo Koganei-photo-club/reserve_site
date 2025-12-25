@@ -225,8 +225,28 @@
       </li>
 
       <hr>
-      <li id="nav-admin" style="display:none;">
-        <a href="/reserve_site/admin/index.html">🛠 管理者メニュー</a>
+      <li class="offcanvas-group" id="nav-admin" style="display: none;">
+        <button class="offcanvas-toggle">
+          🛠 管理者メニュー
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li>
+            <a href="/reserve_site/admin/index.html" data-page="admin-users">
+              ユーザー管理
+            </a>
+          </li>
+          <li>
+            <a href="/reserve_site/camera/admin.html" data-page="admin-camera">
+              カメラ予約管理
+            </a>
+          </li>
+          <li>
+            <a href="/reserve_site/pc/admin.html" data-page="admin-pc">
+              PC予約管理
+            </a>
+          </li>
+        </ul>
       </li>
       <hr>
       
