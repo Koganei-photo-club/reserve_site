@@ -189,7 +189,20 @@
 <!-- オフキャンバスナビ  -->
   <div class="offcanvas-nav">
     <ul class="offcanvas-menu">
-      <li><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
+      <!-- 認証なし -->
+      <li id="nav-login">
+        <a href="/reserve_site/auth/login.html">ログイン / 新規登録</a>
+      </li>
+      <!-- 認証あり（表示のみ） -->
+      <li id="nav-loggedin" style="display:none;">
+        <span class="nav-muted">
+          ログイン中：<strong id="nav-user-name"></strong>
+        </span>
+      </li>
+      <!-- 認証あり -->
+      <li id="nav-mypage" style="display: none;">
+        <a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a>
+      </li>
       <hr>
       <li><a href="/reserve_site/index.html">総合トップ</a></li>
       <hr>
@@ -220,7 +233,9 @@
 
       <hr>
       
-      <li><a href="../auth/login.html" id="logoutBtnOffcanvas">ログアウト</a></li>
+      <li id="nav-logout" style="display: none;">
+        <a href="#" id="logoutBtnOffcanvas">ログアウト</a>
+      </li>
     </ul>
   </div>
 
@@ -234,6 +249,7 @@
   </footer>
 
   <script src="../nav/js/nav-base.js"></script>
+  <script src="../nav/js/nav-auth-bridge.js"></script>
   <!-- JS -->
   <script src="js/script.js"></script>
 </body>

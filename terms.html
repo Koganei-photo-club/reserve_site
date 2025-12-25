@@ -9,6 +9,10 @@
   <link rel="icon" href="icons/club-icon.JPG" type="image/jpeg">
 
   <!-- CSS -->
+  <!-- ナビゲーション決定スタイルシート読み込み -->
+  <link rel="stylesheet" href="./nav/css/nav-base.css">
+  <link rel="stylesheet" href="./nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="./nav/css/nav-mobile.css">
   <link rel="stylesheet" href="css/root-style.css">
 </head>
 
@@ -27,15 +31,21 @@
           <p>予約システム 利用規約</p>
         </div>
       </a>
+      <!-- 🍔 ハンバーガーボタン -->
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <nav class="navbar">
+  <!-- <nav class="navbar">
     <ul>
       <li><a href="index.html">総合トップ</a></li>
       <li><a href="terms.html" class="disabled">利用規約</a></li>
     </ul>
-  </nav>
+  </nav> -->
 </div>
 
 <!-- ==========================
@@ -138,6 +148,62 @@
   </section>
 </main>
 
+<!-- オフキャンバスナビ -->
+<div class="offcanvas-nav">
+  <ul class="offcanvas-menu">
+
+    <!-- 認証なし -->
+    <li id="nav-login">
+      <a href="/reserve_site/auth/login.html">ログイン / 新規登録</a>
+    </li>
+    <!-- 認証あり（表示のみ） -->
+    <li id="nav-loggedin" style="display:none;">
+      <span class="nav-muted">
+        ログイン中：<strong id="nav-user-name"></strong>
+      </span>
+    </li>
+    <!-- 認証あり -->
+    <li id="nav-mypage" style="display: none;">
+      <a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a>
+    </li>
+    <hr>
+    <li>
+      <a href="/reserve_site/index.html">総合トップ</a>
+    </li>
+    <hr>
+    <!-- カメラ -->
+    <li class="offcanvas-group">
+      <button class="offcanvas-toggle">
+        カメラ
+        <span class="arrow"></span>
+      </button>
+      <ul class="offcanvas-submenu">
+        <li><a href="camera/index.html" data-page="camera">カメラトップ</a></li>
+        <li><a href="camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+      </ul>
+    </li>
+
+    <!-- PC -->
+    <li class="offcanvas-group">
+      <button class="offcanvas-toggle">
+        PC
+        <span class="arrow"></span>
+      </button>
+      <ul class="offcanvas-submenu">
+        <li><a href="pc/index.html" data-page="pc">PCトップ</a></li>
+        <li><a href="pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+      </ul>
+    </li>
+
+    <hr>
+
+    <li id="nav-logout" style="display: none;">
+      <a href="#" id="logoutBtnOffcanvas">ログアウト</a>
+    </li>
+  </ul>
+</div>
+<div class="offcanvas-backdrop"></div>
+
 <!-- ==========================
      フッター
 ============================== -->
@@ -145,6 +211,9 @@
   <p><img src="icons/club-icon.JPG" style="height:40px;"></p>
   <p>© 2025 法政大学 小金井写真部</p>
 </footer>
+
+<script src="./nav/js/nav-base.js"></script>
+<script src="./nav/js/nav-auth-bridge.js"></script>
 
 </body>
 </html>
