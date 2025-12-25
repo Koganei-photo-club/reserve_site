@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loggedinItem = document.getElementById("nav-loggedin");
   const mypageItem  = document.getElementById("nav-mypage");
   const logoutItem  = document.getElementById("nav-logout");
+  const adminItem   = document.getElementById("nav-admin");
   const nameEl      = document.getElementById("nav-user-name");
 
   // 必須要素チェック
