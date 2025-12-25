@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navLoggedIn) navLoggedIn.style.display = "block";
     navMypage.style.display   = "block";
     navLogout.style.display   = "block";
+
+    // ユーザー名表示
+    if (nameEl && user.name) {
+      nameEl.textContent = user.name;
+    }
+
   } else {
     navLogin.style.display    = "block";
     if (navLoggedIn) navLoggedIn.style.display = "none";
