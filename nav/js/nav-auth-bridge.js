@@ -26,6 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
       nameEl.textContent = user.name;
     }
 
+    // ========= 管理者判定 =========
+    const adminRoles = [1, 2, 3, 4];
+    if (adminItem) {
+      adminItem.style.display =
+        adminRoles.includes(Number(user.role)) ? "block" : "none";
+    }
+
     const logoutBtn = document.getElementById("logoutBtnOffcanvas");
     if (logoutBtn) {
       logoutBtn.onclick = () => {
