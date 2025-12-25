@@ -52,35 +52,4 @@ async function handleCredentialResponse(response) {
     console.error(err);
     alert("通信エラーが発生しました。ネットワークを確認してください。");
   }
-}
-
-// =======================
-// 🔑 ナビゲーション表示制御
-// =======================
-document.addEventListener("DOMContentLoaded", () => {
-  const userJson = sessionStorage.getItem("user");
-
-  const loginBtn  = document.getElementById("nav-login");
-  const mypageBtn = document.getElementById("nav-mypage");
-  const logoutBtn = document.getElementById("nav-logout");
-
-  if (!loginBtn || !mypageBtn || !logoutBtn) return;
-
-  if (userJson) {
-    // ログイン状態
-    loginBtn.style.display = "none";
-    mypageBtn.style.display = "inline-block";
-    logoutBtn.style.display = "inline-block";
-
-    document.getElementById("logoutBtnNav").onclick = () => {
-      sessionStorage.clear();
-      location.href = "/reserve_site/auth/login.html";
-    };
-
-  } else {
-    // 未ログイン状態
-    loginBtn.style.display = "inline-block";
-    mypageBtn.style.display = "none";
-    logoutBtn.style.display = "none";
-  }
-});
+};
