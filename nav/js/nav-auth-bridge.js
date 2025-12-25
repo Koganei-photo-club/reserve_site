@@ -1,42 +1,44 @@
 // ==========================
-// Offcanvas Auth UI Bridge
+// Nav Auth Bridge（offcanvas対応）
 // ==========================
 document.addEventListener("DOMContentLoaded", () => {
   const userJson = sessionStorage.getItem("user");
-  const isLoggedIn = !!userJson;
 
-  const navLogin    = document.getElementById("nav-login");
-  const navLoggedIn = document.getElementById("nav-loggedin");
-  const navMypage   = document.getElementById("nav-mypage");
-  const navLogout   = document.getElementById("nav-logout");
+  const loginItem   = document.getElementById("nav-login");
+  const loggedinItem = document.getElementById("nav-loggedin");
+  const mypageItem  = document.getElementById("nav-mypage");
+  const logoutItem  = document.getElementById("nav-logout");
+  const nameEl      = document.getElementById("nav-user-name");
 
-  if (!navLogin || !navMypage || !navLogout) return;
+  // 必須要素チェック
+  if (!loginItem || !loggedinItem || !mypageItem || !logoutItem) return;
 
-  if (isLoggedIn) {
-    navLogin.style.display    = "none";
-    if (navLoggedIn) navLoggedIn.style.display = "block";
-    navMypage.style.display   = "block";
-    navLogout.style.display   = "block";
+  if (userJson) {
+    // ===== ログイン中 =====
+    const user = JSON.parse(userJson);
 
-    // ユーザー名表示
+    loginItem.style.display    = "none";
+    loggedinItem.style.display = "block";
+    mypageItem.style.display   = "block";
+    logoutItem.style.display   = "block";
+
     if (nameEl && user.name) {
       nameEl.textContent = user.name;
     }
 
-  } else {
-    navLogin.style.display    = "block";
-    if (navLoggedIn) navLoggedIn.style.display = "none";
-    navMypage.style.display   = "none";
-    navLogout.style.display   = "none";
-  }
+    const logoutBtn = document.getElementById("logoutBtnOffcanvas");
+    if (logoutBtn) {
+      logoutBtn.onclick = () => {
+        sessionStorage.clear();
+        window.location.href = "/reserve_site/auth/login.html";
+      };
+    }
 
-  // ログアウト処理（既存仕様に合わせる）
-  const logoutBtn = document.getElementById("logoutBtnOffcanvas");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", e => {
-      e.preventDefault();
-      sessionStorage.clear();
-      location.href = "/reserve_site/auth/login.html";
-    });
+  } else {
+    // ===== 未ログイン =====
+    loginItem.style.display    = "block";
+    loggedinItem.style.display = "none";
+    mypageItem.style.display   = "none";
+    logoutItem.style.display   = "none";
   }
 });
