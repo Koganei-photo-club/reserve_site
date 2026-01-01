@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../nav/css/nav-mobile.css">
   <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
   <link rel="stylesheet" href="../css/mypage-style.css">
+  <link rel="stylesheet" href="../css/admin-style.css">
   <link rel="stylesheet" href="../responsive/css/responsive-mypage.css" media="screen and (max-width: 768px)">
 
   <!-- ナビゲーション制御（既存） -->
@@ -42,16 +43,16 @@
   </header>
 </div>
 
-<main class="camera-center-section">
-  <h2>📷 カメラ予約一覧（管理者用）</h2>
-  <p style="text-align:center;">
-    役職者のみアクセスできます。<br>
-    各行の「管理者キャンセル」ボタンから予約を削除できます。
-  </p>
-
-  <section class="mypage-card">
-    <div id="camera-admin-table">
-      読み込み中…
+<main class="mypage-center-section admin-page">
+  <section class="mypage-card admin-card">
+    <h2>管理者用カメラ予約管理画面</h2>
+    <p>
+      ここはカメラ予約の管理者用ページです。<br>
+      予約の確認・キャンセルが行えます。<br>
+      不正アクセスは禁止されています。
+    </p>
+    <div class="reserve-list-box admin-list-box">
+      <div id="camera-admin-table" ></div>
     </div>
   </section>
 </main>

@@ -1,0 +1,24 @@
+/* ==========================
+   Admin Page Base
+========================== */
+
+.admin-page {
+  padding-bottom: 2rem;
+}
+
+/* マイページと同じカード感を保つ */
+.admin-card {
+  max-width: 1000px;
+  margin: 1.5rem auto;
+}
+
+/* 管理画面特有の見出し */
+.admin-card h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* まだ中身が壊れててもOKなラッパー */
+.admin-list-box {
+  position: relative;
+}
