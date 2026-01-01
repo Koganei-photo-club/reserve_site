@@ -28,24 +28,14 @@
           <p>PoCKet Camera Admin</p>
         </div>
       </a>
+      <!-- 🍔 ハンバーガーボタン -->
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
-
-  <nav class="navbar two-rows">
-    <div class="nav-row user-links">
-      <ul>
-        <li id="nav-login" style="display: none;"><a href="/reserve_site/auth/login.html">ログイン</a></li>
-        <li id="nav-mypage"><a href="/reserve_site/mypage.html">マイページ</a></li>
-        <li id="nav-logout" style="display: none;"><a href="#">ログアウト</a></li>
-      </ul>
-    </div>
-    <div class="nav-row category-links">
-      <ul>
-        <li><a href="index.html">📷 カメラ予約</a></li>
-        <li><a href="../pc/index.html">💻 PC予約</a></li>
-      </ul>
-    </div>
-  </nav>
 </div>
 
 <main class="camera-center-section">
@@ -61,6 +51,92 @@
     </div>
   </section>
 </main>
+
+<!-- オフキャンバスナビ  -->
+  <div class="offcanvas-nav">
+    <ul class="offcanvas-menu">
+
+      <!-- 認証なし -->
+      <li id="nav-login">
+        <a href="/reserve_site/auth/login.html">ログイン / 新規登録</a>
+      </li>
+      <!-- 認証あり（表示のみ） -->
+      <li id="nav-loggedin" style="display:none;">
+        <span class="nav-muted">
+          ログイン中：<strong id="nav-user-name"></strong>
+        </span>
+      </li>
+      <!-- 認証あり -->
+      <li id="nav-mypage" style="display: none;">
+        <a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a>
+      </li>
+      <hr>
+      <li>
+        <a href="/reserve_site/index.html">総合トップ</a>
+      </li>
+      <hr>
+
+      <!-- カメラ -->
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          カメラ
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="reserve.html" data-page="camera-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <!-- PC -->
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          PC
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="../pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="../pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <hr>
+      <li class="offcanvas-group" id="nav-admin" style="display: none;">
+        <button class="offcanvas-toggle">
+          🛠 管理者メニュー
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li>
+            <a href="/reserve_site/admin/index.html" data-page="admin-users">
+              ユーザー管理
+            </a>
+          </li>
+          <li>
+            <a href="/reserve_site/camera/admin.html" data-page="admin-camera">
+              カメラ予約管理
+            </a>
+          </li>
+          <li>
+            <a href="/reserve_site/pc/admin.html" data-page="admin-pc">
+              PC予約管理
+            </a>
+          </li>
+        </ul>
+      </li>
+      <hr>
+      
+      <li id="nav-logout" style="display: none;">
+        <a href="#" id="logoutBtnOffcanvas">ログアウト</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="offcanvas-backdrop"></div>
+
+<script src="../nav/js/nav-base.js"></script>
+<script src="../nav/js/nav-auth-bridge.js"></script>
+<script src="../mypage.js"></script>
 
 <footer>
   <p>© 写真技術研究会 PoCKet</p>
