@@ -35,3 +35,9 @@
 .admin-list-box td {
   white-space: nowrap;
 }
+
+.cancel-disabled {
+  color: #888;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}

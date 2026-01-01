@@ -88,9 +88,13 @@
                 <td>${r.code || "?"}</td>
                 <td>${procHtml}</td>
                 <td>
-                  <button class="cancel-btn" data-index="${i}">
-                    管理者キャンセル
-                  </button>
+                  ${
+                    r.afterChecked
+                      ? `<span class="cancel-disabled">キャンセル不可（返却済）</span>`
+                      : `<button class="cancel-btn" data-index="${i}">
+                          管理者キャンセル
+                          </button>`
+                    }
                 </td>
               </tr>
               `;
