@@ -8,7 +8,7 @@
 
 /* マイページと同じカード感を保つ */
 .admin-card {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 1.5rem auto;
 }
 
@@ -20,5 +20,18 @@
 
 /* まだ中身が壊れててもOKなラッパー */
 .admin-list-box {
-  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-list-box table {
+  min-width: 900px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* セルが勝手に折り返して崩れるのを防ぐ */
+.admin-list-box th,
+.admin-list-box td {
+  white-space: nowrap;
 }
