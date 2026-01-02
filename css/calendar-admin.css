@@ -1,0 +1,66 @@
+.calendar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 769px) {
+  .calendar-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 24px;
+  }
+
+  .calendar-form button {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-weight: 600;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reserve-table th {
+  white-space: nowrap;
+}
+
+/* ===== 柔らかセレクト ===== */
+.soft-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.soft-select select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background:
+    #fff
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'><path fill='%23666' d='M7 10l5 5 5-5z'/></svg>")
+    no-repeat right 14px center;
+
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.soft-select select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
+}
