@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>学年暦管理 | PoCKet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通ナビ -->
+  <link rel="stylesheet" href="../nav/css/nav-base.css">
+  <link rel="stylesheet" href="../nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="../nav/css/nav-mobile.css">
+
+  <!-- マイページ系を流用 -->
+  <link rel="stylesheet" href="../css/mypage-style.css">
+  <link rel="stylesheet" href="../responsive/css/responsive-mypage.css"
+        media="screen and (max-width:768px)">
+
+  <!-- 学年暦専用（後で作る） -->
+  <link rel="stylesheet" href="./calendar-admin.css">
+
+  <script src="../auth/js/app-auth.js" defer></script>
+</head>
+
+<body data-page="admin-calendar">
+
+<!-- ヘッダー（共通） -->
+<div id="header-wrapper">
+  <header id="main-header">
+    <div class="header-content">
+      <a href="../index.html">
+        <h1>学年暦管理</h1>
+        <p>PoCKet Admin</p>
+      </a>
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+</div>
+
+<main class="mypage-center-section">
+
+  <h2>📅 学年暦設定（管理者専用）</h2>
+
+  <!-- 年度選択 -->
+  <section class="mypage-card">
+    <label>
+      対象年度：
+      <select id="academic-year">
+        <option value="2025">AY2025</option>
+        <option value="2026">AY2026</option>
+      </select>
+    </label>
+  </section>
+
+  <!-- 一覧 -->
+  <section class="mypage-card">
+    <h3>期間一覧</h3>
+
+    <div class="table-wrapper">
+      <table class="reserve-table">
+        <thead>
+          <tr>
+            <th>種別</th>
+            <th>開始日</th>
+            <th>終了日</th>
+            <th>最大日数</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="calendar-table-body">
+          <!-- JSで生成 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 追加 -->
+  <section class="mypage-card">
+    <h3>期間を追加 / 編集</h3>
+
+    <form id="calendar-form">
+      <label>
+        種別
+        <select name="type" required>
+          <option value="">選択してください</option>
+          <option value="SPR_Sem00">春学期</option>
+          <option value="SMR_Vac">夏休み</option>
+          <option value="AUT_Sem01">秋学期（年内）</option>
+          <option value="WTR_Vac">年末年始</option>
+          <option value="AUT_Sem02">秋学期（年明け）</option>
+          <option value="SPR_Vac">春休み</option>
+        </select>
+      </label>
+
+      <label>
+        開始日
+        <input type="date" name="start_date" required>
+      </label>
+
+      <label>
+        終了日
+        <input type="date" name="end_date" required>
+      </label>
+
+      <label>
+        最大貸出日数
+        <select name="max_days">
+          <option value="7">7日</option>
+          <option value="14">14日</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn-primary">
+        保存
+      </button>
+    </form>
+  </section>
+
+</main>
+
+<!-- オフキャンバス（既存流用） -->
+<div class="offcanvas-nav">…</div>
+<div class="offcanvas-backdrop"></div>
+
+<script src="../nav/js/nav-base.js"></script>
+<script src="../nav/js/nav-auth-bridge.js"></script>
+
+</body>
+</html>
