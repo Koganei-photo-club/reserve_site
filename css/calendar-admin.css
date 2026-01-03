@@ -1,3 +1,11 @@
+:root {
+  --header-height: 72px; /* 実際の高さに合わせる */
+}
+
+.calendar-admin-section {
+  padding-top: calc(var(--header-height) + 16px);
+}
+
 .calendar-form {
   display: flex;
   flex-direction: column;
