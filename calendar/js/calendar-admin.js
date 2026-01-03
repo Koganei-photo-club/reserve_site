@@ -121,32 +121,35 @@ async function loadTerms(year) {
   }
 
   tableBox.innerHTML = `
-    <table class="reserve-table">
-      <thead>
-        <tr>
-          <th>種別</th>
-          <th>期間</th>
-          <th>最大日数</th>
-          <th>編集</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.rows.map(r => `
-          <tr>
-            <td>${r.type}</td>
-            <td>${format(r.start_date)} 〜 ${format(r.end_date)}</td>
-            <td>${r.max_days}日</td>
-            <td>
-              <button class="edit-btn"
-                data-row='${JSON.stringify(r)}'>
-                編集
-              </button>
-            </td>
-          </tr>
-        `).join("")}
-      </tbody>
-    </table>
-  `;
+  <div class="term-card-list">
+    ${data.rows.map(r => `
+      <div class="term-card">
+        <div class="term-header">
+          <span class="term-type">${r.type}</span>
+          <span class="term-days">${r.max_days}日</span>
+        </div>
+
+        <div class="term-body">
+          <div class="term-row">
+            <span class="label">開始</span>
+            <span>${format(r.start_date)}</span>
+          </div>
+          <div class="term-row">
+            <span class="label">終了</span>
+            <span>${format(r.end_date)}</span>
+          </div>
+        </div>
+
+        <div class="term-actions">
+          <button class="edit-btn"
+            data-row='${JSON.stringify(r)}'>
+            編集
+          </button>
+        </div>
+      </div>
+    `).join("")}
+  </div>
+`;
 
   document.querySelectorAll(".edit-btn").forEach(btn => {
     btn.onclick = () => openModal(JSON.parse(btn.dataset.row));

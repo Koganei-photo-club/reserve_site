@@ -78,3 +78,80 @@ body.year-switching #calendar-table {
 body.year-switching select {
   pointer-events: none;
 }
+
+/* ===== 学年暦カードUI ===== */
+
+.term-card-list {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 769px) {
+  .term-card-list {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+.term-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.term-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.term-type {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.term-days {
+  background: #f0f4ff;
+  color: #2f5bd3;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.term-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.term-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.term-row .label {
+  color: #777;
+}
+
+.term-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+.term-actions button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #4a90e2;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.term-actions button:hover {
+  opacity: 0.9;
+}
