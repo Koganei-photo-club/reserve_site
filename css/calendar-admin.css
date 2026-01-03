@@ -132,6 +132,23 @@ body.year-switching select {
     font-weight: 600;
 }
 
+/* ===== 現在適用中 ===== */
+.term-card--active {
+  border: 2px solid #4a90e2;
+  background: #f4f8ff;
+}
+
+.term-badge--active {
+  background: #4a90e2;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
 .term-card-header {
   display: flex;
   justify-content: space-between;

@@ -132,9 +132,30 @@ async function loadTerms(year) {
   tableBox.innerHTML = `
   <div class="term-card-list">
     ${data.rows.map(r => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const start = r.start_date ? new Date(r.start_date) : null;
+      const end = r.end_date ? new Date(r.end_date) : null;
+
+      const isActive =
+        start && end && 
+        today >= start && 
+        today <= end;
+
       const isUnset = !r.start_date || !r.end_date;
       return `
-      <div class="term-card ${isUnset ? "term-card--warning" : ""}">
+      <div class="term-card 
+        ${isActive ? "term-card--active" : ""}
+        ${isUnset ? "term-card--warning" : ""}
+      ">
+        
+        ${isActive ? `
+            <div class="term-badge term-badge--active">
+              現在適用中
+            </div>
+            ` : ""}
+
         ${isUnset ? `
             <div class="term-alert">
               ⚠︎ 期間が設定されていません
