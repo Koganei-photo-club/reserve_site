@@ -135,7 +135,12 @@ async function loadTerms(year) {
       const isUnset = !r.start_date || !r.end_date;
       return `
       <div class="term-card ${isUnset ? "term-card--warning" : ""}">
-        <div class="term-header">
+        ${isUnset ? `
+            <div class="term-alert">
+              ⚠︎ 期間が設定されていません
+            </div>
+        ` : ""}
+        <div class="term-card-header">
           <span class="term-type">
             ${TERM_LABELS[r.type] ?? r.type}
           </span>

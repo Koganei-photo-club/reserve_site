@@ -125,7 +125,14 @@ body.year-switching select {
     color: #fff;
 }
 
-.term-header {
+.term-alert {
+    font-size: 13px;
+    color: #d0021b;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.term-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
