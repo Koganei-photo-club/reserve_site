@@ -131,32 +131,36 @@ async function loadTerms(year) {
 
   tableBox.innerHTML = `
   <div class="term-card-list">
-    ${data.rows.map(r => `
-      <div class="term-card">
+    ${data.rows.map(r => {
+      const isUnset = !r.start_date || !r.end_date;
+      return `
+      <div class="term-card ${isUnset ? "term-card--warning" : ""}">
         <div class="term-header">
-          <span class="term-type">${TERM_LABELS[r.type] ?? r.type}</span>
-          <span class="term-days">${r.max_days}日</span>
+          <span class="term-type">
+            ${TERM_LABELS[r.type] ?? r.type}
+          </span>
+          <span class="term-days ${isUnset ? "badge-warning" : ""}">
+            ${r.max_days}日
+          </span>
         </div>
 
-        <div class="term-body">
-          <div class="term-row">
-            <span class="label">開始</span>
-            <span>${format(r.start_date)}</span>
+        <div class="term-dates">
+          <div>
+            <small>開始</small>
+            <span>${r.start_date ? format(r.start_date) : "未設定"}</span>
           </div>
-          <div class="term-row">
-            <span class="label">終了</span>
-            <span>${format(r.end_date)}</span>
+          <div>
+            <small>終了</small>
+            <span>${r.end_date ? format(r.end_date) : "未設定"}</span>
           </div>
         </div>
 
-        <div class="term-actions">
-          <button class="edit-btn"
-            data-row='${JSON.stringify(r)}'>
-            編集
-          </button>
-        </div>
+        <button class="edit-btn" data-row='${JSON.stringify(r)}'>
+          編集
+        </button>
       </div>
-    `).join("")}
+      `;
+    }).join("")}
   </div>
 `;
 

@@ -108,6 +108,23 @@ body.year-switching select {
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
+/* ===== 未設定カード（警告） ===== */
+.term-card--warning {
+    border: 2px solid #f5a623;
+    background: #fff7e6;
+}
+
+.term-card--warning .term-type {
+    color: #b76b00;
+    font-weight: 700;
+}
+
+/* 日数バッジも警告色 */
+.badge-warning {
+    background: #f5a623;
+    color: #fff;
+}
+
 .term-header {
   display: flex;
   justify-content: space-between;
