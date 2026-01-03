@@ -22,9 +22,16 @@ let currentYear = null;
 /* =========
    年度セレクト生成 ★追加
 ========= */
+function getAcademicYear(date = new Date()) {
+    const year = date.getFullYear();
+    const month =date.getMonth() +1; // 1-12
+
+    // 1~3月は前年度
+    return month <= 3 ? year -1 : year;
+}
+
 function initYearSelect() {
-  const now = new Date();
-  const baseYear = now.getFullYear();
+  const baseYear = getAcademicYear();
 
   const START_OFFSET = -1;
   const END_OFFSET   = 3;
