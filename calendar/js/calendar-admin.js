@@ -8,6 +8,15 @@ const modal      = document.getElementById("termModal");
 const form       = document.getElementById("termForm");
 const closeBtn   = document.getElementById("closeModalBtn");
 
+const TERM_LABELS = {
+    SPR_Sem00: "春学期",
+    SMR_Vac: "夏季休業",
+    AUT_Sem01: "秋学期（年内）",
+    WTR_Vac: "冬季休業（年末年始）",
+    AUT_Sem02: "秋学期（年明け）",
+    SPR_Vac: "春季休業",
+};
+
 let currentYear = null;
 
 /* =========
@@ -125,7 +134,7 @@ async function loadTerms(year) {
     ${data.rows.map(r => `
       <div class="term-card">
         <div class="term-header">
-          <span class="term-type">${r.type}</span>
+          <span class="term-type">${TERM_LABELS[r.type] ?? r.type}</span>
           <span class="term-days">${r.max_days}日</span>
         </div>
 
