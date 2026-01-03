@@ -41,52 +41,46 @@
   </header>
 </div>
 
-<main class="mypage-center-section">
-
-  <h2>📅 学年暦設定（管理者専用）</h2>
+<main class="calendar-admin-section">
+  <section class="admin-description">
+  <h2>学年暦（貸出期間等）管理</h2>
+  <p>
+    各期間ごとに「最大貸出日数」を設定します。<br>
+    貸出開始日が属する期間のルールが適用されます。
+  </p>
+  </section>
 
   <!-- 年度選択 -->
-  <section class="mypage-card">
-    <label class="soft-select">
-      対象年度：
-      <select id="academic-year">
-        <option value="AY2025">2025年度</option>
-        <option value="AY2026">2026年度</option>
-      </select>
+  <div class="year-selector">
+    <label for="yearSelect">
+        対象年度: 
     </label>
-  </section>
+    <select id="yearSelect"></select>
+    <small>※ 編集内容はこの年度に保存されます。</small>
+
+    <button id="addTermBtn" class="primary-btn">
+        + 期間を追加
+    </button>
+  </div>
 
   <!-- 一覧 -->
   <section class="mypage-card">
     <h3>期間一覧</h3>
 
-    <div class="table-wrapper">
-      <table class="reserve-table">
-        <thead>
-          <tr>
-            <th>種別</th>
-            <th>開始日</th>
-            <th>終了日</th>
-            <th>最大日数</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody id="calendar-table-body">
-          <!-- JSで生成 -->
-        </tbody>
-      </table>
+    <div id="calendar-table">
+        読み込み中…
     </div>
   </section>
+</main>
 
-  <!-- 追加 -->
-  <section class="mypage-card">
-    <h3>期間を追加 / 編集</h3>
+<div id="termModal" class="modal hidden">
+  <div class="modal-content">
+    <h3 id="modalTitle">期間編集</h3>
 
-    <form id="calendar-form">
+    <form id="termForm">
       <label>
         種別
         <select name="type" required>
-          <option value="">選択してください</option>
           <option value="SPR_Sem00">春学期</option>
           <option value="SMR_Vac">夏休み</option>
           <option value="AUT_Sem01">秋学期（年内）</option>
@@ -114,13 +108,13 @@
         </select>
       </label>
 
-      <button type="submit" class="btn-primary">
-        保存
-      </button>
+      <div class="modal-actions">
+        <button type="submit" class="primary-btn">保存</button>
+        <button type="button" id="closeModalBtn">キャンセル</button>
+      </div>
     </form>
-  </section>
-
-</main>
+  </div>
+</div>
 
 <!-- オフキャンバスナビ  -->
   <div class="offcanvas-nav">
