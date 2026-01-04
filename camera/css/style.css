@@ -760,3 +760,25 @@ footer p {
 .fc-daygrid-day.fc-day-today .fc-bg-event {
   opacity: 0.8;
 }
+
+/* legend */
+#calendar-legend {
+  display: flex;
+  gap: 1.2em;
+  flex-wrap: wrap;
+  margin: 0.5em 0 1em;
+  font-size: 0.9em;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.legend-box {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 3px;
+  border: 1px solid #999;
+}
