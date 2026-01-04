@@ -142,7 +142,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       // FullCalendarはend-exclusiveなので +1日
       end: toYMD(new Date(normalizeDate(t.end_date).getTime() + 86400000)),
       display: "background",
-      backgroundColor: "#f2f2f2",
+      allDay: true,
+      backgroundColor: "rgba(178, 34, 34, 0.35)",
       overlap: false
     }));
   }
