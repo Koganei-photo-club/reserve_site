@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     CALENDAR_TERMS = data.rows || [];
     CAMPUS_CLOSED = CALENDAR_TERMS.filter(t => t.type === "CAMPUS_CLOSED");
+
+    console.log("CALENDAR_TERMS:", CALENDAR_TERMS);
+    console.log("CAMPUS_CLOSED:", CAMPUS_CLOSED);
   } catch (e) {
     console.error("学年暦取得失敗", e);
   }
@@ -207,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("⚠︎ この日は貸出開始日にできません。");
       return;
     }
-    
+
     dayTitle.textContent = `${dateStr} の予約`;
 
     const camWrap = $("cameraButtons");
