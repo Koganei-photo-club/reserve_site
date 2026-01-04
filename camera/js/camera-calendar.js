@@ -144,7 +144,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       display: "background",
       allDay: true,
       backgroundColor: "rgba(178, 34, 34, 0.35)",
-      overlap: false
+      overlap: false,
+
+      extendedProps: {
+        type: "CAMPUS_CLOSED"
+      }
     }));
   }
 
