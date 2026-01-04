@@ -195,6 +195,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       openDayModal(info.dateStr);
     },
     eventClick(info) {
+      if (info.event.extendedProps?.type === "CAMPUS_CLOSED") {
+        return;
+      }
       if (!user) {
         alert("ログインユーザーのみキャンセル可能です");
         return;
