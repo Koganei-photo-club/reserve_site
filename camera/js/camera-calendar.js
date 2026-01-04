@@ -5,6 +5,7 @@
 const API_URL = "https://camera-proxy.photo-club-at-koganei.workers.dev/";
 const CAMERA_DB_URL =
   "https://script.google.com/macros/s/AKfycbyHEx_s2OigM_JCYkanCdf9NQU7mcGGHOUC__OPSBqTuA7TfA-cCrbskM-NrYIwflsT/exec";
+const CALENDAR_API = "https://calendar-proxy.photo-club-at-koganei.workers.dev/";
 
 const {
   toDate, toYMD, $, showModal, hideModal,
@@ -14,8 +15,26 @@ const {
 let APPLY_START = null;
 let APPLY_END = null;
 let APPLY_EQUIP = null;
+let CALENDAR_TERMS = [];
+let CAMPUS_CLOSED = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
+
+  // ===== 学年暦読み込み =====
+  try {
+    const now = new Date();
+    const ay = now.getMonth() < 3
+      ? now.getFullYear() -1
+      : now.getFullYear();
+    const year = "AY" + ay;
+    const res = await fetch(`${CALENDAR_API}?year=${year}`);
+    const data = await res.json();
+
+    CALENDAR_TERMS = data.rows || [];
+    CAMPUS_CLOSED = CALENDAR_TERMS.filter(t => t.type === "CAMPUS_CLOSED");
+  } catch (e) {
+    console.error("学年暦取得失敗", e);
+  }
 
   const userJson = sessionStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
@@ -52,30 +71,73 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   function getEndDates(start, equip) {
     const s = toDate(start);
-    const max = new Date(s);
-    max.setDate(max.getDate() + 6);
+    const maxDays = getMaxDaysByStartDate(start);
 
+    // 次の予約日を探す（既存ロジック維持）
     let nearest = null;
     reservations.forEach(r => {
       if (r.equip !== equip) return;
       const ee = toDate(r.end);
-      ee.setDate(ee.getDate() + 1);
+      ee.setDate(ee.getDate() +1);
       if (ee > s && (!nearest || ee < nearest)) nearest = ee;
     });
 
-    const limit = nearest ? new Date(nearest - 86400000) : max;
-    const arr = [];
+    const hardLimit = nearest
+      ? new Date(nearest - 86400000)
+      : new Date(s.getTime() + (maxDays -1) * 86400000);
+
+    const list =[];
     let cur = new Date(s);
 
-    while (cur <= limit) {
-      arr.push(toYMD(cur));
-      cur.setDate(cur.getDate() + 1);
+    while (cur <= hardLimit) {
+      // 🚫 貸出日・返却日そのものが入構禁止はNG
+      if (!isCampusClosed(cur)) {
+        list.push(toYMD(cur));
+      }
+      cur.setDate(cur.getDate() +1);
     }
-    return arr;
+
+    return list;
+  }
+
+  /* 入構禁止日チェック関数 */
+  function isCampusClosed(date) {
+    return CAMPUS_CLOSED.some(t => {
+      const s = toDate(t.start_date);
+      const e = toDate(t.end_date);
+      return s <= date && date <= e;
+    });
+  }
+
+  /* 最大日数を学年暦から取得 */
+  function getMaxDaysByStartDate(startDate) {
+    const d = toDate(startDate);
+
+    const term = CALENDAR_TERMS.find(t => {
+      if (!t.start_date || !t.end_date) return false;
+      const s = toDate(t.start_date);
+      const e = toDate(t.end_date);
+      return s <= d && d <= e;
+    });
+
+    return term ? Number(term.max_days) : 7;
+  }
+
+  /* ===== 入構禁止日を背景イベントに変換 ===== */
+  function buildCampusClosedEvents() {
+    return CAMPUS_CLOSED.map(t => ({
+      title: "入構禁止",
+      start: t.start_date,
+      // FullCalendarはend-exclusiveなので +1日
+      end: toYMD(new Date(toDate(t.end_date).getTime() + 86400000)),
+      display: "background",
+      backgroundColor: "#f2f2f2",
+      overlap: false
+    }));
   }
 
   /***** 📌 FullCalendar描画 *****/
-  const events = reservations.map(r => {
+  const reservationEvents = reservations.map(r => {
     const ev = buildContinuousEvent(r);
 
     // 🔽 貸出状態に応じてタイトル変更
@@ -92,11 +154,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     return ev;
   });
 
+  const closedEvents = buildCampusClosedEvents();
+  const events = [...reservationEvents, ...closedEvents];
+
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "ja",
     events,
     dateClick(info) {
+      const clickedDate = toDate(info.dateStr);
+
+      // 入構禁止日はクリック不可
+      if (isCampusClosed(clickedDate)) {
+        alert("⚠︎ この日は大学入構禁止期間のため、貸出開始できません");
+        return;
+      }
+      
       if (!user) {
         alert("ログインユーザーのみ予約できます");
         return;
@@ -146,7 +219,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     APPLY_START = start;
     APPLY_EQUIP = equip;
     returnSelect.innerHTML = "";
-    getEndDates(start, equip).forEach(d => {
+    const dates = getEndDates(start, equip);
+
+    if (dates.length === 0) {
+      alert(
+        "⚠︎ この期間は返却日を設定できません。\n" +
+        "・入構禁止期間のみになる\n" +
+        "・最大貸出日数を超える\n" +
+        "・次の予約と重なる\n\n" +
+        "別の日付を選択してください。"
+      );
+      return;
+    }
+    dates.forEach(d => {
       returnSelect.insertAdjacentHTML("beforeend", `<option>${d}</option>`);
     });
     hideModal("dayModal");
