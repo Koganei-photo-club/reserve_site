@@ -212,6 +212,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
   calendar.render();
 
+  /* 凡例を作成 */
+  function renderCalendarLegend() {
+    const legend = document.getElementById("calendar-legend") ;
+    if (!legend) return;
+
+    legend.innerHTML = `
+      <div class="legend-item">
+        <span class="legend-box" style="background:#777;"></span>
+        <span>予約済み（貸出中・準備中）</span>
+      </div>
+      
+      <div class="legend-item">
+        <span class="legend-box" style="background:rgba(178,34,34,0.35);"></span>
+        <span>入構禁止日（貸出不可）</span>
+      </div>
+      `;
+  }
+  renderCalendarLegend();
   /***** 📌 モーダル操作 *****/
   function openDayModal(dateStr) {
     if (isCampusClosed(toDate(dateStr))) {
