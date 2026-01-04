@@ -114,20 +114,20 @@ document.addEventListener("DOMContentLoaded", async function () {
   function isCampusClosed(date) {
     const target = normalizeDate(date);
     return CAMPUS_CLOSED.some(t => {
-      const s = toDate(t.start_date);
-      const e = toDate(t.end_date);
+      const s = normalizeDate(t.start_date);
+      const e = normalizeDate(t.end_date);
       return s <= target && target <= e;
     });
   }
 
   /* 最大日数を学年暦から取得 */
   function getMaxDaysByStartDate(startDate) {
-    const d = toDate(startDate);
+    const d = normalizeDate(startDate);
 
     const term = CALENDAR_TERMS.find(t => {
       if (!t.start_date || !t.end_date) return false;
-      const s = toDate(t.start_date);
-      const e = toDate(t.end_date);
+      const s = normalizeDate(t.start_date);
+      const e = normalizeDate(t.end_date);
       return s <= d && d <= e;
     });
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       title: "入構禁止",
       start: t.start_date,
       // FullCalendarはend-exclusiveなので +1日
-      end: toYMD(new Date(toDate(t.end_date).getTime() + 86400000)),
+      end: toYMD(new Date(normalizeDate(t.end_date).getTime() + 86400000)),
       display: "background",
       backgroundColor: "#f2f2f2",
       overlap: false
