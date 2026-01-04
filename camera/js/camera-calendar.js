@@ -100,12 +100,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     return list;
   }
 
+  /* 日付正規化関数 */
+  function normalizeDate(d) {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
   /* 入構禁止日チェック関数 */
   function isCampusClosed(date) {
+    const target = normalizeDate(date);
     return CAMPUS_CLOSED.some(t => {
       const s = toDate(t.start_date);
       const e = toDate(t.end_date);
-      return s <= date && date <= e;
+      return s <= target && target <= e;
     });
   }
 
@@ -162,14 +170,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     locale: "ja",
     events,
     dateClick(info) {
-      const clickedDate = toDate(info.dateStr);
+      const clickedDate = normalizeDate(info.dateStr);
 
       // 入構禁止日はクリック不可
       if (isCampusClosed(clickedDate)) {
         alert("⚠︎ この日は大学入構禁止期間のため、貸出開始できません");
         return;
       }
-      
+
       if (!user) {
         alert("ログインユーザーのみ予約できます");
         return;
@@ -195,6 +203,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /***** 📌 モーダル操作 *****/
   function openDayModal(dateStr) {
+    if (isCampusClosed(toDate(dateStr))) {
+      alert("⚠︎ この日は貸出開始日にできません。");
+      return;
+    }
+    
     dayTitle.textContent = `${dateStr} の予約`;
 
     const camWrap = $("cameraButtons");
