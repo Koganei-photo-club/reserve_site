@@ -751,3 +751,12 @@ footer p {
   color: #c33;
   min-height: 1.2rem;
 }
+
+/* 入構禁止系 */
+.fc-bg-event {
+  opacity: 0.6;
+}
+
+.fc-daygrid-day.fc-day-today .fc-bg-event {
+  opacity: 0.8;
+}
