@@ -65,11 +65,22 @@
 
   <!-- 一覧 -->
   <section class="mypage-card">
-    <h3>期間一覧</h3>
-
-    <div id="calendar-table">
+    <h3>学期・休業期間</h3>
+    <div id="SingleTermContainer">
         読み込み中…
     </div>
+  </section>
+
+  <!-- 入構禁止期間（複数系）-->
+  <section class="mypage-card">
+    <h3>入構禁止期間</h3>
+    <div id="campusClosedList">
+        読み込み中…
+    </div>
+
+    <button id="addCampusClosed" class="primary-btn">
+      + 入構禁止期間を追加
+    </button>
   </section>
 </main>
 
@@ -111,6 +122,30 @@
       <div class="modal-actions">
         <button type="submit" class="primary-btn">保存</button>
         <button type="button" id="closeModalBtn">キャンセル</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CAMPUS_CLOSED 専用モーダル -->
+<div id="campusClosedModal" class="modal hidden">
+  <div class="modal-content">
+    <h3 id="campusClosedTitle">入構禁止期間</h3>
+
+    <form id="campusClosedForm">
+      <label>
+        開始日
+        <input type="date" name="start_date" required>
+      </label>
+
+      <label>
+        終了日
+        <input type="date" name="end_date" required>
+      </label>
+
+      <div class="modal-actions">
+        <button type="submit" class="primary-btn">保存</button>
+        <button type="button" id="closeCampusClosedBtn">キャンセル</button>
       </div>
     </form>
   </div>
