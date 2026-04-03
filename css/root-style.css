@@ -64,6 +64,17 @@ body {
   color: #ccc;
 }
 
+/* フッター */
+footer p {
+  font-size: 0.95rem;
+}
+
+.footer-copy {
+  font-size: 1.2em;
+  line-height: 1;
+  vertical-align: -0.03em;
+}
+
 /* ▼ 2段になったので本文の開始位置を下げる */
 /* --- 本文 --- */
 main {
