@@ -11,13 +11,14 @@ body {
 }
 
 /* ラッパー */
-#header-wrapper {
+/* #header-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 2100;
-}
+} */
+ /* ↑ IGNORE --- PC では nav-desktop.css で sticky に上書きするため、ここでは relative のままにしておく */
 
 /* --- ヘッダー --- */
 #main-header {
