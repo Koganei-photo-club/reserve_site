@@ -82,6 +82,21 @@ document.querySelectorAll(".offcanvas-toggle").forEach(btn => {
 });
 
 // ==========================
+// ヘッダー高さをJSで正しく渡す
+// ==========================
+const headerWrapper = document.getElementById("header-wrapper");
+
+function syncHeaderHeight() {
+  if (!headerWrapper) return;
+  const h = headerWrapper.offsetHeight;
+  document.documentElement.style.setProperty("--header-height", `${h}px`);
+}
+
+syncHeaderHeight();
+window.addEventListener("resize", syncHeaderHeight);
+window.addEventListener("load", syncHeaderHeight);
+
+// ==========================
 // Active 表示（共通）
 // ==========================
 const page = document.body.dataset.page;

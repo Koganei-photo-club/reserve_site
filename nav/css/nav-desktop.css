@@ -4,7 +4,8 @@
 @media screen and (min-width: 769px) {
 
   #header-wrapper {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 3000;
   }
 
@@ -23,14 +24,14 @@
   /* ===== オフキャンバスを「下方向ドロップダウン化」 ===== */
 
   .offcanvas-nav {
-    position: absolute;
-    top: 70px;              /* ヘッダー直下（header 高さに合わせる） */
+    position: fixed;
+    top: var(--header-height, 70px);           /* ヘッダー直下（header 高さに合わせる） */
     left: 0;
     right: 0;
     width: 100%;
     height: auto;
 
-    transform: translateY(-100%);
+    transform: translateY(-110%);
     transition: transform 0.25s ease;
 
     background: #222;
@@ -51,15 +52,31 @@
 
   .offcanvas-menu {
     display: flex;
+    align-items: stretch;
     flex-direction: row;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.2rem;
     padding: 1rem 2rem;
   }
 
-  .offcanvas-menu li {
+  .offcanvas-menu > li {
     margin: 0;
+    align-items: stretch;
   }
+
+  .offcanvas-menu > li > a, 
+  .offcanvas-menu > li > .offcanvas-toggle {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+  
 
   .offcanvas-toggle .arrow {
     display: none;
