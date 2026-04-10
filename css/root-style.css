@@ -265,6 +265,23 @@ footer p {
   color: #555;
 }
 
+.sns-links {
+  margin-top: 0.5em;
+}
+.sns-links a {
+  margin: 0 0.5em;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+.sns-links a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+.sns-links i {
+  margin-right: 0.3em; /* アイコンと文字の間に余白 */
+}
+
 /* ===============================
    カレンダー（FullCalendar）用
    =============================== */
