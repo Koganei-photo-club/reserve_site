@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>困ったとき｜予約総合サイト 使い方ガイド</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: #f6f7f9;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #1f2937;
+      color: #fff;
+      padding: 24px 20px;
+    }
+
+    header h1 {
+      max-width: 760px;
+      margin: 0 auto 6px;
+      font-size: 1.5rem;
+    }
+
+    header p {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .question {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .answer {
+      margin-top: 6px;
+    }
+
+    .note {
+      background: #eff6ff;
+      border-left: 5px solid #2563eb;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      padding: 20px 16px 32px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>困ったとき</h1>
+  <p>予約総合サイトでよくある質問と対応方法をまとめています。</p>
+</header>
+
+<main>
+  <a class="back" href="./index.html">← 使い方ガイドに戻る</a>
+
+  <section>
+    <h2>よくある質問</h2>
+
+    <div class="faq-item">
+      <div class="question">Q. 予約したい行事が表示されません。</div>
+      <div class="answer">
+        A. 受付期間外、対象者外、または定員に達している可能性があります。  
+        案内文に記載されている受付期間や対象者を確認してください。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question">Q. 予約ボタンが押せません。</div>
+      <div class="answer">
+        A. 必須項目の入力漏れがある可能性があります。  
+        氏名、学年、連絡先、参加希望など、未入力の項目がないか確認してください。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question">Q. 送信後に完了画面が表示されません。</div>
+      <div class="answer">
+        A. 通信状況によって送信に時間がかかっている可能性があります。  
+        すぐに何度も送信せず、少し待ってから画面を確認してください。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question">Q. 間違えて予約してしまいました。</div>
+      <div class="answer">
+        A. 変更・キャンセルができる場合は、案内に従って手続きをしてください。  
+        サイト上で変更できない場合は、担当者に連絡してください。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question">Q. 予約内容を確認したいです。</div>
+      <div class="answer">
+        A. 予約完了画面や、案内されている確認方法を確認してください。  
+        不明な場合は、氏名・行事名を添えて担当者に問い合わせてください。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question">Q. キャンセルしたあと、もう一度予約できますか。</div>
+      <div class="answer">
+        A. 受付期間内で定員に空きがある場合は、再予約できることがあります。  
+        ただし、行事によっては再予約できない場合もあります。
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>エラーが出た場合</h2>
+
+    <h3>まず確認すること</h3>
+    <ol>
+      <li>通信環境が安定しているか確認する</li>
+      <li>ページを再読み込みする</li>
+      <li>入力漏れがないか確認する</li>
+      <li>受付期間内か確認する</li>
+      <li>同じ内容で何度も送信していないか確認する</li>
+    </ol>
+
+    <div class="warning">
+      エラーが出た状態で何度も送信すると、重複予約になる可能性があります。  
+      不安な場合は、担当者に確認してください。
+    </div>
+  </section>
+
+  <section>
+    <h2>問い合わせる前に準備するもの</h2>
+    <p>
+      担当者に問い合わせる場合は、次の情報を送ると確認がスムーズです。
+    </p>
+
+    <ol>
+      <li>氏名</li>
+      <li>学年・所属</li>
+      <li>予約したい行事名</li>
+      <li>発生している問題の内容</li>
+      <li>表示されたエラー文</li>
+      <li>可能であれば画面のスクリーンショット</li>
+    </ol>
+
+    <div class="note">
+      「予約できません」だけだと原因を確認しにくいため、  
+      どの画面で、どの操作をしたときに、何が表示されたかを伝えてください。
+    </div>
+  </section>
+
+  <section>
+    <h2>担当者への連絡</h2>
+    <p>
+      上記を確認しても解決しない場合は、案内文に記載されている担当者へ連絡してください。
+    </p>
+
+    <p>
+      連絡時は、以下のように送ると分かりやすいです。
+    </p>
+
+    <div class="note">
+      【予約サイトについて】<br>
+      氏名：山田 太郎<br>
+      学年：B2<br>
+      行事名：○月○日 撮影会<br>
+      内容：予約しようとしたところ、「○○」というエラーが表示されました。<br>
+      使用端末：iPhone / Android / PC など
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  最終更新：2026年5月<br>
+  予約総合サイト 利用者向けガイド
+</footer>
+
+</body>
+</html>
