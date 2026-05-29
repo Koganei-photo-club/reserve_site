@@ -10,6 +10,15 @@ body.manual-page {
   line-height: 1.8;
 }
 
+/* ラッパー */
+#header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2100;
+}
+
 /* ヘッダー内のリンク装飾を既存サイトに合わせる */
 #main-header a {
   color: inherit;
