@@ -2,131 +2,190 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <title>使い方ガイド | 法政大学 小金井写真部 予約システム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>カメラ・パソコン予約サイト 使い方ガイド</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
-      background: #f6f7f9;
-      color: #222;
-      line-height: 1.7;
-    }
 
-    header {
-      background: #1f2937;
-      color: #fff;
-      padding: 28px 20px;
-      text-align: center;
-    }
+  <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
 
-    header h1 {
-      margin: 0 0 8px;
-      font-size: 1.55rem;
-    }
+  <link rel="stylesheet" href="../nav/css/nav-base.css">
+  <link rel="stylesheet" href="../nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="../nav/css/nav-mobile.css">
+  <link rel="stylesheet" href="./css/manual.css">
 
-    header p {
-      margin: 0;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
+  <link rel="manifest" href="/reserve_site/manifest.json">
+  <meta name="theme-color" content="#333333">
+  <link rel="apple-touch-icon" href="/reserve_site/icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">
 
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 24px 16px 40px;
-    }
-
-    .notice {
-      background: #fff7ed;
-      border-left: 5px solid #f97316;
-      padding: 14px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-    }
-
-    .card p {
-      margin-bottom: 16px;
-    }
-
-    .button {
-      display: inline-block;
-      background: #2563eb;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-
-    .button.secondary {
-      background: #4b5563;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      padding: 20px 16px 32px;
-    }
-  </style>
+  <script src="../auth/js/app-auth.js" defer></script>
 </head>
-<body>
 
-<header>
-  <h1>カメラ・パソコン予約サイト<br>使い方ガイド</h1>
-  <p>備品の予約・受け取り・返却方法をまとめています。</p>
-</header>
+<body class="manual-page" data-page="manual">
 
-<main>
-  <div class="notice">
-    このページは、カメラ・パソコンなどの備品を借りる方向けの案内ページです。  
-    予約前に、貸出ルール・利用期間・返却期限を必ず確認してください。
+  <div id="header-wrapper">
+    <header id="main-header">
+      <div class="header-content">
+        <a href="/reserve_site/index.html">
+          <img src="../camera/images/club-icon.JPG" class="logo" alt="法政大学 小金井写真部 ロゴ">
+          <div class="site-title">
+            <h1>法政大学 小金井写真部</h1>
+            <p>カメラ・PC予約システム 使い方ガイド</p>
+          </div>
+        </a>
+
+        <button class="nav-toggle" aria-label="メニュー">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
   </div>
 
-  <section class="card">
-    <h2>はじめて予約する方へ</h2>
+  <main class="manual-main">
+    <section class="manual-hero">
+      <span class="manual-hero__label">User Guide</span>
+      <h2>カメラ・PC予約サイトの使い方</h2>
+      <p>
+        カメラ・PCの予約方法、マイページでの確認、キャンセル、貸出・返却時の注意点をまとめています。
+      </p>
+
+      <div class="manual-alert">
+        予約後にメール通知は届きません。予約内容は、必ずマイページで確認してください。<br>
+        予約は先着順です。借りたい日の7日前までに予約を入れてください。
+      </div>
+    </section>
+
+    <section class="manual-grid">
+      <article class="manual-card">
+        <h3>はじめて利用する方へ</h3>
+        <p>
+          新規登録、大学メールアドレスでのログイン、登録情報の入力について説明します。
+        </p>
+        <a class="manual-button" href="./user.html#register">新規登録方法を見る</a>
+      </article>
+
+      <article class="manual-card">
+        <h3>予約方法を確認する</h3>
+        <p>
+          カメラ・PCを予約してから、マイページで確認するまでの流れを説明します。
+        </p>
+        <a class="manual-button" href="./user.html">予約方法を見る</a>
+      </article>
+
+      <article class="manual-card">
+        <h3>マイページを使う</h3>
+        <p>
+          自分のカメラ予約・PC予約の確認、キャンセル方法を説明します。
+        </p>
+        <a class="manual-button" href="./user.html#mypage">マイページの使い方を見る</a>
+      </article>
+
+      <article class="manual-card">
+        <h3>困ったとき</h3>
+        <p>
+          ログインできない、予約できない、表示が切り替わらない場合などの対応方法をまとめています。
+        </p>
+        <a class="manual-button" href="./trouble.html">FAQを見る</a>
+      </article>
+    </section>
+
+    <section class="manual-section">
+      <h2>利用前に確認すること</h2>
+      <ul>
+        <li>初めて利用する場合は、新規登録が必要です。</li>
+        <li>ログインには、大学から配布された <strong>@stu.hosei.ac.jp</strong> のメールアドレスを使用してください。</li>
+        <li>予約は先着順です。</li>
+        <li>借りたい日の7日前までに予約してください。</li>
+        <li>通常授業期間中の貸出上限は7日間です。</li>
+        <li>予約後にメール通知は届きません。</li>
+        <li>予約内容の確認とキャンセルは、マイページから行います。</li>
+      </ul>
+    </section>
+  </main>
+
+  <div class="offcanvas-nav">
+    <ul class="offcanvas-menu">
+
+      <li id="nav-login">
+        <a href="/reserve_site/auth/login.html">ログイン / 新規登録</a>
+      </li>
+
+      <li id="nav-loggedin" style="display:none;">
+        <span class="nav-muted">
+          ログイン中：<strong id="nav-user-name"></strong>
+        </span>
+      </li>
+
+      <li id="nav-mypage" style="display: none;">
+        <a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a>
+      </li>
+
+      <hr>
+
+      <li><a href="/reserve_site/index.html" data-page="top-page">総合トップ</a></li>
+      <li><a href="/reserve_site/manual/index.html" data-page="manual">使い方ガイド</a></li>
+
+      <hr>
+
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          カメラ
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/camera/index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="/reserve_site/camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          PC
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="/reserve_site/pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <hr>
+
+      <li class="offcanvas-group" id="nav-admin" style="display: none;">
+        <button class="offcanvas-toggle">
+          🛠 管理者メニュー
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/admin/index.html" data-page="admin-users">ユーザー管理</a></li>
+          <li><a href="/reserve_site/camera/admin.html" data-page="admin-camera">カメラ管理画面</a></li>
+          <li><a href="/reserve_site/pc/admin.html" data-page="admin-pc">PC管理画面</a></li>
+        </ul>
+      </li>
+
+      <hr>
+
+      <li id="nav-logout" style="display: none;">
+        <a href="#" id="logoutBtnOffcanvas">ログアウト</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="offcanvas-backdrop"></div>
+
+  <footer>
+    <p><img src="../icons/club-icon.JPG" alt="法政大学 小金井写真部 ロゴ" style="height:40px;"></p>
+    <p><a href="/reserve_site/terms.html">利用規約</a></p>
     <p>
-      カメラ・パソコンなどの備品を予約する方法、受け取り、返却までの流れを説明します。
+      <span class="footer-copy">&copy;</span>
+      2025-2026 法政大学 小金井写真部
     </p>
-    <a class="button" href="./user.html">予約方法を見る</a>
-  </section>
+  </footer>
 
-  <section class="card">
-    <h2>予約を変更・キャンセルしたい方へ</h2>
-    <p>
-      予約内容を変更したい場合や、借りる予定がなくなった場合の対応方法を説明します。
-    </p>
-    <a class="button" href="./user.html#change-cancel">変更・キャンセル方法を見る</a>
-  </section>
-
-  <section class="card">
-    <h2>困ったとき</h2>
-    <p>
-      「予約できない」「備品が表示されない」「返却が遅れそう」など、よくある質問をまとめています。
-    </p>
-    <a class="button secondary" href="./trouble.html">FAQを見る</a>
-  </section>
-</main>
-
-<footer>
-  最終更新：2026年5月<br>
-  カメラ・パソコン予約サイト 利用者向けガイド
-</footer>
-
+  <script src="../nav/js/nav-base.js"></script>
+  <script src="../nav/js/nav-auth-bridge.js"></script>
 </body>
 </html>

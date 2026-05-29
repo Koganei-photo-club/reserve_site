@@ -1,297 +1,173 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>困ったとき｜カメラ・パソコン予約サイト</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
-      background: #f6f7f9;
-      color: #222;
-      line-height: 1.8;
-    }
+<main class="manual-main">
+  <a class="manual-back" href="./index.html">← 使い方ガイドに戻る</a>
 
-    header {
-      background: #1f2937;
-      color: #fff;
-      padding: 24px 20px;
-    }
-
-    header h1 {
-      max-width: 760px;
-      margin: 0 auto 6px;
-      font-size: 1.5rem;
-    }
-
-    header p {
-      max-width: 760px;
-      margin: 0 auto;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 24px 16px 40px;
-    }
-
-    .back {
-      display: inline-block;
-      margin-bottom: 18px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    section {
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 1.25rem;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 8px;
-    }
-
-    h3 {
-      margin-top: 20px;
-      font-size: 1.05rem;
-    }
-
-    ol, ul {
-      padding-left: 1.4em;
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid #e5e7eb;
-      padding: 14px 0;
-    }
-
-    .faq-item:last-child {
-      border-bottom: none;
-    }
-
-    .question {
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .answer {
-      margin-top: 6px;
-    }
-
-    .note {
-      background: #eff6ff;
-      border-left: 5px solid #2563eb;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .warning {
-      background: #fff7ed;
-      border-left: 5px solid #f97316;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .danger {
-      background: #fef2f2;
-      border-left: 5px solid #dc2626;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      padding: 20px 16px 32px;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>困ったとき</h1>
-  <p>カメラ・パソコン予約サイトでよくある質問と対応方法をまとめています。</p>
-</header>
-
-<main>
-  <a class="back" href="./index.html">← 使い方ガイドに戻る</a>
-
-  <section>
-    <h2>予約に関する質問</h2>
-
-    <div class="faq-item">
-      <div class="question">Q. 借りたい備品が表示されません。</div>
-      <div class="answer">
-        A. すでに貸出中、予約受付停止中、または管理者側で非表示になっている可能性があります。  
-        しばらくしても表示されない場合は、担当者に確認してください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 希望する日程で予約できません。</div>
-      <div class="answer">
-        A. その期間に他の人の予約が入っている、または貸出不可日に設定されている可能性があります。  
-        別の日程を選ぶか、担当者に相談してください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 予約ボタンが押せません。</div>
-      <div class="answer">
-        A. 必須項目の入力漏れ、日付の選択ミス、または予約条件を満たしていない可能性があります。  
-        氏名・連絡先・貸出希望日・返却予定日を確認してください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 間違った備品を予約してしまいました。</div>
-      <div class="answer">
-        A. 変更またはキャンセルができる場合は、予約サイトから手続きしてください。  
-        サイト上で変更できない場合は、担当者に連絡してください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 予約をキャンセルしたいです。</div>
-      <div class="answer">
-        A. 使わないことが分かった時点で、できるだけ早くキャンセルしてください。  
-        キャンセル方法が分からない場合は、氏名・予約した備品・予約日を添えて担当者に連絡してください。
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>受け取り・返却に関する質問</h2>
-
-    <div class="faq-item">
-      <div class="question">Q. どこで受け取ればよいですか。</div>
-      <div class="answer">
-        A. 受け取り場所は、案内文または担当者からの連絡を確認してください。  
-        不明な場合は、予約した備品名と利用日時を添えて担当者に確認してください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 返却が遅れそうです。</div>
-      <div class="answer">
-        A. 分かった時点で、すぐに担当者へ連絡してください。  
-        次の予約者がいる場合、利用に影響が出る可能性があります。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 付属品を返し忘れました。</div>
-      <div class="answer">
-        A. すぐに担当者へ連絡し、返却方法を確認してください。  
-        充電器、ケーブル、ケース、SDカードなどの付属品も備品の一部です。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 返却後に連絡は必要ですか。</div>
-      <div class="answer">
-        A. 返却方法によっては、返却完了の連絡が必要な場合があります。  
-        案内に従って、必要であれば担当者に返却完了を連絡してください。
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>破損・不具合に関する質問</h2>
-
-    <div class="faq-item">
-      <div class="question">Q. 借りた備品に不具合がありました。</div>
-      <div class="answer">
-        A. 使用前に気づいた場合は、すぐに担当者へ連絡してください。  
-        いつ、どの備品で、どのような不具合があったかを伝えてください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. 使用中に備品を壊してしまいました。</div>
-      <div class="answer">
-        A. 隠さず、すぐに担当者へ連絡してください。  
-        破損状況、発生した日時、使用状況をできるだけ詳しく伝えてください。
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="question">Q. カメラのデータやパソコン内のファイルはどうすればよいですか。</div>
-      <div class="answer">
-        A. 返却前に、個人データや不要なファイルが残っていないか確認してください。  
-        ただし、削除してよいか分からないデータがある場合は、担当者に確認してください。
-      </div>
-    </div>
-
-    <div class="danger">
-      破損・紛失・不具合があった場合は、自己判断で放置せず、必ず担当者へ連絡してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>問い合わせる前に確認すること</h2>
+  <section class="manual-hero">
+    <span class="manual-hero__label">FAQ</span>
+    <h2>困ったとき</h2>
     <p>
-      担当者に問い合わせる場合は、次の情報を送ると確認がスムーズです。
+      ログイン、予約確認、キャンセル、貸出・返却に関するよくある質問をまとめています。
     </p>
+  </section>
 
+  <section class="manual-section">
+    <h2>ログイン・新規登録について</h2>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 初めて使うにはどうすればよいですか。</div>
+      <div class="manual-faq__a">
+        A. 新規登録が必要です。名前、学年、LINEの名前を入力し、大学から配布された <strong>@stu.hosei.ac.jp</strong> のメールアドレスで登録・ログインしてください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 個人のGmailで登録できますか。</div>
+      <div class="manual-faq__a">
+        A. 原則として、大学から配布された <strong>@stu.hosei.ac.jp</strong> のメールアドレスを使用してください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. ログインできません。</div>
+      <div class="manual-faq__a">
+        A. メールアドレスの入力間違いがないか確認してください。特に、ドメインが <strong>@stu.hosei.ac.jp</strong> になっているか確認してください。
+      </div>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h2>予約確認について</h2>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 予約後にメールは届きますか。</div>
+      <div class="manual-faq__a">
+        A. いいえ、予約後にメール通知は届きません。予約内容は、予約サイト内のマイページで確認してください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 自分の予約はどこで確認できますか。</div>
+      <div class="manual-faq__a">
+        A. マイページで確認できます。マイページでは、自分のカメラ予約とPC予約を確認できます。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 予約したはずなのにマイページに表示されません。</div>
+      <div class="manual-faq__a">
+        A. 予約が完了していない、別のアカウントでログインしている、または通信状況により反映されていない可能性があります。ログイン中のメールアドレスを確認し、再度マイページを開いてください。
+      </div>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h2>予約・キャンセルについて</h2>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 予約は先着順ですか。</div>
+      <div class="manual-faq__a">
+        A. はい。予約は先着順です。希望する備品や日程がある場合は、早めに予約してください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 借りたい日の直前でも予約できますか。</div>
+      <div class="manual-faq__a">
+        A. 原則として、借りたい日の7日前までに予約を入れる必要があります。直前の予約は受け付けられない場合があります。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 7日を超えて借りられますか。</div>
+      <div class="manual-faq__a">
+        A. 通常授業期間中の貸出上限は7日間です。詳しくは利用規約を確認してください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 予約をキャンセルしたいです。</div>
+      <div class="manual-faq__a">
+        A. マイページからキャンセルできます。使わないことが分かった場合は、他の部員が予約できるよう、早めにキャンセルしてください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 予約内容を変更したいです。</div>
+      <div class="manual-faq__a">
+        A. 予約内容を直接変更できない場合は、一度キャンセルしてから、正しい内容で再予約してください。ただし、再予約時も先着順となるため、同じ備品・日程を再度予約できるとは限りません。
+      </div>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h2>カメラの貸出について</h2>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. カメラを予約したら、すぐに取りに行ってよいですか。</div>
+      <div class="manual-faq__a">
+        A. 通常、幹部が貸出前の確認を行った後、表示が切り替わって貸出可能になります。表示を確認してから取りに行ってください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. カメラはどこで受け取りますか。</div>
+      <div class="manual-faq__a">
+        A. 部室から直接取りに行く運用です。受け取り時には、貸出シートに必要事項を記入してください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. カメラの付属品はサイトで確認できますか。</div>
+      <div class="manual-faq__a">
+        A. サイト上では「カメラ（レンズ付き）」として予約します。付属品の管理は、部室の貸出シートで行います。
+      </div>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h2>返却・トラブルについて</h2>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 返却が遅れそうです。</div>
+      <div class="manual-faq__a">
+        A. 分かった時点で早めに幹部へ連絡してください。次に利用する人がいる場合、影響が出る可能性があります。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. 備品を破損してしまいました。</div>
+      <div class="manual-faq__a">
+        A. 隠さず、すぐに幹部へ連絡してください。破損状況、発生した日時、使用状況をできるだけ詳しく伝えてください。
+      </div>
+    </div>
+
+    <div class="manual-faq">
+      <div class="manual-faq__q">Q. PCを返却するときに気をつけることはありますか。</div>
+      <div class="manual-faq__a">
+        A. 個人ファイルやログイン状態が残っていないか確認してください。必要に応じて、ブラウザや各種サービスからログアウトしてください。
+      </div>
+    </div>
+
+    <div class="manual-danger">
+      破損・紛失・不具合があった場合は、自己判断で放置せず、必ず幹部へ連絡してください。
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h2>問い合わせるときに伝えること</h2>
     <ul>
-      <li>氏名</li>
-      <li>学年・所属</li>
+      <li>名前</li>
+      <li>学年</li>
+      <li>LINEの名前</li>
+      <li>ログインに使った大学メールアドレス</li>
       <li>予約した備品名</li>
-      <li>貸出希望日</li>
-      <li>返却予定日</li>
+      <li>貸出日・返却日</li>
       <li>困っている内容</li>
       <li>表示されたエラー文</li>
       <li>可能であれば画面のスクリーンショット</li>
     </ul>
 
-    <div class="note">
-      「予約できません」だけだと原因を確認しにくいため、  
-      どの画面で、どの操作をしたときに、何が表示されたかを伝えてください。
+    <div class="manual-note">
+      担当者への連絡先をサイト上に記載するかどうかは検討中です。現時点では、部内で案内されている連絡方法に従ってください。
     </div>
   </section>
-
-  <section>
-    <h2>担当者への連絡例</h2>
-    <p>
-      問い合わせ時は、以下のように送ると分かりやすいです。
-    </p>
-
-    <div class="note">
-      【備品予約について】<br>
-      氏名：山田 太郎<br>
-      学年：B2<br>
-      予約したい備品：カメラ ○○ / パソコン ○○<br>
-      希望日：○月○日〜○月○日<br>
-      内容：予約しようとしたところ、「○○」というエラーが表示されました。<br>
-      使用端末：iPhone / Android / PC など
-    </div>
-  </section>
-
 </main>
-
-<footer>
-  最終更新：2026年5月<br>
-  カメラ・パソコン予約サイト 利用者向けガイド
-</footer>
-
-</body>
-</html>

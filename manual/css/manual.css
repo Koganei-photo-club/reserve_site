@@ -1,0 +1,228 @@
+/* ==========================
+   Manual Page
+========================== */
+
+body.manual-page {
+  margin: 0;
+  background: #f5f6f8;
+  color: #222;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+  line-height: 1.8;
+}
+
+/* ヘッダー内のリンク装飾を既存サイトに合わせる */
+#main-header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* マニュアル本文 */
+.manual-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 16px 48px;
+}
+
+.manual-hero {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.manual-hero__label {
+  display: inline-block;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.manual-hero h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  line-height: 1.35;
+}
+
+.manual-hero p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.manual-alert {
+  background: #fff7ed;
+  border-left: 5px solid #f97316;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 18px 0;
+  font-size: 0.95rem;
+}
+
+.manual-note {
+  background: #eff6ff;
+  border-left: 5px solid #2563eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 18px 0;
+  font-size: 0.95rem;
+}
+
+.manual-danger {
+  background: #fef2f2;
+  border-left: 5px solid #dc2626;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 18px 0;
+  font-size: 0.95rem;
+}
+
+.manual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.manual-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.manual-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.manual-card p {
+  margin: 0 0 14px;
+  color: #4b5563;
+}
+
+.manual-button {
+  display: inline-block;
+  background: #333333;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.manual-button:hover {
+  opacity: 0.86;
+}
+
+.manual-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.manual-section h2 {
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e5e7eb;
+  font-size: 1.3rem;
+}
+
+.manual-section h3 {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-size: 1.08rem;
+}
+
+.manual-section ul,
+.manual-section ol {
+  padding-left: 1.4em;
+}
+
+.manual-section li {
+  margin-bottom: 8px;
+}
+
+.manual-image {
+  margin: 16px 0;
+  padding: 12px;
+  background: #f3f4f6;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.manual-image img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 8px;
+  border-radius: 8px;
+}
+
+.manual-faq {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 14px 0;
+}
+
+.manual-faq:last-child {
+  border-bottom: none;
+}
+
+.manual-faq__q {
+  font-weight: 800;
+  color: #111827;
+}
+
+.manual-faq__a {
+  margin-top: 6px;
+  color: #374151;
+}
+
+.manual-back {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #333333;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.manual-back:hover {
+  text-decoration: underline;
+}
+
+/* フッター */
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  padding: 28px 16px 36px;
+}
+
+footer a {
+  color: #333333;
+}
+
+/* スマホ */
+@media screen and (max-width: 768px) {
+  .manual-main {
+    padding: 20px 14px 40px;
+  }
+
+  .manual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manual-card,
+  .manual-section,
+  .manual-hero {
+    border-radius: 14px;
+  }
+}

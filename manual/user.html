@@ -2,387 +2,351 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <title>予約方法 | 法政大学 小金井写真部 予約システム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>予約方法｜カメラ・パソコン予約サイト</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
-      background: #f6f7f9;
-      color: #222;
-      line-height: 1.8;
-    }
 
-    header {
-      background: #1f2937;
-      color: #fff;
-      padding: 24px 20px;
-    }
+  <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
 
-    header h1 {
-      max-width: 760px;
-      margin: 0 auto 6px;
-      font-size: 1.5rem;
-    }
+  <link rel="stylesheet" href="../nav/css/nav-base.css">
+  <link rel="stylesheet" href="../nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="../nav/css/nav-mobile.css">
+  <link rel="stylesheet" href="./css/manual.css">
 
-    header p {
-      max-width: 760px;
-      margin: 0 auto;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 24px 16px 40px;
-    }
-
-    .back {
-      display: inline-block;
-      margin-bottom: 18px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    section {
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 1.25rem;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 8px;
-    }
-
-    h3 {
-      margin-top: 24px;
-      font-size: 1.05rem;
-    }
-
-    ol, ul {
-      padding-left: 1.4em;
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    .image-box {
-      margin: 14px 0;
-      background: #f3f4f6;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      color: #666;
-      font-size: 0.9rem;
-    }
-
-    .image-box img {
-      max-width: 100%;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto 8px;
-    }
-
-    .note {
-      background: #eff6ff;
-      border-left: 5px solid #2563eb;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .warning {
-      background: #fff7ed;
-      border-left: 5px solid #f97316;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .danger {
-      background: #fef2f2;
-      border-left: 5px solid #dc2626;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .button {
-      display: inline-block;
-      background: #2563eb;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 600;
-      margin-top: 8px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      padding: 20px 16px 32px;
-    }
-  </style>
+  <script src="../auth/js/app-auth.js" defer></script>
 </head>
-<body>
 
-<header>
-  <h1>カメラ・パソコンの予約方法</h1>
-  <p>備品を予約してから返却するまでの流れを説明します。</p>
-</header>
+<body class="manual-page" data-page="manual">
 
-<main>
-  <a class="back" href="./index.html">← 使い方ガイドに戻る</a>
+  <div id="header-wrapper">
+    <header id="main-header">
+      <div class="header-content">
+        <a href="/reserve_site/index.html">
+          <img src="../camera/images/club-icon.JPG" class="logo" alt="法政大学 小金井写真部 ロゴ">
+          <div class="site-title">
+            <h1>法政大学 小金井写真部</h1>
+            <p>カメラ・PC予約システム 使い方ガイド</p>
+          </div>
+        </a>
 
-  <section>
-    <h2>このサイトでできること</h2>
-    <p>
-      カメラ・パソコン予約サイトでは、部・サークルで管理している備品の貸出予約を行うことができます。
-    </p>
+        <button class="nav-toggle" aria-label="メニュー">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+  </div>
 
-    <ul>
-      <li>カメラの予約</li>
-      <li>パソコンの予約</li>
-      <li>貸出日時・返却日時の確認</li>
-      <li>予約状況の確認</li>
-      <li>予約の変更・キャンセル</li>
+  <main class="manual-main">
+    <a class="manual-back" href="./index.html">← 使い方ガイドに戻る</a>
+
+    <section class="manual-hero">
+      <span class="manual-hero__label">How to Use</span>
+      <h2>カメラ・PC予約サイトの使い方</h2>
+      <p>
+        新規登録、ログイン、予約、マイページ確認、キャンセル、貸出・返却の流れを説明します。
+      </p>
+    </section>
+
+    <section class="manual-section">
+      <h2>このサイトでできること</h2>
+      <p>
+        カメラ・PC予約サイトでは、部で管理しているカメラと共用PCの貸出予約ができます。
+      </p>
+
+      <ul>
+        <li>カメラの予約</li>
+        <li>PCの予約</li>
+        <li>マイページでの予約確認</li>
+        <li>マイページでの予約キャンセル</li>
+      </ul>
+
+      <div class="manual-alert">
+        予約後にメール通知は届きません。予約内容は、必ずマイページで確認してください。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>利用前に確認すること</h2>
+      <ul>
+        <li>予約は先着順です。</li>
+        <li>借りたい日の7日前までに予約してください。</li>
+        <li>通常授業期間中の貸出上限は7日間です。</li>
+        <li>予約内容の確認とキャンセルは、マイページから行います。</li>
+        <li>貸出期間や予約期限に関する詳しいルールは、利用規約も確認してください。</li>
+      </ul>
+    </section>
+
+    <section class="manual-section" id="register">
+      <h2>1. 初めて使う場合：新規登録</h2>
+      <p>
+        初めて予約サイトを利用する場合は、新規登録が必要です。
+      </p>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/register-step1.png" alt="新規登録画面">
+        図1：新規登録画面
+      </div>
+
+      <h3>登録に必要な情報</h3>
+      <ul>
+        <li>大学から配布されたメールアドレス</li>
+        <li>名前</li>
+        <li>学年</li>
+        <li>LINEの名前</li>
+      </ul>
+
+      <div class="manual-note">
+        ログインには、大学から配布された <strong>@stu.hosei.ac.jp</strong> のメールアドレスを使用してください。
+      </div>
+
+      <div class="manual-alert">
+        個人のGmailや他大学のメールアドレスでは、登録・ログインできない場合があります。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>2. ログインする</h2>
+      <p>
+        登録後、大学メールアドレスを使って予約サイトにログインします。
+      </p>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/login-step1.png" alt="ログイン画面">
+        図2：ログイン画面
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>3. 借りたい備品を選ぶ</h2>
+      <p>
+        予約ページから、借りたいカメラまたはPCを選びます。
+      </p>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/reserve-step1.png" alt="備品一覧画面">
+        図3：備品一覧画面
+      </div>
+
+      <ul>
+        <li>カメラまたはPCの名称</li>
+        <li>予約可能な期間</li>
+        <li>現在の予約状況</li>
+        <li>利用規約や注意事項</li>
+      </ul>
+
+      <div class="manual-note">
+        サイト上では、カメラは「カメラ（レンズ付き）」として予約します。  
+        付属品の管理は、部室で記入する貸出シートによって行います。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>4. 貸出日・返却日を入力する</h2>
+      <p>
+        借りたい日と返却予定日を選択します。
+      </p>
+
+      <div class="manual-alert">
+        予約は先着順です。借りたい日の7日前までに予約を入れてください。
+      </div>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/reserve-step2.png" alt="予約日入力画面">
+        図4：貸出日・返却日を入力する画面
+      </div>
+
+      <h3>貸出期間について</h3>
+      <ul>
+        <li>通常授業期間中の貸出上限は7日間です。</li>
+        <li>7日を超える期間では予約できない場合があります。</li>
+        <li>貸出期間のルールは、利用規約も確認してください。</li>
+      </ul>
+
+      <div class="manual-alert">
+        返却予定日は、実際に返却できる日を入力してください。返却が遅れると、次に使う人に影響が出る場合があります。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>5. 内容を確認して予約する</h2>
+      <p>
+        備品名、貸出日、返却日、利用者情報を確認してから予約します。
+      </p>
+
+      <ul>
+        <li>予約する備品が合っているか</li>
+        <li>貸出日が合っているか</li>
+        <li>返却日が合っているか</li>
+        <li>名前・学年・LINEの名前が正しいか</li>
+      </ul>
+
+      <div class="manual-alert">
+        予約後にメール通知は届きません。予約ができているかどうかは、マイページから確認してください。
+      </div>
+    </section>
+
+    <section class="manual-section" id="mypage">
+      <h2>6. マイページで予約を確認する</h2>
+      <p>
+        予約後は、マイページで自分の予約内容を確認できます。
+      </p>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/mypage-step1.png" alt="マイページ画面">
+        図5：マイページ画面
+      </div>
+
+      <ul>
+        <li>自分のカメラ予約</li>
+        <li>自分のPC予約</li>
+        <li>貸出日</li>
+        <li>返却予定日</li>
+        <li>予約状況</li>
+        <li>キャンセル操作</li>
+      </ul>
+    </section>
+
+    <section class="manual-section">
+      <h2>7. カメラ予約の状態について</h2>
+      <p>
+        カメラの予約では、予約後すぐに貸出可能になるわけではありません。
+        通常、幹部が貸出前の確認を行うと、サイト上の表示が切り替わり、貸出可能な状態になります。
+      </p>
+
+      <div class="manual-alert">
+        表示が切り替わる前に部室へ取りに行っても、貸出できない場合があります。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>8. カメラを受け取る</h2>
+      <p>
+        カメラは、部室から直接取りに行く運用です。
+      </p>
+
+      <ul>
+        <li>予約したカメラを確認する</li>
+        <li>カメラ本体とレンズを確認する</li>
+        <li>貸出シートに必要事項を記入する</li>
+        <li>付属品の有無を貸出シートで確認する</li>
+        <li>返却日を確認する</li>
+      </ul>
+
+      <div class="manual-danger">
+        受け取り時に破損・不具合・付属品不足に気づいた場合は、使用前に幹部へ連絡してください。
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h2>9. PCを受け取る</h2>
+      <p>
+        PCの受け取り方法は、案内やサイト上の表示に従ってください。
+      </p>
+
+      <ul>
+        <li>予約したPCと合っているか</li>
+        <li>本体に破損がないか</li>
+        <li>充電器など必要なものがそろっているか</li>
+        <li>返却予定日を確認したか</li>
+      </ul>
+    </section>
+
+    <section class="manual-section">
+      <h2>10. 返却する</h2>
+
+      <h3>カメラ返却時の確認</h3>
+      <ul>
+        <li>カメラ本体を返却する</li>
+        <li>レンズを返却する</li>
+        <li>貸出シート上の付属品を確認する</li>
+        <li>破損や不具合がある場合は幹部へ伝える</li>
+      </ul>
+
+      <h3>PC返却時の確認</h3>
+      <ul>
+        <li>本体を返却する</li>
+        <li>充電器などの付属品を返却する</li>
+        <li>個人ファイルを残していないか確認する</li>
+        <li>ログイン状態が残っていないか確認する</li>
+      </ul>
+
+      <div class="manual-alert">
+        返却が遅れそうな場合は、分かった時点で早めに幹部へ連絡してください。
+      </div>
+    </section>
+
+    <section class="manual-section" id="change-cancel">
+      <h2>11. 予約をキャンセルする</h2>
+      <p>
+        予約をキャンセルしたい場合は、マイページからキャンセルできます。
+      </p>
+
+      <div class="manual-image">
+        <img src="../assets/manual-images/cancel-step1.png" alt="キャンセル画面">
+        図6：マイページから予約をキャンセルする画面
+      </div>
+
+      <ul>
+        <li>備品を使わなくなった</li>
+        <li>予約日を間違えた</li>
+        <li>別の備品を予約したい</li>
+        <li>返却予定日を変更したい</li>
+      </ul>
+
+      <div class="manual-note">
+        使わない予約を残したままにすると、他の部員が予約できなくなる場合があります。早めにキャンセルしてください。
+      </div>
+    </section>
+  </main>
+
+  <!-- manual/index.html と同じオフキャンバスを入れる -->
+  <div class="offcanvas-nav">
+    <ul class="offcanvas-menu">
+      <li id="nav-login"><a href="/reserve_site/auth/login.html">ログイン / 新規登録</a></li>
+      <li id="nav-loggedin" style="display:none;"><span class="nav-muted">ログイン中：<strong id="nav-user-name"></strong></span></li>
+      <li id="nav-mypage" style="display: none;"><a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a></li>
+      <hr>
+      <li><a href="/reserve_site/index.html" data-page="top-page">総合トップ</a></li>
+      <li><a href="/reserve_site/manual/index.html" data-page="manual">使い方ガイド</a></li>
+      <hr>
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">カメラ<span class="arrow"></span></button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/camera/index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="/reserve_site/camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">PC<span class="arrow"></span></button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="/reserve_site/pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+      <hr>
+      <li class="offcanvas-group" id="nav-admin" style="display: none;">
+        <button class="offcanvas-toggle">🛠 管理者メニュー<span class="arrow"></span></button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/admin/index.html" data-page="admin-users">ユーザー管理</a></li>
+          <li><a href="/reserve_site/camera/admin.html" data-page="admin-camera">カメラ管理画面</a></li>
+          <li><a href="/reserve_site/pc/admin.html" data-page="admin-pc">PC管理画面</a></li>
+        </ul>
+      </li>
+      <hr>
+      <li id="nav-logout" style="display: none;"><a href="#" id="logoutBtnOffcanvas">ログアウト</a></li>
     </ul>
+  </div>
 
-    <div class="note">
-      実際に予約できる備品は、時期や管理状況によって変わる場合があります。  
-      サイト上に表示されている備品が、現在予約できる備品です。
-    </div>
-  </section>
+  <div class="offcanvas-backdrop"></div>
 
-  <section>
-    <h2>予約から返却までの流れ</h2>
-    <ol>
-      <li>予約サイトを開く</li>
-      <li>借りたい備品を選ぶ</li>
-      <li>貸出希望日・返却予定日を入力する</li>
-      <li>氏名・学年・連絡先などを入力する</li>
-      <li>内容を確認して予約する</li>
-      <li>担当者の案内に従って備品を受け取る</li>
-      <li>返却期限までに備品を返却する</li>
-    </ol>
+  <footer>
+    <p><img src="../icons/club-icon.JPG" alt="法政大学 小金井写真部 ロゴ" style="height:40px;"></p>
+    <p><a href="/reserve_site/terms.html">利用規約</a></p>
+    <p><span class="footer-copy">&copy;</span> 2025-2026 法政大学 小金井写真部</p>
+  </footer>
 
-    <div class="warning">
-      備品は共有物です。返却期限を過ぎると、次に使う人が利用できなくなる場合があります。  
-      返却日時は必ず守ってください。
-    </div>
-  </section>
-
-  <section>
-    <h2>1. 予約サイトを開く</h2>
-    <p>
-      LINEノートや案内文に掲載されているURLから、カメラ・パソコン予約サイトを開きます。
-    </p>
-
-    <div class="image-box">
-      <img src="../assets/manual-images/reserve-step1.png" alt="予約サイトのトップ画面">
-      図1：予約サイトのトップ画面
-    </div>
-
-    <p>
-      トップ画面が表示されたら、予約したい備品の種類を確認してください。
-    </p>
-  </section>
-
-  <section>
-    <h2>2. 借りたい備品を選ぶ</h2>
-    <p>
-      一覧から、借りたいカメラまたはパソコンを選択します。
-    </p>
-
-    <div class="image-box">
-      <img src="../assets/manual-images/reserve-step2.png" alt="備品を選択する画面">
-      図2：備品選択画面
-    </div>
-
-    <h3>確認すること</h3>
-    <ul>
-      <li>備品名</li>
-      <li>利用可能日</li>
-      <li>貸出中かどうか</li>
-      <li>付属品の有無</li>
-      <li>注意事項</li>
-    </ul>
-
-    <div class="note">
-      同じ種類の備品が複数ある場合は、備品番号や名称を確認してから予約してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>3. 貸出希望日・返却予定日を入力する</h2>
-    <p>
-      備品を借りたい日と、返却予定日を入力します。
-    </p>
-
-    <h3>入力時の注意</h3>
-    <ul>
-      <li>利用開始日と返却予定日を正しく入力してください。</li>
-      <li>長期間の貸出が必要な場合は、事前に担当者へ確認してください。</li>
-      <li>返却予定日は、実際に返却できる日を入力してください。</li>
-      <li>他の人の予約と重なっている場合は、予約できないことがあります。</li>
-    </ul>
-
-    <div class="warning">
-      返却予定日を過ぎる可能性がある場合は、分かった時点で早めに担当者へ連絡してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>4. 利用者情報を入力する</h2>
-    <p>
-      氏名、学年、連絡先、利用目的などを入力します。
-    </p>
-
-    <h3>入力項目の例</h3>
-    <ul>
-      <li>氏名</li>
-      <li>学年</li>
-      <li>メールアドレスまたは連絡先</li>
-      <li>借りたい備品</li>
-      <li>貸出希望日</li>
-      <li>返却予定日</li>
-      <li>利用目的</li>
-      <li>備考</li>
-    </ul>
-
-    <div class="note">
-      連絡先に誤りがあると、予約内容の確認や緊急連絡ができない場合があります。  
-      送信前に必ず確認してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>5. 内容を確認して予約する</h2>
-    <p>
-      入力内容に間違いがないか確認し、問題なければ予約を送信します。
-    </p>
-
-    <h3>送信前に確認すること</h3>
-    <ul>
-      <li>備品名が合っているか</li>
-      <li>貸出希望日が合っているか</li>
-      <li>返却予定日が合っているか</li>
-      <li>氏名・連絡先に誤りがないか</li>
-      <li>利用目的が正しく入力されているか</li>
-    </ul>
-
-    <div class="warning">
-      送信後に変更できない項目がある場合があります。  
-      特に、備品名・貸出日・返却日は必ず確認してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>6. 予約完了後の確認</h2>
-    <p>
-      予約が完了したら、画面に表示される内容を確認してください。
-    </p>
-
-    <ul>
-      <li>予約した備品</li>
-      <li>貸出希望日</li>
-      <li>返却予定日</li>
-      <li>受け取り方法</li>
-      <li>担当者からの連絡事項</li>
-    </ul>
-
-    <div class="note">
-      予約完了画面が表示された場合は、必要に応じてスクリーンショットを保存してください。
-    </div>
-  </section>
-
-  <section>
-    <h2>7. 備品を受け取る</h2>
-    <p>
-      予約した日時になったら、担当者の案内に従って備品を受け取ります。
-    </p>
-
-    <h3>受け取り時に確認すること</h3>
-    <ul>
-      <li>予約した備品と合っているか</li>
-      <li>本体に傷や破損がないか</li>
-      <li>付属品がそろっているか</li>
-      <li>バッテリーや充電器などが必要な場合、含まれているか</li>
-      <li>返却日時を確認したか</li>
-    </ul>
-
-    <div class="danger">
-      受け取り時点で破損や不具合に気づいた場合は、使用前に必ず担当者へ連絡してください。  
-      連絡せずに使用すると、後から状態確認が難しくなる場合があります。
-    </div>
-  </section>
-
-  <section>
-    <h2>8. 備品を返却する</h2>
-    <p>
-      返却予定日までに、指定された方法で備品を返却してください。
-    </p>
-
-    <h3>返却前に確認すること</h3>
-    <ul>
-      <li>本体を返却する</li>
-      <li>充電器・ケーブル・ケースなどの付属品を返却する</li>
-      <li>SDカードや個人データを残していないか確認する</li>
-      <li>破損・不具合があった場合は担当者に伝える</li>
-      <li>返却場所・返却方法を守る</li>
-    </ul>
-
-    <div class="warning">
-      パソコンを返却する場合は、個人情報やログイン状態が残っていないか確認してください。  
-      必要に応じて、ブラウザのログアウトやファイル削除を行ってください。
-    </div>
-  </section>
-
-  <section id="change-cancel">
-    <h2>予約の変更・キャンセル</h2>
-    <p>
-      予約内容を変更したい場合や、備品を借りる必要がなくなった場合は、できるだけ早く変更またはキャンセルしてください。
-    </p>
-
-    <div class="image-box">
-      <img src="../assets/manual-images/cancel-step1.png" alt="予約変更・キャンセル画面">
-      図3：予約変更・キャンセル画面
-    </div>
-
-    <h3>変更・キャンセルが必要な例</h3>
-    <ul>
-      <li>借りる日が変わった</li>
-      <li>返却予定日が変わった</li>
-      <li>別の備品を借りたい</li>
-      <li>備品を使わなくなった</li>
-      <li>予約内容を間違えた</li>
-    </ul>
-
-    <div class="note">
-      キャンセルせずに放置すると、他の人がその備品を予約できなくなる場合があります。  
-      使わないことが分かった時点で、早めに対応してください。
-    </div>
-
-    <a class="button" href="./trouble.html">困ったときのページを見る</a>
-  </section>
-
-</main>
-
-<footer>
-  最終更新：2026年5月<br>
-  カメラ・パソコン予約サイト 利用者向けガイド
-</footer>
-
+  <script src="../nav/js/nav-base.js"></script>
+  <script src="../nav/js/nav-auth-bridge.js"></script>
 </body>
 </html>
