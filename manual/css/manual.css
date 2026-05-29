@@ -59,6 +59,18 @@ body.manual-page {
 }
 
 
+.site-title h1 {
+  font-size: 1.2em;
+  margin: 0;
+  color: white;
+}
+
+.site-title p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
 /* マニュアル本文 */
 .manual-main {
   max-width: 900px;
