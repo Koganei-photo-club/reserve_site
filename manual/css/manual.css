@@ -25,6 +25,40 @@ body.manual-page {
   text-decoration: none;
 }
 
+/* --- ヘッダー --- */
+#main-header {
+  position: relative;
+  background: #333;
+  color: white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: top 0.25s ease;
+  z-index: 2100;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 1em;
+}
+
+.header-content a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 1em;
+}
+
+
 /* マニュアル本文 */
 .manual-main {
   max-width: 900px;
