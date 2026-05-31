@@ -73,6 +73,7 @@ body.manual-page {
 
 /* マニュアル本文 */
 .manual-main {
+    margin-top: 160px;
   max-width: 900px;
   margin: 0 auto;
   padding: 28px 16px 48px;
