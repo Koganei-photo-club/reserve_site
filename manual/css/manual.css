@@ -3,7 +3,7 @@
 ========================== */
 
 body.manual-page {
-  margin: 0;
+  /* margin: 160px; */
   background: #f5f6f8;
   color: #222;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
