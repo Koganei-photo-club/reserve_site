@@ -73,7 +73,7 @@ body.manual-page {
 
 /* マニュアル本文 */
 .manual-main {
-    margin-top: 160px;
+  margin-top: 160px;
   max-width: 900px;
   margin: 0 auto;
   padding: 28px 16px 48px;
@@ -255,11 +255,14 @@ body.manual-page {
 }
 
 /* フッター */
-footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-  padding: 28px 16px 36px;
+footer p {
+  font-size: 0.95rem;
+}
+
+.footer-copy {
+  font-size: 1.2em;
+  line-height: 1;
+  vertical-align: -0.03em;
 }
 
 footer a {
