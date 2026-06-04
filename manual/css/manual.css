@@ -79,7 +79,7 @@ main {
 .manual-main {
   margin-top: 160px;
   max-width: 900px;
-  margin: 160px auto;
+  margin: 160px auto 0;
   padding: 28px 16px 48px;
 }
 
