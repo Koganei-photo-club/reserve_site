@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>使い方ガイド | 法政大学 小金井写真部 予約システム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="../camera/images/club-icon.JPG" type="image/jpeg">
+
+  <link rel="stylesheet" href="../nav/css/nav-base.css">
+  <link rel="stylesheet" href="../nav/css/nav-desktop.css">
+  <link rel="stylesheet" href="../nav/css/nav-mobile.css">
+  <link rel="stylesheet" href="./css/manual.css">
+
+  <link rel="manifest" href="/reserve_site/manifest.json">
+  <meta name="theme-color" content="#333333">
+  <link rel="apple-touch-icon" href="/reserve_site/icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <script src="../auth/js/app-auth.js" defer></script>
+</head>
+
+<body>
+
 <main class="manual-main">
   <a class="manual-back" href="./index.html">← 使い方ガイドに戻る</a>
 
@@ -171,3 +197,88 @@
     </div>
   </section>
 </main>
+
+  <div class="offcanvas-nav">
+    <ul class="offcanvas-menu">
+
+      <li id="nav-login">
+        <a href="/reserve_site/auth/login.html">ログイン / 新規登録</a>
+      </li>
+
+      <li id="nav-loggedin" style="display:none;">
+        <span class="nav-muted">
+          ログイン中：<strong id="nav-user-name"></strong>
+        </span>
+      </li>
+
+      <li id="nav-mypage" style="display: none;">
+        <a href="/reserve_site/mypage.html" data-page="mypage">マイページ</a>
+      </li>
+
+      <hr>
+
+      <li><a href="/reserve_site/index.html" data-page="top-page">総合トップ</a></li>
+      <li><a href="/reserve_site/manual/index.html" data-page="manual">使い方ガイド</a></li>
+
+      <hr>
+
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          カメラ
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/camera/index.html" data-page="camera">カメラトップ</a></li>
+          <li><a href="/reserve_site/camera/reserve.html" data-page="camera-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <li class="offcanvas-group">
+        <button class="offcanvas-toggle">
+          PC
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/pc/index.html" data-page="pc">PCトップ</a></li>
+          <li><a href="/reserve_site/pc/reserve.html" data-page="pc-calendar">カレンダー</a></li>
+        </ul>
+      </li>
+
+      <hr>
+
+      <li class="offcanvas-group" id="nav-admin" style="display: none;">
+        <button class="offcanvas-toggle">
+          🛠 管理者メニュー
+          <span class="arrow"></span>
+        </button>
+        <ul class="offcanvas-submenu">
+          <li><a href="/reserve_site/admin/index.html" data-page="admin-users">ユーザー管理</a></li>
+          <li><a href="/reserve_site/camera/admin.html" data-page="admin-camera">カメラ管理画面</a></li>
+          <li><a href="/reserve_site/pc/admin.html" data-page="admin-pc">PC管理画面</a></li>
+        </ul>
+      </li>
+
+      <hr>
+
+      <li id="nav-logout" style="display: none;">
+        <a href="#" id="logoutBtnOffcanvas">ログアウト</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="offcanvas-backdrop"></div>
+
+  <footer>
+    <p><img src="../icons/club-icon.JPG" alt="法政大学 小金井写真部 ロゴ" style="height:40px;"></p>
+    <p><a href="/reserve_site/terms.html">利用規約</a></p>
+    <p>
+      <span class="footer-copy">&copy;</span>
+      2025-2026 法政大学 小金井写真部
+    </p>
+  </footer>
+
+  <script src="../nav/js/nav-base.js"></script>
+  <script src="../nav/js/nav-auth-bridge.js"></script>
+  <script src="../js/root-script.js"></script>
+</body>
+</html>
