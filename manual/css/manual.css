@@ -72,6 +72,10 @@ body.manual-page {
 }
 
 /* マニュアル本文 */
+main {
+  margin-top: 160px;
+}
+
 .manual-main {
   margin-top: 160px;
   max-width: 900px;
