@@ -1,0 +1,151 @@
+/* ==========================
+   Floating Help Button
+========================== */
+
+.help-fab-wrap {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1400;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+/* メインボタン */
+.help-fab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-height: 54px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+
+  background: #333333;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.help-fab-button:hover {
+  background: #242424;
+}
+
+.help-fab-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.help-fab-label {
+  white-space: nowrap;
+}
+
+/* 開閉パネル */
+.help-fab-panel {
+  position: absolute;
+  right: 0;
+  bottom: 68px;
+
+  width: min(320px, calc(100vw - 32px));
+  background: #ffffff;
+  color: #222222;
+
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.help-fab-wrap.is-open .help-fab-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.help-fab-head {
+  background: #333333;
+  color: #ffffff;
+  padding: 16px 18px;
+}
+
+.help-fab-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.help-fab-desc {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #d1d5db;
+  line-height: 1.5;
+}
+
+.help-fab-links {
+  padding: 10px;
+}
+
+.help-fab-link {
+  display: block;
+  padding: 12px 12px;
+  border-radius: 12px;
+  color: #222222;
+  text-decoration: none;
+}
+
+.help-fab-link:hover {
+  background: #f3f4f6;
+}
+
+.help-fab-link strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.help-fab-link span {
+  display: block;
+  margin-top: 2px;
+  color: #666666;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.help-fab-note {
+  border-top: 1px solid #e5e7eb;
+  padding: 10px 14px 12px;
+  font-size: 0.78rem;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* スマホでは丸ボタン寄りにする */
+@media screen and (max-width: 768px) {
+  .help-fab-wrap {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .help-fab-button {
+    min-height: 52px;
+    padding: 0 14px;
+  }
+
+  .help-fab-label {
+    display: none;
+  }
+
+  .help-fab-icon {
+    font-size: 1.35rem;
+  }
+
+  .help-fab-panel {
+    bottom: 64px;
+  }
+}

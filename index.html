@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./nav/css/nav-base.css">
   <link rel="stylesheet" href="./nav/css/nav-desktop.css">
   <link rel="stylesheet" href="./nav/css/nav-mobile.css">
+  <link rel="stylesheet" href="/reserve_site/help/help-fab.css">
   <link rel="stylesheet" href="css/root-style.css">
 
   <link rel="manifest" href="/reserve_site/manifest.json">
@@ -204,9 +205,58 @@
     </p>
   </footer>
 
+  <!-- ===== フローティングヘルプ ===== -->
+  <div class="help-fab-wrap">
+    <div class="help-fab-panel" id="helpFabPanel" aria-hidden="true">
+      <div class="help-fab-head">
+        <p class="help-fab-title">困ったときは</p>
+        <p class="help-fab-desc">
+          予約方法やキャンセル方法を確認できます。
+        </p>
+      </div>
+
+      <div class="help-fab-links">
+        <a class="help-fab-link" href="/reserve_site/manual/index.html">
+          <strong>使い方ガイド</strong>
+          <span>初めて使う方はこちら</span>
+        </a>
+
+        <a class="help-fab-link" href="/reserve_site/manual/user.html">
+          <strong>予約方法・マイページ</strong>
+          <span>予約、確認、キャンセルの流れ</span>
+        </a>
+
+        <a class="help-fab-link" href="/reserve_site/manual/trouble.html">
+          <strong>よくある質問</strong>
+          <span>ログインできない、予約できない場合</span>
+        </a>
+
+        <a class="help-fab-link" href="/reserve_site/terms.html">
+          <strong>利用規約</strong>
+          <span>貸出期間や予約ルールを確認</span>
+        </a>
+      </div>
+
+      <div class="help-fab-note">
+        予約後にメール通知は届きません。予約内容はマイページで確認してください。
+      </div>
+    </div>
+
+    <button
+      class="help-fab-button"
+      type="button"
+      aria-controls="helpFabPanel"
+      aria-expanded="false"
+    >
+      <span class="help-fab-icon">?</span>
+      <span class="help-fab-label">困ったときは</span>
+    </button>
+  </div>
+
   <!-- Java -->
   <script src="./nav/js/nav-base.js"></script>
   <script src="./nav/js/nav-auth-bridge.js"></script>
   <script src="js/root-script.js"></script>
+  <script src="/reserve_site/help/help-fab.js"></script>
 </body>
 </html>
